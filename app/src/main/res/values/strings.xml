@@ -1,0 +1,27 @@
+<resources>
+    <string name="app_name">CertisCISCO</string>
+    <string name="pressback">Press BACK again to exit</string>
+    <string name="networkerror">Network Error</string>
+    <string name="autherror">Authentication Error</string>
+    <string name="datakerror">Data Error</string>
+    <!-- TODO: Remove or change this placeholder text -->
+
+    <string name="stringComplerte">COMPLETE</string>
+
+    //LOAD Types
+    <string name="load">LOAD</string>
+    <string name="unload">UNLOAD</string>
+
+    //Frag Types
+    <string name="loading">LOAD</string>
+
+    //Alert message
+    <string name="invalid_scan_title">Invalid barcode</string>
+    <string name="invalid_scan_message">This bar code is invalid</string>
+    <string name="invalid_scan_message2">Complete previous cartridge first</string>
+    <string name="rescan_title">Do you want to rescan?</string>
+    <string name="rescan_message">Current progress will be cleared.</string>
+    <string name="no_internet">No internet</string>
+</resources>
+
+

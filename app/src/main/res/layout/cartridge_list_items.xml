@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              android:id="@+id/llbg"
+              android:layout_width="match_parent"
+              android:layout_height="wrap_content"
+              android:gravity="center_vertical"
+              android:orientation="horizontal"
+              android:padding="3dp">
+
+    <TextView
+        android:id="@+id/txt_cartno"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_weight="0.7"
+        android:gravity="center"
+        android:textColor="@color/orangedark"/>
+
+    <LinearLayout
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_margin="1dp"
+        android:layout_weight="1"
+        android:gravity="center_vertical"
+        android:orientation="vertical">
+
+        <TextView
+            android:id="@+id/txt_serialno"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="2px"
+            android:paddingBottom="2px"
+            android:paddingLeft="5px"
+            android:paddingRight="2px"
+            android:paddingTop="2px"
+            android:textColor="@color/orangedark"/>
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/ll_sealno"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_margin="1dp"
+        android:layout_weight="1"
+        android:gravity="center_vertical"
+        android:orientation="vertical">
+    </LinearLayout>
+
+    <ImageView
+        android:id="@+id/imgdone"
+        android:layout_width="0dp"
+        android:layout_height="match_parent"
+        android:layout_gravity="right"
+        android:layout_weight="0.3"
+        android:padding="5dp"
+        android:src="@drawable/ic_done_black_24dp"
+        android:tint="@color/colorWhite"/>
+</LinearLayout>
