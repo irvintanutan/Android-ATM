@@ -3,8 +3,8 @@ package com.novigosolutions.certiscisco.activities;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Looper;
-import android.support.annotation.Nullable;
-import android.support.design.widget.Snackbar;
+import androidx.annotation.Nullable;
+import com.google.android.material.snackbar.Snackbar;
 
 import com.novigosolutions.certiscisco.interfaces.IOnScannerData;
 import com.symbol.emdk.EMDKManager;
