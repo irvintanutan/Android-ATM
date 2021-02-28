@@ -27,7 +27,7 @@ public class CertisCISCO extends Application {
         Configuration dbConfiguration = new Configuration.Builder(this).setDatabaseName("certiscisco.db").setDatabaseVersion(3).addModelClasses(Job.class, Cartridge.class, Seal.class, OtherScan.class, TestCash.class, CoinEnvelopes.class, EditRequests.class, ClearHistoryRequests.class).create();
         ActiveAndroid.initialize(dbConfiguration);
         if(TextUtils.isEmpty(Preferences.getString("API_URL",getApplicationContext()))){
-            Preferences.saveString("API_URL", "http://10.8.8.134", getApplicationContext());
+            Preferences.saveString("API_URL", "http://192.168.1.2:81", getApplicationContext());
         }
     }
 

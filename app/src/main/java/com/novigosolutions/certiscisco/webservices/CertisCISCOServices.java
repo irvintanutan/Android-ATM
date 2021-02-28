@@ -28,8 +28,7 @@ public interface CertisCISCOServices {
 
     @POST("GetATMScheduledList")
     Call<ResponseBody> GetList(@Header("AuthToken") String AuthToken, @Header("UserId") int UserId, @Query("teamId") int teamId, @Query("LoginDate") String LoginDate);
-
-
+ 
     @Headers("Content-Type: application/json")
     @POST("SubmitReplenishment")
     Call<ResponseBody> SubmitReplenishment(@Header("AuthToken") String AuthToken, @Header("UserId") int UserId, @Body JsonObject jsonObject);

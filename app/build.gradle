@@ -20,6 +20,8 @@ android {
 
 dependencies {
     implementation fileTree(include: ['*.jar'], exclude: ['com.symbol.emdk.jar'], dir: 'libs')
+    implementation 'android.arch.lifecycle:livedata:1.1.1'
+    implementation 'android.arch.lifecycle:viewmodel:1.1.1'
     compileOnly fileTree(include: ['*.jar'], dir: 'libs')
     compileOnly 'com.symbol:emdk:7.6.10'
 //    implementation project(':library')

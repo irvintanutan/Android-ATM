@@ -12,6 +12,7 @@ import android.support.v7.widget.Toolbar;
 import android.text.Editable;
 import android.text.TextUtils;
 import android.text.TextWatcher;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -55,6 +56,7 @@ import java.util.Calendar;
 import java.util.List;
 import java.util.Locale;
 import java.util.concurrent.TimeUnit;
+import java.util.logging.Logger;
 
 import okhttp3.OkHttpClient;
 import okhttp3.ResponseBody;
@@ -253,6 +255,9 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener,
         httpClient.readTimeout(30, TimeUnit.SECONDS);
         httpClient.writeTimeout(30, TimeUnit.SECONDS);
 //        httpClient.addInterceptor(logging);
+
+        Log.e("asdsd" , (CertisCISCOServer.getPATH(LoginActivity.this) + "\n" + jsonObject.toString()));
+
         Retrofit retrofit = new Retrofit.Builder()
                 .baseUrl(CertisCISCOServer.getPATH(LoginActivity.this))
                 .addConverterFactory(GsonConverterFactory.create())

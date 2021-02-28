@@ -48,6 +48,7 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:hint="User ID"
+                        android:text="73354"
                         android:inputType="text"
                         android:maxLines="1" />
                 </android.support.design.widget.TextInputLayout>
@@ -65,6 +66,7 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:hint="Password"
+                        android:text="1234567"
                         android:inputType="textPassword" />
                 </android.support.design.widget.TextInputLayout>
 
