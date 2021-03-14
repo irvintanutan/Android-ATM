@@ -11,6 +11,8 @@ import android.os.Handler;
 import androidx.coordinatorlayout.widget.CoordinatorLayout;
 import androidx.localbroadcastmanager.content.LocalBroadcastManager;
 import androidx.appcompat.widget.Toolbar;
+
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -75,6 +77,8 @@ public class HomeActivity extends BaseActivity implements ApiCallback, NetworkCh
             @Override
             public void onItemClick(AdapterView<?> parent, View v, int position, long id) {
                 Intent intent = null;
+
+
                 switch (position) {
                     case 0:
                         intent = new Intent(HomeActivity.this, JobListActivity.class);

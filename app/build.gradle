@@ -10,6 +10,10 @@ android {
         versionName "10.0"
         testInstrumentationRunner 'androidx.test.runner.AndroidJUnitRunner'
     }
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_1_8
+        targetCompatibility JavaVersion.VERSION_1_8
+    }
     buildTypes {
         release {
             minifyEnabled false
@@ -38,5 +42,11 @@ dependencies {
 //    testImplementation 'junit:junit:4.12'
     implementation 'com.github.JakeWharton:ViewPagerIndicator:2.4.1'
     implementation 'com.squareup.okhttp3:logging-interceptor:3.9.0'
+    def fragment_version = "1.2.5"
+    // Java language implementation
+    implementation "androidx.fragment:fragment:$fragment_version"
+
+    implementation 'com.jakewharton:butterknife:10.2.3'
+    annotationProcessor 'com.jakewharton:butterknife-compiler:10.2.3'
 }
 

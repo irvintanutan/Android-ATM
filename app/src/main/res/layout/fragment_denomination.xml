@@ -6,6 +6,7 @@
     tools:context=".fragments.DenominationFragment">
 
     <LinearLayout
+        android:padding="15dp"
         android:orientation="vertical"
         android:layout_width="match_parent"
         android:layout_height="match_parent">
@@ -41,7 +42,7 @@
 
                     <EditText
                         android:gravity="center"
-                        android:padding="10dp"
+                        android:padding="5dp"
                         android:id="@+id/text1000"
                         android:layout_width="0dp"
                         android:layout_weight="1"
@@ -68,7 +69,7 @@
 
                     <EditText
                         android:gravity="center"
-                        android:padding="10dp"
+                        android:padding="5dp"
                         android:id="@+id/text100"
                         android:layout_width="0dp"
                         android:layout_weight="1"
@@ -95,7 +96,7 @@
 
                     <EditText
                         android:gravity="center"
-                        android:padding="10dp"
+                        android:padding="5dp"
                         android:id="@+id/text50"
                         android:layout_width="0dp"
                         android:layout_weight="1"
@@ -123,7 +124,7 @@
 
                     <EditText
                         android:gravity="center"
-                        android:padding="10dp"
+                        android:padding="5dp"
                         android:id="@+id/text10"
                         android:layout_width="0dp"
                         android:layout_weight="1"
@@ -151,7 +152,7 @@
 
                     <EditText
                         android:gravity="center"
-                        android:padding="10dp"
+                        android:padding="5dp"
                         android:id="@+id/text5"
                         android:layout_width="0dp"
                         android:layout_weight="1"
@@ -179,7 +180,7 @@
 
                     <EditText
                         android:gravity="center"
-                        android:padding="10dp"
+                        android:padding="5dp"
                         android:id="@+id/text2"
                         android:layout_width="0dp"
                         android:layout_weight="1"
@@ -214,7 +215,7 @@
 
                     <EditText
                         android:gravity="center"
-                        android:padding="10dp"
+                        android:padding="5dp"
                         android:id="@+id/text1"
                         android:layout_width="0dp"
                         android:layout_weight="1"
@@ -241,7 +242,7 @@
 
                     <EditText
                         android:gravity="center"
-                        android:padding="10dp"
+                        android:padding="5dp"
                         android:id="@+id/text0.50"
                         android:layout_width="0dp"
                         android:layout_weight="1"
@@ -268,7 +269,7 @@
 
                     <EditText
                         android:gravity="center"
-                        android:padding="10dp"
+                        android:padding="5dp"
                         android:id="@+id/text0.20"
                         android:layout_width="0dp"
                         android:layout_weight="1"
@@ -296,7 +297,7 @@
 
                     <EditText
                         android:gravity="center"
-                        android:padding="10dp"
+                        android:padding="5dp"
                         android:id="@+id/text0.10"
                         android:layout_width="0dp"
                         android:layout_weight="1"
@@ -324,7 +325,7 @@
 
                     <EditText
                         android:gravity="center"
-                        android:padding="10dp"
+                        android:padding="5dp"
                         android:id="@+id/text0.05"
                         android:layout_width="0dp"
                         android:layout_weight="1"
@@ -352,7 +353,7 @@
 
                     <EditText
                         android:gravity="center"
-                        android:padding="10dp"
+                        android:padding="5dp"
                         android:id="@+id/textTotal"
                         android:layout_width="0dp"
                         android:layout_weight="1"
@@ -363,7 +364,6 @@
             </LinearLayout>
         </LinearLayout>
         <RadioGroup xmlns:android="http://schemas.android.com/apk/res/android"
-            android:layout_marginTop="20dp"
             android:layout_marginLeft="10dp"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -371,21 +371,54 @@
             <RadioButton android:id="@+id/highReject"
                 style="@android:style/Widget.CompoundButton.CheckBox"
                 android:layoutDirection="rtl"
-                android:layout_margin="10dp"
+                android:layout_margin="5dp"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:textSize="30sp"
+                android:textSize="20sp"
                 android:text="High Reject" />
             <RadioButton android:id="@+id/noCashFound"
                 style="@android:style/Widget.CompoundButton.CheckBox"
                 android:layoutDirection="rtl"
-                android:layout_margin="10dp"
+                android:layout_margin="5dp"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:textSize="30sp"
+                android:textSize="20sp"
                 android:text="No Cash Found" />
         </RadioGroup>
+        <LinearLayout
+            android:layout_marginTop="20dp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:weightSum="2"
+            android:orientation="horizontal">
 
+
+            <Button
+                android:id="@+id/cancel_action"
+                android:layout_weight="1"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_margin="10dp"
+                android:background="@drawable/button_shape_red"
+                android:gravity="center"
+                android:text="Cancel Transaction"
+                android:textColor="@color/colorWhite"
+                android:textSize="20sp"/>
+
+            <Button
+                android:id="@+id/btn_next"
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                android:layout_margin="10dp"
+                android:layout_height="match_parent"
+                android:background="@drawable/button_shape"
+                android:gravity="center"
+                android:text="NEXT"
+                android:textColor="@color/colorWhite"
+                android:textSize="20sp"/>
+
+
+        </LinearLayout>
     </LinearLayout>
 
 </FrameLayout>

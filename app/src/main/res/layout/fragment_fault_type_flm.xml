@@ -13,7 +13,7 @@
 
        <TextView
            android:layout_marginTop="10dp"
-           android:textAppearance="@style/TextAppearance.AppCompat.Large"
+           android:textAppearance="@style/TextAppearance.AppCompat.Medium"
            android:layout_width="match_parent"
            android:layout_height="wrap_content"
            android:text="Fault Type" />
@@ -26,7 +26,7 @@
 
        <TextView
            android:layout_marginTop="10dp"
-           android:textAppearance="@style/TextAppearance.AppCompat.Large"
+           android:textAppearance="@style/TextAppearance.AppCompat.Medium"
            android:layout_width="match_parent"
            android:layout_height="wrap_content"
            android:text="Fault Found" />
@@ -35,15 +35,16 @@
            android:layout_marginTop="10dp"
            android:id="@+id/faultFound"
            android:layout_width="match_parent"
-           android:layout_height="250dp"
+           android:layout_height="150dp"
+           android:inputType="textMultiLine"
            android:background="@drawable/rounded"
-           android:gravity="center"
+           android:gravity="top|left"
            android:padding="10dp" />
 
 
        <TextView
            android:layout_marginTop="10dp"
-           android:textAppearance="@style/TextAppearance.AppCompat.Large"
+           android:textAppearance="@style/TextAppearance.AppCompat.Medium"
            android:layout_width="match_parent"
            android:layout_height="wrap_content"
            android:text="Additional Remarks" />
@@ -52,10 +53,47 @@
            android:layout_marginTop="10dp"
            android:id="@+id/remarks"
            android:layout_width="match_parent"
-           android:layout_height="100dp"
+           android:layout_height="50dp"
+           android:inputType="textMultiLine"
+           android:gravity="top|left"
            android:background="@drawable/rounded"
-           android:gravity="center"
            android:padding="10dp" />
+
+
+       <LinearLayout
+           android:layout_marginTop="20dp"
+           android:layout_width="match_parent"
+           android:layout_height="wrap_content"
+           android:weightSum="2"
+           android:orientation="horizontal">
+
+
+           <Button
+               android:id="@+id/cancel_action"
+               android:layout_weight="1"
+               android:layout_width="0dp"
+               android:layout_height="match_parent"
+               android:layout_margin="10dp"
+               android:background="@drawable/button_shape_red"
+               android:gravity="center"
+               android:text="Cancel Transaction"
+               android:textColor="@color/colorWhite"
+               android:textSize="20sp"/>
+
+           <Button
+               android:id="@+id/btn_next"
+               android:layout_width="0dp"
+               android:layout_weight="1"
+               android:layout_margin="10dp"
+               android:layout_height="match_parent"
+               android:background="@drawable/button_shape"
+               android:gravity="center"
+               android:text="NEXT"
+               android:textColor="@color/colorWhite"
+               android:textSize="20sp"/>
+
+
+       </LinearLayout>
 
    </LinearLayout>
 

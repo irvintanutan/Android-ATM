@@ -95,7 +95,7 @@ public class Job extends Model {
     public static List<Job> getByStatus(String OrderMode, String Status) {
         return new Select().from(Job.class)
                 .orderBy("ATMOrderId ASC")
-                .where("OrderMode =? AND Status=?", OrderMode, Status)
+                //.where("OrderMode =? AND Status=?", OrderMode, Status)
                 .execute();
     }
 

@@ -7,6 +7,7 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Build;
+import android.util.Log;
 import android.view.WindowManager;
 import android.widget.Toast;
 
@@ -51,6 +52,9 @@ public class SyncDatabase {
                     }
                 }
                 if (jobsJSONObject != null) {
+
+                    Log.e("JOBS" , jobsJSONObject.getString("OperationMode"));
+
                     Boolean addemptyunloading = false;
                     Job job = new Job();
                     int ATMOrderId = jobsJSONObject.getInt("ATMOrderId");

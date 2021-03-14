@@ -15,19 +15,18 @@
             android:orientation="vertical"
             android:padding="5dp">
 
-            <com.google.android.material.textfield.TextInputLayout
+            <TextView
+                android:layout_marginTop="10dp"
+                android:textAppearance="@style/TextAppearance.AppCompat.Medium"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="8dp"
-                android:layout_marginBottom="8dp"
-                android:hint="Fault Type">
+                android:text="Fault Type" />
 
-                <com.google.android.material.textfield.TextInputEditText
-                    android:id="@+id/faultFound"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:inputType="text" />
-            </com.google.android.material.textfield.TextInputLayout>
+            <Spinner
+                android:layout_marginTop="10dp"
+                android:id="@+id/faultTypeSpinner"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" />
 
             <com.google.android.material.textfield.TextInputLayout
                 android:layout_width="match_parent"
@@ -126,6 +125,41 @@
                     android:layout_height="wrap_content"
                     android:inputType="text" />
             </com.google.android.material.textfield.TextInputLayout>
+
+            <LinearLayout
+                android:layout_marginTop="20dp"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:weightSum="2"
+                android:orientation="horizontal">
+
+
+                <Button
+                    android:id="@+id/cancel_action"
+                    android:layout_weight="1"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_margin="10dp"
+                    android:background="@drawable/button_shape_red"
+                    android:gravity="center"
+                    android:text="Cancel Transaction"
+                    android:textColor="@color/colorWhite"
+                    android:textSize="20sp"/>
+
+                <Button
+                    android:id="@+id/btn_next"
+                    android:layout_width="0dp"
+                    android:layout_weight="1"
+                    android:layout_margin="10dp"
+                    android:layout_height="match_parent"
+                    android:background="@drawable/button_shape"
+                    android:gravity="center"
+                    android:text="COMPLETE"
+                    android:textColor="@color/colorWhite"
+                    android:textSize="20sp"/>
+
+
+            </LinearLayout>
 
         </LinearLayout>
 

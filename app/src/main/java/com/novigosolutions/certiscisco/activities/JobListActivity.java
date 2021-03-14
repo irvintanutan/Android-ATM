@@ -13,6 +13,7 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.appcompat.widget.Toolbar;
 
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -219,6 +220,12 @@ public class JobListActivity extends BarCodeScanActivity implements IOnScannerDa
                     break;
                 default:
                     jobList = Job.getByStatus("SCHEDULED", status);
+
+                    Log.e("SIZE" , Integer.toString(jobList.size()));
+                    for (Job j : jobList) {
+                        Log.e("HEY" , j.OperationMode);
+                    }
+
                     break;
             }
             mAdapter = new JobListAdapter(jobList, this, this);

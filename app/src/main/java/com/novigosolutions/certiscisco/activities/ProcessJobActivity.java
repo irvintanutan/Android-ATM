@@ -5,9 +5,11 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
+
 import androidx.coordinatorlayout.widget.CoordinatorLayout;
 import androidx.viewpager.widget.ViewPager;
 import androidx.appcompat.widget.Toolbar;
+
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
@@ -35,7 +37,7 @@ import com.viewpagerindicator.CirclePageIndicator;
 
 import static com.novigosolutions.certiscisco.R.id.pager;
 
-public class ProcessJobActivity extends BarCodeScanActivity implements ApiCallback,NetworkChangekListener {
+public class ProcessJobActivity extends BarCodeScanActivity implements ApiCallback, NetworkChangekListener {
     PagerIndicatorAdapter mAdapter;
     ViewPager mPager;
     //ImageView left, right;
@@ -47,6 +49,7 @@ public class ProcessJobActivity extends BarCodeScanActivity implements ApiCallba
     ImageView imgnetwork;
     protected MenuItem refreshItem = null;
     CoordinatorLayout cl;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -55,12 +58,14 @@ public class ProcessJobActivity extends BarCodeScanActivity implements ApiCallba
         initialize();
         setactions();
     }
+
     @Override
     protected void onResume() {
         super.onResume();
         NetworkChangeReceiver.changekListener = this;
         onNetworkChanged();
     }
+
     private void setuptoolbar() {
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
@@ -89,8 +94,7 @@ public class ProcessJobActivity extends BarCodeScanActivity implements ApiCallba
     public boolean onOptionsItemSelected(MenuItem item) {
         if (item.getItemId() == R.id.action_home) {
             alert(2, "Confirm", "Are you sure you want to go home?");
-        }
-        else if (item.getItemId() == R.id.action_sync) {
+        } else if (item.getItemId() == R.id.action_sync) {
             if (NetworkUtil.getConnectivityStatusString(this)) {
                 SyncCaller.instance().Sync(this, this);
                 runRefresh();
@@ -102,6 +106,7 @@ public class ProcessJobActivity extends BarCodeScanActivity implements ApiCallba
 
 
     }
+
     protected void setRefreshItem(MenuItem item) {
         refreshItem = item;
     }
@@ -123,13 +128,14 @@ public class ProcessJobActivity extends BarCodeScanActivity implements ApiCallba
             //refreshItem.setActionView(iv);
         }
     }
+
     private void initialize() {
 
         txtorderno = (TextView) findViewById(R.id.txt_orderno);
         cl = (CoordinatorLayout) findViewById(R.id.cl);
         Bundle extras = getIntent().getExtras();
         if (extras != null) {
-            orderno=extras.getInt("orderno");
+            orderno = extras.getInt("orderno");
             txtorderno.setText(Job.getATMCode(orderno));
             OperationMode = Job.getOperationMode(extras.getInt("orderno"));
             Cartridge.cancelAllScan(orderno);
@@ -158,11 +164,11 @@ public class ProcessJobActivity extends BarCodeScanActivity implements ApiCallba
 
 //        DateFormat df = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
 //        String date = df.format(Calendar.getInstance().getTime());
-  //      Log.e("startdate:",":"+date);
+        //      Log.e("startdate:",":"+date);
         Job.updateStartDate(orderno, CommonMethods.getCurrentDateTimeInFormat(this
         ));
-        Preferences.saveInt("PROGRESSJOBID",orderno,this);
-        Log.e("PROGRESSJOBID",":"+orderno);
+        Preferences.saveInt("PROGRESSJOBID", orderno, this);
+        Log.e("PROGRESSJOBID", ":" + orderno);
     }
 
     private void setactions() {
@@ -178,20 +184,36 @@ public class ProcessJobActivity extends BarCodeScanActivity implements ApiCallba
                     case 1:
                         if (OperationMode.equals("LOAD"))
                             title = "LOADING";
+                        else if (OperationMode.equals("SLM"))
+                            title = "SLM";
+                        else if (OperationMode.equals("FLM"))
+                            title = "FLM";
                         else
                             title = "UNLOADING";
                         break;
                     case 2:
                         if (OperationMode.equals("LOAD"))
                             title = "LOADING ENVELOPE";
+                        else if (OperationMode.equals("SLM"))
+                            title = "SLM ENVELOPE";
+                        else if (OperationMode.equals("FLM"))
+                            title = "FLM";
                         else
                             title = "UNLOADING ENVELOPE";
                         break;
                     case 3:
-                        title = "LOADING";
+                        if (OperationMode.equals("FLM"))
+                            title = "FLM ENVELOPE";
+                        else if (OperationMode.equals("SLM"))
+                            title = "SLM";
+                        else
+                            title = "LOADING";
                         break;
                     case 4:
-                        title = "LOADING ENVELOPE";
+                        if (OperationMode.equals("FLM"))
+                            title = "FLM";
+                        else
+                            title = "LOADING ENVELOPE";
                         break;
                 }
 
@@ -226,7 +248,7 @@ public class ProcessJobActivity extends BarCodeScanActivity implements ApiCallba
         alert(1, "Confirm", "Are you sure you want to go back?");
     }
 
-    private void alert(final int type, String title, String message) {
+    public void alert(final int type, String title, String message) {
         AlertDialog.Builder alertDialog = new AlertDialog.Builder(ProcessJobActivity.this);
         //alertDialog.setCancelable(true);
         alertDialog.setTitle(title);
@@ -268,12 +290,9 @@ public class ProcessJobActivity extends BarCodeScanActivity implements ApiCallba
     @Override
     public void onResult(int result, String messege) {
         stopRefresh();
-        if(result==409)
-        {
+        if (result == 409) {
             authalert(this);
-        }
-        else
-        {
+        } else {
             raiseSnakbar(messege);
         }
     }
@@ -281,7 +300,7 @@ public class ProcessJobActivity extends BarCodeScanActivity implements ApiCallba
     @Override
     protected void onDestroy() {
         super.onDestroy();
-        Preferences.saveInt("PROGRESSJOBID",0,this);
+        Preferences.saveInt("PROGRESSJOBID", 0, this);
         unregisterScannerEvent();
     }
 

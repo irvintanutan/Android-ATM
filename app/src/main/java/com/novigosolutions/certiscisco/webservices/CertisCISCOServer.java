@@ -30,6 +30,7 @@ public class CertisCISCOServer {
 
     public static String getPATH(Context context) {
         //return getIP() + "api/api/DeviceApi/";
-        return "https://pcs-atmuatapi.certis-cslops-uat.com/" + "api/DeviceApi/";
+        //return "https://pcs-atmuatapi.certis-cslops-uat.com/" + "api/DeviceApi/";
+        return "http://192.168.1.2:81/" + "api/DeviceApi/";
     }
 }

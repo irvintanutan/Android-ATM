@@ -10,8 +10,8 @@ import butterknife.OnClick;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ArrayAdapter;
-import android.widget.Spinner;
+import android.widget.Button;
+import android.widget.Toast;
 
 import com.novigosolutions.certiscisco.R;
 import com.novigosolutions.certiscisco.activities.ProcessJobActivity;
@@ -22,29 +22,19 @@ import com.novigosolutions.certiscisco.interfaces.FragmentInterface;
  * Use the  factory method to
  * create an instance of this fragment.
  */
-public class FaultTypeFLMFragment extends Fragment implements FragmentInterface {
+public class JobDetailsFragmentSLM_FLM extends Fragment implements FragmentInterface {
 
-    @BindView(R.id.faultTypeSpinner)
-    Spinner faultType;
-
-    public FaultTypeFLMFragment() {
+    public JobDetailsFragmentSLM_FLM() {
         // Required empty public constructor
     }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        View rootView = inflater.inflate(R.layout.fragment_fault_type_flm, container, false);
+        View rootView = inflater.inflate(R.layout.fragment_job_details_s_l_m__f_l_m, container, false);
+
         ButterKnife.bind(this, rootView);
-
-        loadSpinnerIdTypes();
         return rootView;
-    }
-
-
-    @OnClick(R.id.cancel_action)
-    void cancel() {
-        ((ProcessJobActivity) getActivity()).alert(1,"Confirm", "Confirm Exit Job?");
     }
 
 
@@ -53,11 +43,6 @@ public class FaultTypeFLMFragment extends Fragment implements FragmentInterface 
         ((ProcessJobActivity) getActivity()).setpage(1);
     }
 
-    private void loadSpinnerIdTypes() {
-        ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(getActivity(), R.array.fault_type, android.R.layout.simple_spinner_item);
-        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-        faultType.setAdapter(adapter);
-    }
 
     @Override
     public void fragmentBecameVisible() {

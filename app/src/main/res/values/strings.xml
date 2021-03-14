@@ -25,10 +25,15 @@
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
 
-    <string-array name="planets_array">
+    <string-array name="fault_type">
         <item>ATM</item>
         <item>CDM</item>
         <item>PUM</item>
+    </string-array>
+
+    <string-array name="yesno">
+        <item>YES</item>
+        <item>NO</item>
     </string-array>
 </resources>
 
