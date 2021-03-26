@@ -74,6 +74,7 @@ public class SyncCaller {
                 .build();
         CertisCISCOServices service = retrofit.create(CertisCISCOServices.class);
         Call<ResponseBody> call = service.Sync(Preferences.getString("AuthToken", activity), Preferences.getInt("UserId", activity), json);
+        Log.e("TOKENS" ,Preferences.getString("AuthToken", activity) + " " + Preferences.getInt("UserId", activity));
         call.enqueue(new Callback<ResponseBody>() {
             @Override
             public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
@@ -90,8 +91,10 @@ public class SyncCaller {
                                 Boolean ischangeindata = false;
                                 JSONObject jsonObject = obj.getJSONObject("Data");
                                 JSONArray jsonArray = jsonObject.getJSONArray("Orders");
+                                Log.e("ERROR IRVIN" , jsonArray.toString());
                                 for (int i = 0; i < jsonArray.length(); i++) {
                                     JSONObject orderJSONObject = jsonArray.getJSONObject(i);
+                                    Log.e("ORDER INFO" , orderJSONObject.getJSONObject("OrderInfo").toString());
                                     if (orderJSONObject.getString("Status").equals("Updated") || orderJSONObject.getString("Status").equals("Cancelled") || orderJSONObject.getString("Status").equals("New")) {
                                         ischangeindata = true;
                                         break;

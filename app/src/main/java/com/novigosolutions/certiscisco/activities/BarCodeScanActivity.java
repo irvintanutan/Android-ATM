@@ -19,9 +19,9 @@ import com.symbol.emdk.barcode.StatusData;
 
 import java.util.ArrayList;
 
-public abstract class BarCodeScanActivity extends BaseActivity {/* implements
+public abstract class BarCodeScanActivity extends BaseActivity implements
         EMDKManager.EMDKListener, Scanner.DataListener, Scanner.StatusListener,
-        BarcodeManager.ScannerConnectionListener {*/
+        BarcodeManager.ScannerConnectionListener {
 
     private Snackbar snackBar;
     private static IOnScannerData iOnScannerData = null;
@@ -40,7 +40,7 @@ public abstract class BarCodeScanActivity extends BaseActivity {/* implements
         mEventRunnable = new IOnScannerEventRunnable();
     }
 
-   /* @Override
+    @Override
     protected void onResume() {
         super.onResume();
 
@@ -69,7 +69,7 @@ public abstract class BarCodeScanActivity extends BaseActivity {/* implements
         this.emdkManager = emdkManager;
         // Add connection listener
         attachListenersAndInitScanner();
-    }*/
+    }
 
     public static void registerScannerEvent(IOnScannerData miOnScannerData) {
         iOnScannerData = miOnScannerData;
@@ -79,7 +79,7 @@ public abstract class BarCodeScanActivity extends BaseActivity {/* implements
         iOnScannerData = null;
     }
 
-   /* @Override
+    @Override
     public void onClosed() {
         if (emdkManager != null) {
             // Remove connection listener
@@ -91,8 +91,8 @@ public abstract class BarCodeScanActivity extends BaseActivity {/* implements
             emdkManager.release();
             emdkManager = null;
         }
-    }*/
-/*
+    }
+
     @Override
     public void onStatus(StatusData statusData) {
         StatusData.ScannerStates state = statusData.getState();
@@ -125,9 +125,9 @@ public abstract class BarCodeScanActivity extends BaseActivity {/* implements
                 //error, currently we don't perform any action
                 break;
         }
-    }*/
+    }
 
-   /* @Override
+    @Override
     public void onData(ScanDataCollection scanDataCollection) {
         try {
             if (scanDataCollection != null
@@ -143,7 +143,7 @@ public abstract class BarCodeScanActivity extends BaseActivity {/* implements
         } catch (Exception e) {
             e.printStackTrace();
         }
-    }*/
+    }
 
     private static class IOnScannerEventRunnable implements Runnable {
         private String mBarcodeData = "";
@@ -161,17 +161,17 @@ public abstract class BarCodeScanActivity extends BaseActivity {/* implements
     }
 
 
-   /* @Override
+     @Override
     public void onConnectionChange(ScannerInfo scannerInfo,
                                    BarcodeManager.ConnectionState connectionState) {
         //we don't need to performs logic here currently
         // Log.d("connection changed", connectionState.name());
-    }*/
+    }
 
     /**
      * Get an instance of the barcode reader and start listening to scan events
      */
-    /*private void attachListenersAndInitScanner() {
+    private void attachListenersAndInitScanner() {
         // Acquire the barcode manager resources
         barcodeManager = (BarcodeManager) emdkManager.getInstance(EMDKManager.FEATURE_TYPE.BARCODE);
         if (barcodeManager != null) {
@@ -180,12 +180,12 @@ public abstract class BarCodeScanActivity extends BaseActivity {/* implements
             initScanner();
         }
     }
-*/
+
     /**
      * Destroy all the resources associated with the current EMDK service
      * Must be called before closing the app or leaving the current Activity
      */
-    /*private void deInitScanner() {
+  private void deInitScanner() {
         if (scanner != null) {
             //here we are separating the various try/catch because they are grouped by scope
             //if one of them crash it doesn't mean the others cannot be performed
@@ -219,7 +219,7 @@ public abstract class BarCodeScanActivity extends BaseActivity {/* implements
             emdkManager.release();
             emdkManager = null;
         }
-    }*/
+    }
 
     /**
      * Init scanner object and start reading for scans
@@ -231,8 +231,8 @@ public abstract class BarCodeScanActivity extends BaseActivity {/* implements
             scanner = barcodeManager.getDevice(BarcodeManager.DeviceIdentifier.DEFAULT);
             if (scanner != null) {
                 //attach listener and set config
-                //scanner.addDataListener(this);
-                //scanner.addStatusListener(this);
+                scanner.addDataListener(this);
+                scanner.addStatusListener(this);
                 scanner.triggerType = Scanner.TriggerType.HARD;
                 try {
                     scanner.enable();
@@ -256,9 +256,9 @@ public abstract class BarCodeScanActivity extends BaseActivity {/* implements
     /**
      * start the EMDK service connection
      */
-   /* private void askForEMDKConnection() {
+    private void askForEMDKConnection() {
         EMDKManager.getEMDKManager(getApplicationContext(), this);
-    }*/
+    }
 
     /**
      * show snackbar connnection error
@@ -267,8 +267,8 @@ public abstract class BarCodeScanActivity extends BaseActivity {/* implements
         snackBar = Snackbar
                 .make(findViewById(android.R.id.content), "can't connect to the Zebra scanner", Snackbar.LENGTH_INDEFINITE);
         snackBar.show();
-        //deInitScanner();
-        //askForEMDKConnection();
+        deInitScanner();
+         askForEMDKConnection();
     }
 
     /**

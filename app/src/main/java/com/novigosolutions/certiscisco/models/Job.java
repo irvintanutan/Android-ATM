@@ -72,6 +72,12 @@ public class Job extends Model {
     @Column(name = "isHistoryCleared")
     public int isHistoryCleared;
 
+    @Column(name = "Remarks")
+    public String Remarks;
+
+    @Column(name = "ActivationTime")
+    public String ActivationTime;
+
     public static Job getSingle(int ATMOrderId) {
         return new Select().from(Job.class)
                 .orderBy("ATMOrderId ASC")
