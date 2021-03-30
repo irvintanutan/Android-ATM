@@ -26,9 +26,12 @@ import com.novigosolutions.certiscisco.adapters.PagerIndicatorAdapter;
 import com.novigosolutions.certiscisco.interfaces.FragmentInterface;
 import com.novigosolutions.certiscisco.interfaces.NetworkChangekListener;
 import com.novigosolutions.certiscisco.models.Cartridge;
+import com.novigosolutions.certiscisco.models.Denomination;
+import com.novigosolutions.certiscisco.models.FLMSLMAdditionalDetails;
 import com.novigosolutions.certiscisco.models.Job;
 import com.novigosolutions.certiscisco.recivers.NetworkChangeReceiver;
 import com.novigosolutions.certiscisco.utils.CommonMethods;
+import com.novigosolutions.certiscisco.utils.Constants;
 import com.novigosolutions.certiscisco.utils.NetworkUtil;
 import com.novigosolutions.certiscisco.utils.Preferences;
 import com.novigosolutions.certiscisco.webservices.ApiCallback;
@@ -255,6 +258,8 @@ public class ProcessJobActivity extends BarCodeScanActivity implements ApiCallba
         alertDialog.setMessage(message);
         alertDialog.setPositiveButton("Yes", new DialogInterface.OnClickListener() {
             public void onClick(DialogInterface dialog, int which) {
+                Constants.FlmSlmDetails = new FLMSLMAdditionalDetails();
+                Constants.denomination = new Denomination();
                 Cartridge.cancelAllScan(orderno);
                 if (Job.isHistoryCleared(orderno)) {
                     Job.clearHistory(orderno, getString(R.string.unload));
@@ -277,6 +282,10 @@ public class ProcessJobActivity extends BarCodeScanActivity implements ApiCallba
 
     public void setpage(int count) {
         mPager.setCurrentItem(currentpage + count, true);
+    }
+
+    public void deleteFlmSlmEntry() {
+
     }
 
     @Override
@@ -308,6 +317,20 @@ public class ProcessJobActivity extends BarCodeScanActivity implements ApiCallba
     public void onPause() {
         super.onPause();
 //        unregisterScannerEvent();
+    }
+
+    public void alert(String message){
+        androidx.appcompat.app.AlertDialog.Builder builder = new androidx.appcompat.app.AlertDialog.Builder(this);
+        builder.setTitle("Warning");
+        builder.setMessage(message);
+        builder.setPositiveButton("OK", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+            }
+        });
+
+        androidx.appcompat.app.AlertDialog alert = builder.create();
+        alert.show();
     }
 
 }

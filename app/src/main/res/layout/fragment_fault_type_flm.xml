@@ -18,11 +18,12 @@
            android:layout_height="wrap_content"
            android:text="Fault Type" />
 
-       <Spinner
+       <com.novigosolutions.certiscisco.utils.MultiSelectionSpinner
            android:layout_marginTop="10dp"
            android:id="@+id/faultTypeSpinner"
            android:layout_width="match_parent"
-           android:layout_height="wrap_content" />
+           android:layout_height="wrap_content"
+           android:spinnerMode="dropdown" />
 
        <TextView
            android:layout_marginTop="10dp"

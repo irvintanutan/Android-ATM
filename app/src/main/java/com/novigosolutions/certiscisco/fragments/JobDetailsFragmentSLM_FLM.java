@@ -15,7 +15,9 @@ import android.widget.TextView;
 import com.novigosolutions.certiscisco.R;
 import com.novigosolutions.certiscisco.activities.ProcessJobActivity;
 import com.novigosolutions.certiscisco.interfaces.FragmentInterface;
+import com.novigosolutions.certiscisco.models.FLMSLMAdditionalDetails;
 import com.novigosolutions.certiscisco.models.Job;
+import com.novigosolutions.certiscisco.utils.Constants;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -74,6 +76,8 @@ public class JobDetailsFragmentSLM_FLM extends Fragment implements FragmentInter
             bank.setText(job.Bank + " " + job.ATMType);
             // remarks.setText(job.Remarks);
             // activationTime.setText(job.ActivationTime);
+
+            Constants.FlmSlmDetails = new FLMSLMAdditionalDetails();
         }
     }
 

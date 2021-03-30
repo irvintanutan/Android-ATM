@@ -5,6 +5,11 @@
     android:layout_height="match_parent"
     tools:context=".fragments.DenominationFragment">
 
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+
     <LinearLayout
         android:padding="15dp"
         android:orientation="vertical"
@@ -41,13 +46,16 @@
                         />
 
                     <EditText
-                        android:gravity="center"
-                        android:padding="5dp"
                         android:id="@+id/text1000"
                         android:layout_width="0dp"
-                        android:layout_weight="1"
                         android:layout_height="match_parent"
-                        android:background="@drawable/rounded" />
+                        android:layout_weight="1"
+                        android:background="@drawable/rounded"
+                        android:gravity="center"
+                        android:inputType="number"
+                        android:selectAllOnFocus="true"
+                        android:padding="5dp"
+                        android:text="0" />
 
                 </LinearLayout>
 
@@ -73,6 +81,9 @@
                         android:id="@+id/text100"
                         android:layout_width="0dp"
                         android:layout_weight="1"
+                        android:inputType="number"
+                        android:selectAllOnFocus="true"
+                        android:text="0"
                         android:layout_height="match_parent"
                         android:background="@drawable/rounded" />
 
@@ -100,6 +111,9 @@
                         android:id="@+id/text50"
                         android:layout_width="0dp"
                         android:layout_weight="1"
+                        android:inputType="number"
+                        android:selectAllOnFocus="true"
+                        android:text="0"
                         android:layout_height="match_parent"
                         android:background="@drawable/rounded" />
 
@@ -128,6 +142,9 @@
                         android:id="@+id/text10"
                         android:layout_width="0dp"
                         android:layout_weight="1"
+                        android:inputType="number"
+                        android:selectAllOnFocus="true"
+                        android:text="0"
                         android:layout_height="match_parent"
                         android:background="@drawable/rounded" />
 
@@ -156,6 +173,9 @@
                         android:id="@+id/text5"
                         android:layout_width="0dp"
                         android:layout_weight="1"
+                        android:inputType="number"
+                        android:selectAllOnFocus="true"
+                        android:text="0"
                         android:layout_height="match_parent"
                         android:background="@drawable/rounded" />
 
@@ -184,6 +204,9 @@
                         android:id="@+id/text2"
                         android:layout_width="0dp"
                         android:layout_weight="1"
+                        android:inputType="number"
+                        android:selectAllOnFocus="true"
+                        android:text="0"
                         android:layout_height="match_parent"
                         android:background="@drawable/rounded" />
 
@@ -219,6 +242,9 @@
                         android:id="@+id/text1"
                         android:layout_width="0dp"
                         android:layout_weight="1"
+                        android:inputType="number"
+                        android:selectAllOnFocus="true"
+                        android:text="0"
                         android:layout_height="match_parent"
                         android:background="@drawable/rounded" />
 
@@ -243,9 +269,12 @@
                     <EditText
                         android:gravity="center"
                         android:padding="5dp"
-                        android:id="@+id/text0.50"
+                        android:id="@+id/text0_50"
                         android:layout_width="0dp"
                         android:layout_weight="1"
+                        android:selectAllOnFocus="true"
+                        android:inputType="number"
+                        android:text="0"
                         android:layout_height="match_parent"
                         android:background="@drawable/rounded" />
 
@@ -270,9 +299,12 @@
                     <EditText
                         android:gravity="center"
                         android:padding="5dp"
-                        android:id="@+id/text0.20"
+                        android:id="@+id/text0_20"
                         android:layout_width="0dp"
                         android:layout_weight="1"
+                        android:selectAllOnFocus="true"
+                        android:inputType="number"
+                        android:text="0"
                         android:layout_height="match_parent"
                         android:background="@drawable/rounded" />
 
@@ -298,9 +330,12 @@
                     <EditText
                         android:gravity="center"
                         android:padding="5dp"
-                        android:id="@+id/text0.10"
+                        android:id="@+id/text0_10"
                         android:layout_width="0dp"
+                        android:selectAllOnFocus="true"
                         android:layout_weight="1"
+                        android:inputType="number"
+                        android:text="0"
                         android:layout_height="match_parent"
                         android:background="@drawable/rounded" />
 
@@ -326,9 +361,12 @@
                     <EditText
                         android:gravity="center"
                         android:padding="5dp"
-                        android:id="@+id/text0.05"
+                        android:id="@+id/text0_05"
                         android:layout_width="0dp"
                         android:layout_weight="1"
+                        android:selectAllOnFocus="true"
+                        android:inputType="number"
+                        android:text="0"
                         android:layout_height="match_parent"
                         android:background="@drawable/rounded" />
 
@@ -342,21 +380,15 @@
                     android:layout_height="wrap_content"
                     android:layout_width="match_parent">
 
-                    <TextView
-                        android:textAppearance="@style/TextAppearance.AppCompat.Large"
-                        android:layout_width="0dp"
-                        android:layout_height="match_parent"
-                        android:layout_weight="1"
-                        android:gravity="center_vertical"
-                        android:text="Total"
-                        />
-
                     <EditText
                         android:gravity="center"
                         android:padding="5dp"
                         android:id="@+id/textTotal"
                         android:layout_width="0dp"
-                        android:layout_weight="1"
+                        android:layout_weight="2"
+                        android:inputType="number"
+                        android:enabled="false"
+                        android:text="0"
                         android:layout_height="match_parent"
                         android:background="@drawable/rounded" />
 
@@ -367,6 +399,7 @@
             android:layout_marginLeft="10dp"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:id="@+id/radioGroup"
             android:orientation="vertical">
             <RadioButton android:id="@+id/highReject"
                 style="@android:style/Widget.CompoundButton.CheckBox"
@@ -420,5 +453,6 @@
 
         </LinearLayout>
     </LinearLayout>
+    </ScrollView>
 
 </FrameLayout>

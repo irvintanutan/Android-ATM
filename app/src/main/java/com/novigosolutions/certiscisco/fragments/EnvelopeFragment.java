@@ -26,10 +26,12 @@ import android.widget.TextView;
 import com.novigosolutions.certiscisco.R;
 import com.novigosolutions.certiscisco.activities.BarCodeScanActivity;
 import com.novigosolutions.certiscisco.activities.ProcessJobActivity;
+import com.novigosolutions.certiscisco.adapters.ScanFLMSLMChipListAdapter;
 import com.novigosolutions.certiscisco.adapters.ScanOtherChipListAdapter;
 import com.novigosolutions.certiscisco.interfaces.FragmentInterface;
 import com.novigosolutions.certiscisco.interfaces.IOnScannerData;
 import com.novigosolutions.certiscisco.interfaces.RecyclerViewClickListenerLong;
+import com.novigosolutions.certiscisco.models.FLMSLMScan;
 import com.novigosolutions.certiscisco.models.Job;
 import com.novigosolutions.certiscisco.models.OtherScan;
 import com.novigosolutions.certiscisco.webservices.ApiCallback;
@@ -67,8 +69,8 @@ public class EnvelopeFragment extends Fragment implements IOnScannerData, View.O
     Button prevChooseButton;
     int orderNo = 0;
     String scanType = "", scanTypeName = "";
-    private ScanOtherChipListAdapter mAdapter;
-    List<OtherScan> list = new ArrayList<>();
+    private ScanFLMSLMChipListAdapter mAdapter;
+    List<FLMSLMScan> list = new ArrayList<>();
 
 
     public EnvelopeFragment() {
@@ -227,24 +229,25 @@ public class EnvelopeFragment extends Fragment implements IOnScannerData, View.O
 
     private void addData(String data) {
         ///LinearLayout linearLayout = new LinearLayout(getActivity());
-        OtherScan otherScan = new OtherScan();
+        FLMSLMScan otherScan = new FLMSLMScan();
         otherScan.ATMOrderId = orderNo;
         otherScan.ScanType = scanType;
         otherScan.ScanTypeName = scanTypeName;
         otherScan.ScanValue = data;
+        otherScan.OperationMode = Job.getOperationMode(orderNo);
         otherScan.save();
         refresh();
 
     }
 
     private void refresh() {
-        List<OtherScan> templist = OtherScan.get(orderNo);
+        List<FLMSLMScan> tempList = FLMSLMScan.get(orderNo);
         list.clear();
-        list.addAll(templist);
+        list.addAll(tempList);
         if (list.size() > 0) {
             sethasdata();
             if (mAdapter == null) {
-                mAdapter = new ScanOtherChipListAdapter(list, this);
+                mAdapter = new ScanFLMSLMChipListAdapter(list, this);
                 recyclerView.setAdapter(mAdapter);
             } else {
 

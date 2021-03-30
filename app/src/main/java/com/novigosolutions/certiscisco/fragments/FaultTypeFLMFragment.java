@@ -7,15 +7,23 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ArrayAdapter;
-import android.widget.Spinner;
+import android.widget.EditText;
 
 import com.novigosolutions.certiscisco.R;
 import com.novigosolutions.certiscisco.activities.ProcessJobActivity;
 import com.novigosolutions.certiscisco.interfaces.FragmentInterface;
+import com.novigosolutions.certiscisco.utils.Constants;
+import com.novigosolutions.certiscisco.utils.MultiSelectionSpinner;
+
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
+
+import static com.novigosolutions.certiscisco.utils.Constants.FlmSlmDetails;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -25,7 +33,15 @@ import com.novigosolutions.certiscisco.interfaces.FragmentInterface;
 public class FaultTypeFLMFragment extends Fragment implements FragmentInterface {
 
     @BindView(R.id.faultTypeSpinner)
-    Spinner faultType;
+    MultiSelectionSpinner faultType;
+
+    @BindView(R.id.faultFound)
+    EditText faultFound;
+
+    @BindView(R.id.remarks)
+    EditText remarks;
+
+    int orderNo;
 
     public FaultTypeFLMFragment() {
         // Required empty public constructor
@@ -36,27 +52,66 @@ public class FaultTypeFLMFragment extends Fragment implements FragmentInterface 
                              Bundle savedInstanceState) {
         View rootView = inflater.inflate(R.layout.fragment_fault_type_flm, container, false);
         ButterKnife.bind(this, rootView);
-
         loadSpinnerIdTypes();
+        initialize();
         return rootView;
     }
 
 
     @OnClick(R.id.cancel_action)
     void cancel() {
-        ((ProcessJobActivity) getActivity()).alert(1,"Confirm", "Confirm Exit Job?");
+        //((ProcessJobActivity) getActivity()).alert(1,"Confirm", "Confirm Exit Job?");
+        ((ProcessJobActivity) getActivity()).setpage(-1);
     }
 
 
     @OnClick(R.id.btn_next)
     void next() {
+        add();
         ((ProcessJobActivity) getActivity()).setpage(1);
     }
 
+    private void initialize() {
+        Bundle extras = getActivity().getIntent().getExtras();
+        if (extras != null) {
+            orderNo = extras.getInt("orderno");
+            Log.e("orderno", ":" + orderNo);
+        }
+
+        try {
+            List<String> faultTypeList;
+            faultTypeList = Arrays.asList(FlmSlmDetails.FaultType.split(","));
+            faultType.setSelection(faultTypeList);
+
+            faultFound.setText(FlmSlmDetails.FaultFound);
+            remarks.setText(FlmSlmDetails.AdditionalRemarks);
+
+        } catch (Exception e) {
+            Log.e("ERROR", e.toString());
+        }
+    }
+
+    private void add() {
+        FlmSlmDetails.FaultType = faultType.getSelectedItemsAsString() == null ? "" : faultType.getSelectedItemsAsString();
+        FlmSlmDetails.FaultFound = faultFound.getText().toString() == null ? "" : faultFound.getText().toString();
+        FlmSlmDetails.AdditionalRemarks = remarks.getText().toString() == null ? "" : remarks.getText().toString();
+    }
+
     private void loadSpinnerIdTypes() {
-        ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(getActivity(), R.array.fault_type, android.R.layout.simple_spinner_item);
-        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-        faultType.setAdapter(adapter);
+
+        faultType.setItems(getResources().getStringArray(R.array.fault_type));
+
+        faultType.setListener(new MultiSelectionSpinner.OnMultipleItemsSelectedListener() {
+            @Override
+            public void selectedIndices(List<Integer> indices) {
+
+            }
+
+            @Override
+            public void selectedStrings(List<String> strings) {
+
+            }
+        });
     }
 
     @Override

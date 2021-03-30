@@ -236,6 +236,10 @@ public class Cartridge extends Model {
                 .where("ATMOrderId=?", ATMOrderId)
                 .execute();
 
+        new Delete().from(FLMSLMScan.class)
+                .where("ATMOrderId=?", ATMOrderId)
+                .execute();
+
         new Delete().from(TestCash.class)
                 .where("ATMOrderId=?", ATMOrderId)
                 .execute();

@@ -46,7 +46,7 @@ import retrofit2.Response;
 import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
 
-import static com.novigosolutions.certiscisco.utils.Constatnts.coinenvelopeid;
+import static com.novigosolutions.certiscisco.utils.Constants.coinenvelopeid;
 
 
 public class RequestEditDialog extends Dialog implements View.OnClickListener, AdapterView.OnItemSelectedListener, TextWatcher {

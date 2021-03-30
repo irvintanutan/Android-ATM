@@ -6,7 +6,7 @@ import com.activeandroid.annotation.Table;
 import com.activeandroid.query.Delete;
 import com.activeandroid.query.Select;
 import com.activeandroid.query.Update;
-import com.novigosolutions.certiscisco.utils.Constatnts;
+import com.novigosolutions.certiscisco.utils.Constants;
 
 import java.util.List;
 
@@ -84,7 +84,7 @@ public class EditRequests extends Model {
     public static void removeSingle(long reqid) {
         EditRequests editRequests = new Select().from(EditRequests.class)
                 .where("requestId=?", reqid).executeSingle();
-        if(editRequests.CartId== Constatnts.coinenvelopeid)
+        if(editRequests.CartId== Constants.coinenvelopeid)
         {
             new Update(CoinEnvelopes.class)
                     .set("isEditRequested=?", 0)
