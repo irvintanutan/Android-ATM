@@ -34,6 +34,7 @@ import com.novigosolutions.certiscisco.interfaces.RecyclerViewClickListenerLong;
 import com.novigosolutions.certiscisco.models.FLMSLMScan;
 import com.novigosolutions.certiscisco.models.Job;
 import com.novigosolutions.certiscisco.models.OtherScan;
+import com.novigosolutions.certiscisco.utils.Constants;
 import com.novigosolutions.certiscisco.webservices.ApiCallback;
 import com.novigosolutions.certiscisco.webservices.SendUpdateCaller;
 
@@ -41,6 +42,8 @@ import org.json.JSONObject;
 
 import java.util.ArrayList;
 import java.util.List;
+
+import static com.novigosolutions.certiscisco.utils.Constants.denomination;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -91,7 +94,14 @@ public class EnvelopeFragment extends Fragment implements IOnScannerData, View.O
 
     @OnClick(R.id.btn_next)
     void next() {
-        ((ProcessJobActivity) getActivity()).setpage(1);
+
+        int jammedCash = FLMSLMScan.getCount(orderNo, "JAMMED").size();
+
+        if ((Double.parseDouble(denomination.textTotal) > 0 || denomination.HighReject) && jammedCash == 0) {
+            ((ProcessJobActivity) getActivity()).alert("You mus have at least 1 Jammed Cash Envelope Scanned");
+        } else
+
+            ((ProcessJobActivity) getActivity()).setpage(1);
     }
 
     @OnClick(R.id.cancel_action)
@@ -263,19 +273,19 @@ public class EnvelopeFragment extends Fragment implements IOnScannerData, View.O
 
     private void refreshmessage() {
         llMessage.removeAllViews();
-        int jammedCash = OtherScan.getCount(orderNo, "JAMMED").size();
+        int jammedCash = FLMSLMScan.getCount(orderNo, "JAMMED").size();
         if (jammedCash > 0) {
             TextView textView = new TextView(getActivity());
             textView.setText(jammedCash + " Jammed Cash scanned");
             llMessage.addView(textView);
         }
-        int passbook = OtherScan.getCount(orderNo, "PASSBOOK").size();
+        int passbook = FLMSLMScan.getCount(orderNo, "PASSBOOK").size();
         if (passbook > 0) {
             TextView textView = new TextView(getActivity());
             textView.setText(passbook + " Passbook scanned");
             llMessage.addView(textView);
         }
-        int retainedCard = OtherScan.getCount(orderNo, "RETAIN").size();
+        int retainedCard = FLMSLMScan.getCount(orderNo, "RETAIN").size();
         if (retainedCard > 0) {
             TextView textView = new TextView(getActivity());
             textView.setText(retainedCard + " Retained card scanned");
@@ -296,60 +306,6 @@ public class EnvelopeFragment extends Fragment implements IOnScannerData, View.O
     @Override
     public void recyclerViewListClicked(Long id) {
         alert(2, id);
-    }
-
-    private void dialoguemiscinput() {
-        LayoutInflater inflater = getActivity().getLayoutInflater();
-        AlertDialog.Builder dialogBuilder = new AlertDialog.Builder(getActivity());
-        final View dialogView = inflater.inflate(R.layout.misc_input_dialog, null);
-        dialogBuilder.setView(dialogView);
-
-        final EditText edt = (EditText) dialogView.findViewById(R.id.misc_input);
-        edt.addTextChangedListener(new TextWatcher() {
-            public void afterTextChanged(Editable editable) {
-                if (edt.getText().length() > 0) {
-                    edt.setError(null);
-                }
-            }
-
-            @Override
-            public void beforeTextChanged(CharSequence s, int start, int count,
-                                          int after) {
-                // TODO Auto-generated method stub
-
-            }
-
-            @Override
-            public void onTextChanged(CharSequence s, int start, int before,
-                                      int count) {
-                // TODO Auto-generated method stub
-
-            }
-        });
-        dialogBuilder.setTitle("Enter misc input");
-        ///dialogBuilder.setMessage("Enter misc input");
-        dialogBuilder.setPositiveButton("Done", new DialogInterface.OnClickListener() {
-            public void onClick(DialogInterface dialog, int whichButton) {
-
-            }
-        });
-        dialogBuilder.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
-            public void onClick(DialogInterface dialog, int whichButton) {
-                //pass
-            }
-        });
-        final AlertDialog b = dialogBuilder.create();
-        b.show();
-        b.getButton(AlertDialog.BUTTON_POSITIVE).setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                String textmiscinput = edt.getText().toString().toUpperCase();
-                if (textmiscinput.length() > 0) {
-                    onDataScanned(textmiscinput);
-                    b.cancel();
-                } else edt.setError("Cannot be empty.");
-            }
-        });
     }
 
     @Override

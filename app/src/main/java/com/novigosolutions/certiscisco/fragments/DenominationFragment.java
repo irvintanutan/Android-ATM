@@ -5,6 +5,7 @@ import android.os.Bundle;
 import androidx.fragment.app.Fragment;
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import butterknife.OnCheckedChanged;
 import butterknife.OnClick;
 
 import android.provider.MediaStore;
@@ -15,6 +16,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
@@ -75,13 +77,11 @@ public class DenominationFragment extends Fragment implements FragmentInterface 
     EditText textTotal;
 
     @BindView(R.id.highReject)
-    RadioButton highReject;
+    CheckBox highReject;
 
     @BindView(R.id.noCashFound)
-    RadioButton noCashFound;
+    CheckBox noCashFound;
 
-    @BindView(R.id.radioGroup)
-    RadioGroup radioGroup;
 
     int orderNo;
     Double total = 0.00;
@@ -100,6 +100,22 @@ public class DenominationFragment extends Fragment implements FragmentInterface 
         initialize();
 
         return rootView;
+    }
+
+    @OnClick(R.id.highReject)
+    void setHighReject() {
+        if (highReject.isChecked()) {
+            clear();
+            noCashFound.setChecked(false);
+        }
+    }
+
+    @OnClick(R.id.noCashFound)
+    void setNoCashFound() {
+        if (noCashFound.isChecked()) {
+            clear();
+            highReject.setChecked(false);
+        }
     }
 
     void initialize() {
@@ -138,17 +154,31 @@ public class DenominationFragment extends Fragment implements FragmentInterface 
         denomination.text50 = text50.getText().toString();
         denomination.text100 = text100.getText().toString();
         denomination.text1000 = text1000.getText().toString();
-        denomination.textTotal = textTotal.getText().toString();
+        denomination.textTotal = total.toString();
+    }
+
+    void clear() {
+        text1000.setText("0");
+        text100.setText("0");
+        text50.setText("0");
+        text10.setText("0");
+        text5.setText("0");
+        text2.setText("0");
+        text1.setText("0");
+        text0_50.setText("0");
+        text0_20.setText("0");
+        text0_10.setText("0");
+        text0_05.setText("0");
     }
 
 
     @OnClick(R.id.btn_next)
     void next() {
-        if (total == 0)
+        if (total == 0 && (!highReject.isChecked() && !noCashFound.isChecked()))
             ((ProcessJobActivity) getActivity()).alert("Total must be greater than 0");
-        else if (radioGroup.getCheckedRadioButtonId() == -1) {
-            ((ProcessJobActivity) getActivity()).alert("Must select either High Reject or No Cash Found");
-        } else {
+//        else if (radioGroup.getCheckedRadioButtonId() == -1) {
+//            ((ProcessJobActivity) getActivity()).alert("Must select either High Reject or No Cash Found");  }
+        else {
             saveDenomination();
             ((ProcessJobActivity) getActivity()).setpage(1);
         }
@@ -204,7 +234,11 @@ public class DenominationFragment extends Fragment implements FragmentInterface 
         total += Integer.parseInt(text0_10.getText().toString()) * 0.1;
         total += Integer.parseInt(text0_05.getText().toString()) * 0.05;
 
-        Log.e("TOTAL", total.toString());
+
+        if (total > 0) {
+            highReject.setChecked(false);
+            noCashFound.setChecked(false);
+        }
 
         textTotal.setText("$" + formatter.format(total));
 

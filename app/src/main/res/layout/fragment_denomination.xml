@@ -395,29 +395,25 @@
                 </LinearLayout>
             </LinearLayout>
         </LinearLayout>
-        <RadioGroup xmlns:android="http://schemas.android.com/apk/res/android"
-            android:layout_marginLeft="10dp"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:id="@+id/radioGroup"
-            android:orientation="vertical">
-            <RadioButton android:id="@+id/highReject"
-                style="@android:style/Widget.CompoundButton.CheckBox"
-                android:layoutDirection="rtl"
+        <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+            android:orientation="vertical"
+            android:layout_width="fill_parent"
+            android:layout_height="fill_parent">
+            <CheckBox android:id="@+id/highReject"
                 android:layout_margin="5dp"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:textSize="20sp"
+                android:layoutDirection="rtl"
                 android:text="High Reject" />
-            <RadioButton android:id="@+id/noCashFound"
-                style="@android:style/Widget.CompoundButton.CheckBox"
-                android:layoutDirection="rtl"
+            <CheckBox android:id="@+id/noCashFound"
                 android:layout_margin="5dp"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:textSize="20sp"
+                android:layoutDirection="rtl"
                 android:text="No Cash Found" />
-        </RadioGroup>
+        </LinearLayout>
         <LinearLayout
             android:layout_marginTop="20dp"
             android:layout_width="match_parent"

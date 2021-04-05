@@ -20,7 +20,7 @@
 
         <EditText
             android:layout_marginTop="10dp"
-            android:id="@+id/faultFound"
+            android:id="@+id/resolution"
             android:layout_width="match_parent"
             android:layout_height="150dp"
             android:inputType="textMultiLine"

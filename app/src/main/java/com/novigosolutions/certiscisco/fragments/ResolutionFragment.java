@@ -7,16 +7,23 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
+import android.widget.EditText;
 import android.widget.Spinner;
+import android.widget.Toast;
 
 import com.novigosolutions.certiscisco.R;
 import com.novigosolutions.certiscisco.activities.ProcessJobActivity;
 import com.novigosolutions.certiscisco.interfaces.FragmentInterface;
-import com.novigosolutions.certiscisco.utils.CustomDialogClass;
+import com.novigosolutions.certiscisco.models.FLMSLMScan;
+import com.novigosolutions.certiscisco.models.Job;
+import com.novigosolutions.certiscisco.utils.Constants;
+
+import static com.novigosolutions.certiscisco.utils.Constants.FlmSlmDetails;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -28,8 +35,10 @@ public class ResolutionFragment extends Fragment implements FragmentInterface {
     @BindView(R.id.slmRequiredSpinner)
     Spinner slmRequired;
 
+    @BindView(R.id.resolution)
+    EditText resolution;
 
-    int orderno = 0;
+    int orderNo = 0;
 
 
     public ResolutionFragment() {
@@ -46,7 +55,7 @@ public class ResolutionFragment extends Fragment implements FragmentInterface {
 
         Bundle extras = getActivity().getIntent().getExtras();
         if (extras != null) {
-            orderno = extras.getInt("orderno");
+            orderNo = extras.getInt("orderno");
         }
 
         return rootView;
@@ -66,7 +75,19 @@ public class ResolutionFragment extends Fragment implements FragmentInterface {
 
     @OnClick(R.id.btn_next)
     void next() {
+
+        setFLMResolutionDetails();
+
+        Toast.makeText(getActivity(), "I AM HERE", Toast.LENGTH_SHORT).show();
+        Log.e("DENOMINATION" , Constants.denomination.toString());
+        Log.e("DETAILS" , FlmSlmDetails.toString());
+        Log.e("SCANNED" , FLMSLMScan.get(orderNo).toString());
         // show complete screen custom dialog
+    }
+
+    void setFLMResolutionDetails(){
+        FlmSlmDetails.Resolution = resolution.getText().toString();
+        FlmSlmDetails.SLMRequired = slmRequired.getSelectedItem().toString();
     }
 
 

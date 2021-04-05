@@ -60,8 +60,7 @@ public class FaultTypeFLMFragment extends Fragment implements FragmentInterface 
 
     @OnClick(R.id.cancel_action)
     void cancel() {
-        //((ProcessJobActivity) getActivity()).alert(1,"Confirm", "Confirm Exit Job?");
-        ((ProcessJobActivity) getActivity()).setpage(-1);
+        ((ProcessJobActivity) getActivity()).alert(1, "Confirm", "Confirm Exit Job?");
     }
 
 
