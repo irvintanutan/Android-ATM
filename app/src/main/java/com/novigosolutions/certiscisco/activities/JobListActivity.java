@@ -69,20 +69,20 @@ public class JobListActivity extends BarCodeScanActivity implements IOnScannerDa
         getSupportActionBar().setDisplayShowTitleEnabled(false);
         getSupportActionBar().setHomeButtonEnabled(false);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-        TextView mTitle = (TextView) toolbar.findViewById(R.id.toolbar_title);
+        TextView mTitle = toolbar.findViewById(R.id.toolbar_title);
         mTitle.setText("JOB LIST");
-        imgnetwork = (ImageView) toolbar.findViewById(R.id.imgnetwork);
+        imgnetwork = toolbar.findViewById(R.id.imgnetwork);
     }
 
     private void initializeviews() {
-        LinearLayout ll = (LinearLayout) findViewById(R.id.scanll);
+        LinearLayout ll = findViewById(R.id.scanll);
         ll.setOnClickListener(this);
-        recyclerView = (RecyclerView) findViewById(recyclerview);
-        cardscan = (CardView) findViewById(R.id.cardscan);
-        cardnodata = (CardView) findViewById(R.id.cardviewnodata);
-        llmain = (LinearLayout) findViewById(R.id.llmain);
-        cl = (CoordinatorLayout) findViewById(R.id.cl);
-        submitall = (Button) findViewById(R.id.btn_submit);
+        recyclerView = findViewById(recyclerview);
+        cardscan = findViewById(R.id.cardscan);
+        cardnodata = findViewById(R.id.cardviewnodata);
+        llmain = findViewById(R.id.llmain);
+        cl = findViewById(R.id.cl);
+        submitall = findViewById(R.id.btn_submit);
         submitall.setOnClickListener(this);
         RecyclerView.LayoutManager mLayoutManager = new LinearLayoutManager(getApplicationContext());
         recyclerView.setLayoutManager(mLayoutManager);

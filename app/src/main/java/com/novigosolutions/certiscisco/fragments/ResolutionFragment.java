@@ -22,6 +22,12 @@ import com.novigosolutions.certiscisco.interfaces.FragmentInterface;
 import com.novigosolutions.certiscisco.models.FLMSLMScan;
 import com.novigosolutions.certiscisco.models.Job;
 import com.novigosolutions.certiscisco.utils.Constants;
+import com.novigosolutions.certiscisco.utils.CustomDialogClass;
+import com.novigosolutions.certiscisco.utils.CustomDialogFlmSlmClass;
+import com.novigosolutions.certiscisco.webservices.ApiCallback;
+import com.novigosolutions.certiscisco.webservices.SendUpdateCaller;
+
+import org.json.JSONObject;
 
 import static com.novigosolutions.certiscisco.utils.Constants.FlmSlmDetails;
 
@@ -30,7 +36,7 @@ import static com.novigosolutions.certiscisco.utils.Constants.FlmSlmDetails;
  * Use the  factory method to
  * create an instance of this fragment.
  */
-public class ResolutionFragment extends Fragment implements FragmentInterface {
+public class ResolutionFragment extends Fragment implements FragmentInterface, ApiCallback {
 
     @BindView(R.id.slmRequiredSpinner)
     Spinner slmRequired;
@@ -69,23 +75,23 @@ public class ResolutionFragment extends Fragment implements FragmentInterface {
 
     @OnClick(R.id.cancel_action)
     void cancel() {
-        ((ProcessJobActivity) getActivity()).alert(1,"Confirm", "Confirm Exit Job?");
+        ((ProcessJobActivity) getActivity()).alert(1, "Confirm", "Confirm Exit Job?");
     }
 
 
     @OnClick(R.id.btn_next)
     void next() {
 
-        setFLMResolutionDetails();
-
-        Toast.makeText(getActivity(), "I AM HERE", Toast.LENGTH_SHORT).show();
-        Log.e("DENOMINATION" , Constants.denomination.toString());
-        Log.e("DETAILS" , FlmSlmDetails.toString());
-        Log.e("SCANNED" , FLMSLMScan.get(orderNo).toString());
-        // show complete screen custom dialog
+        if (resolution.getText().toString().isEmpty()) {
+            ((ProcessJobActivity) getActivity()).alert("All Fields Are Required");
+        } else {
+            setFLMResolutionDetails();
+            CustomDialogFlmSlmClass cdd = new CustomDialogFlmSlmClass(getActivity(), this, orderNo, false);
+            cdd.show();
+        }
     }
 
-    void setFLMResolutionDetails(){
+    void setFLMResolutionDetails() {
         FlmSlmDetails.Resolution = resolution.getText().toString();
         FlmSlmDetails.SLMRequired = slmRequired.getSelectedItem().toString();
     }
@@ -94,5 +100,27 @@ public class ResolutionFragment extends Fragment implements FragmentInterface {
     @Override
     public void fragmentBecameVisible() {
 
+    }
+
+    @Override
+    public void onResult(int result, String resultdata) {
+        if (result == 200) {
+            try {
+                JSONObject obj = new JSONObject(resultdata);
+                String strresult = obj.getString("Result");
+                String messege = obj.getString("Message");
+                if (strresult.equals("Success")) {
+                    Job.updateStatus(orderNo);
+                    getActivity().finish();
+                    SendUpdateCaller.instance().sendUpdate(getActivity());
+                } else {
+                    //raiseSnakbar(cl, messege);
+                }
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        } else if (result == 409) {
+            ((ProcessJobActivity) getActivity()).authalert(getActivity());
+        }
     }
 }

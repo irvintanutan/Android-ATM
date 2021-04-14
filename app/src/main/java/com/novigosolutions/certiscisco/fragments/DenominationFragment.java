@@ -176,8 +176,6 @@ public class DenominationFragment extends Fragment implements FragmentInterface 
     void next() {
         if (total == 0 && (!highReject.isChecked() && !noCashFound.isChecked()))
             ((ProcessJobActivity) getActivity()).alert("Total must be greater than 0");
-//        else if (radioGroup.getCheckedRadioButtonId() == -1) {
-//            ((ProcessJobActivity) getActivity()).alert("Must select either High Reject or No Cash Found");  }
         else {
             saveDenomination();
             ((ProcessJobActivity) getActivity()).setpage(1);
@@ -186,8 +184,7 @@ public class DenominationFragment extends Fragment implements FragmentInterface 
 
     @OnClick(R.id.cancel_action)
     void cancel() {
-        // ((ProcessJobActivity) getActivity()).alert(1, "Confirm", "Confirm Exit Job?");
-        ((ProcessJobActivity) getActivity()).setpage(-1);
+        ((ProcessJobActivity) getActivity()).alert(1, "Confirm", "Confirm Exit Job?");
     }
 
     @Override

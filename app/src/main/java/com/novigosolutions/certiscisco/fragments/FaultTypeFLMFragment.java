@@ -66,8 +66,12 @@ public class FaultTypeFLMFragment extends Fragment implements FragmentInterface 
 
     @OnClick(R.id.btn_next)
     void next() {
-        add();
-        ((ProcessJobActivity) getActivity()).setpage(1);
+        if (faultFound.getText().toString().isEmpty() || remarks.getText().toString().isEmpty()) {
+            ((ProcessJobActivity) getActivity()).alert("All Fields Are Required");
+        } else {
+            add();
+            ((ProcessJobActivity) getActivity()).setpage(1);
+        }
     }
 
     private void initialize() {

@@ -24,9 +24,9 @@ public class ScanFLMSLMChipListAdapter extends RecyclerView.Adapter<ScanFLMSLMCh
 
         public MyViewHolder(View view) {
             super(view);
-            txtbarcode = (TextView) view.findViewById(R.id.txtbarcode);
-            txtscantype = (TextView) view.findViewById(R.id.txtscantype);
-            imageView = (ImageView) view.findViewById(R.id.imgclear);
+            txtbarcode = view.findViewById(R.id.txtbarcode);
+            txtscantype = view.findViewById(R.id.txtscantype);
+            imageView = view.findViewById(R.id.imgclear);
             imageView.setOnClickListener(this);
         }
 

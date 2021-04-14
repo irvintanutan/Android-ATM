@@ -248,7 +248,11 @@ public class ProcessJobActivity extends BarCodeScanActivity implements ApiCallba
 
     @Override
     public void onBackPressed() {
-        alert(1, "Confirm", "Are you sure you want to go back?");
+
+        if ((OperationMode.equals("FLM") || OperationMode.equals("SLM")) && currentpage != 0) {
+            setpage(-1);
+        } else
+            alert(1, "Confirm", "Are you sure you want to go back?");
     }
 
     public void alert(final int type, String title, String message) {
@@ -319,7 +323,7 @@ public class ProcessJobActivity extends BarCodeScanActivity implements ApiCallba
 //        unregisterScannerEvent();
     }
 
-    public void alert(String message){
+    public void alert(String message) {
         androidx.appcompat.app.AlertDialog.Builder builder = new androidx.appcompat.app.AlertDialog.Builder(this);
         builder.setTitle("Warning");
         builder.setMessage(message);

@@ -72,8 +72,8 @@ public class SyncDatabase {
                     job.Status = jobsJSONObject.getString("Status");
                     job.Location = jobsJSONObject.getString("Location");
                     job.Zone = jobsJSONObject.getString("Zone");
-                    //job.Remarks = jobsJSONObject.getString("Remarks");
-                    //job.ActivationTime = jobsJSONObject.getString("ActivationTime");
+                    job.Remarks = jobsJSONObject.getString("Remarks");
+                    job.ActivationTime = jobsJSONObject.getString("ActivationTime");
 
                     Log.e("JOBS" , job.toString());
 

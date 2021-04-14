@@ -68,7 +68,7 @@ public class Denomination extends Model {
     public boolean NoCashFound;
 
     public static Denomination getSingle(int ATMOrderId) {
-        return new Select().from(Job.class)
+        return new Select().from(Denomination.class)
                 .orderBy("ATMOrderId ASC")
                 .where("ATMOrderId=?", ATMOrderId)
                 .executeSingle();

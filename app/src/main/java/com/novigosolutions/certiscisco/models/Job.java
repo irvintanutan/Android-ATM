@@ -220,6 +220,9 @@ public class Job extends Model {
         TestCash testCash = new Select().from(TestCash.class)
                 .where("ScanValue=?", ScanValue)
                 .executeSingle();
+        FLMSLMScan flmslmScan = new Select().from(FLMSLMScan.class)
+                .where("ScanValue=?", ScanValue)
+                .executeSingle();
         Cartridge cartridge = new Select().from(Cartridge.class)
                 .where("SerialNo=?", ScanValue)
                 .executeSingle();
@@ -229,7 +232,7 @@ public class Job extends Model {
         CoinEnvelopes envelopes = new Select().from(CoinEnvelopes.class)
                 .where("CoinEnvelope=?", ScanValue)
                 .executeSingle();
-        return (otherScan != null) || (testCash != null) || (cartridge != null) || (seal != null) || (envelopes != null);
+        return (otherScan != null) || (testCash != null) || (cartridge != null) || (seal != null) || (envelopes != null) || (flmslmScan != null);
     }
 
     //Testing purpose

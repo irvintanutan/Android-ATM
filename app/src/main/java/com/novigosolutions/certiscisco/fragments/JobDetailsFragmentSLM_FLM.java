@@ -15,6 +15,7 @@ import android.widget.TextView;
 import com.novigosolutions.certiscisco.R;
 import com.novigosolutions.certiscisco.activities.ProcessJobActivity;
 import com.novigosolutions.certiscisco.interfaces.FragmentInterface;
+import com.novigosolutions.certiscisco.models.Denomination;
 import com.novigosolutions.certiscisco.models.FLMSLMAdditionalDetails;
 import com.novigosolutions.certiscisco.models.Job;
 import com.novigosolutions.certiscisco.utils.Constants;
@@ -56,7 +57,6 @@ public class JobDetailsFragmentSLM_FLM extends Fragment implements FragmentInter
                              Bundle savedInstanceState) {
         View rootView = inflater.inflate(R.layout.fragment_job_details_s_l_m__f_l_m, container, false);
         ButterKnife.bind(this, rootView);
-
         initialize();
 
         return rootView;
@@ -74,10 +74,18 @@ public class JobDetailsFragmentSLM_FLM extends Fragment implements FragmentInter
             location.setText(job.Location);
             zone.setText(job.Zone);
             bank.setText(job.Bank + " " + job.ATMType);
-            // remarks.setText(job.Remarks);
-            // activationTime.setText(job.ActivationTime);
+            remarks.setText(job.Remarks);
+            activationTime.setText(job.ActivationTime);
 
             Constants.FlmSlmDetails = new FLMSLMAdditionalDetails();
+            Constants.denomination = new Denomination();
+
+            Constants.FlmSlmDetails.ATMOrderId = orderNo;
+            Constants.FlmSlmDetails.OperationMode = job.OperationMode;
+
+            Constants.denomination.ATMOrderId = orderNo;
+            Constants.denomination.OperationMode = job.OperationMode;
+
         }
     }
 

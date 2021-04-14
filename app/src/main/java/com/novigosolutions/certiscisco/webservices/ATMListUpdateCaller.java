@@ -8,11 +8,16 @@ import com.google.gson.JsonObject;
 import com.novigosolutions.certiscisco.R;
 import com.novigosolutions.certiscisco.activities.BaseActivity;
 import com.novigosolutions.certiscisco.models.Cartridge;
+import com.novigosolutions.certiscisco.models.Denomination;
+import com.novigosolutions.certiscisco.models.FLMSLMAdditionalDetails;
+import com.novigosolutions.certiscisco.models.FLMSLMScan;
 import com.novigosolutions.certiscisco.models.Job;
 import com.novigosolutions.certiscisco.models.OtherScan;
 import com.novigosolutions.certiscisco.models.Seal;
 import com.novigosolutions.certiscisco.models.TestCash;
 import com.novigosolutions.certiscisco.utils.Preferences;
+
+import org.json.JSONObject;
 
 import java.util.List;
 import java.util.concurrent.TimeUnit;
@@ -105,6 +110,62 @@ public class ATMListUpdateCaller {
                 loadingEnvelops.add(testcash);
             }
             json.add("LoadingEnvelops", loadingEnvelops);
+
+            JsonArray FlmSlmEnvelop = new JsonArray();
+            List<FLMSLMScan> FLMSLMEnvelope = FLMSLMScan.get(ATMOrderId);
+            for (int i = 0; i < FLMSLMEnvelope.size(); i++) {
+                JsonObject envelope = new JsonObject();
+                envelope.addProperty("ItemType", FLMSLMEnvelope.get(i).ScanType);
+                envelope.addProperty("Barcode", FLMSLMEnvelope.get(i).ScanValue);
+                envelope.addProperty("Remarks", "");
+                FlmSlmEnvelop.add(envelope);
+            }
+            String operationEnvelope = job.OperationMode.equals("FLM") ? "FLMEnvelops" : "SLMEnvelops";
+            if (operationEnvelope.equals("FLMEnvelops")) {
+                json.add(operationEnvelope, FlmSlmEnvelop);
+                json.add("SLM", new JsonObject());
+            } else {
+                json.add(operationEnvelope, FlmSlmEnvelop);
+                json.add("FLM", new JsonObject());
+            }
+
+
+
+            Log.e("updatedjson", json.toString());
+
+            JsonObject flmDetails = new JsonObject();
+            JsonObject denomination = new JsonObject();
+            JsonObject summary = new JsonObject();
+
+            Denomination denom = Denomination.getSingle(ATMOrderId);
+            denomination.addProperty("_1000" , denom.text1000);
+            denomination.addProperty("_100" , denom.text100);
+            denomination.addProperty("_10" , denom.text10);
+            denomination.addProperty("_1" , denom.text1);
+            denomination.addProperty("_2" , denom.text2);
+            denomination.addProperty("_5" , denom.text5);
+            denomination.addProperty("_50" , denom.text50);
+            denomination.addProperty("_05" , denom.text0_50);
+            denomination.addProperty("_02" , denom.text0_20);
+            denomination.addProperty("_01" , denom.text0_10);
+            denomination.addProperty("_005" , denom.text0_05);
+            denomination.addProperty("HighReject" , denom.HighReject);
+            denomination.addProperty("NoCashFound" , denom.NoCashFound);
+
+            flmDetails.add("Denominations" , denomination);
+
+            FLMSLMAdditionalDetails details = FLMSLMAdditionalDetails.getSingle(ATMOrderId);
+            summary.addProperty("Type" , details.FaultType);
+            summary.addProperty("FaultFound" , details.FaultFound);
+            summary.addProperty("Resolution" , details.Resolution);
+            summary.addProperty("StaffName" , details.StaffName);
+            summary.addProperty("FLMTeamArrivalTime" , details.TeamArrivalTime);
+            summary.addProperty("EngineerArrivalTime" , details.EngineerArrivalTime);
+            summary.addProperty("AdditionalRemarks" , details.AdditionalRemarks);
+            summary.addProperty("SLMRequired" , details.SLMRequired);
+            flmDetails.add("Summary" , summary);
+
+            json.add("FLMSLMDetails" , flmDetails);
             Log.e("updatedjson", json.toString());
 
         } catch (Exception e) {
@@ -116,6 +177,9 @@ public class ATMListUpdateCaller {
         httpClient.connectTimeout(30, TimeUnit.SECONDS);
         httpClient.readTimeout(30, TimeUnit.SECONDS);
         httpClient.writeTimeout(30, TimeUnit.SECONDS);
+
+        Log.e("JSON" , json.toString());
+
 //        httpClient.addInterceptor(logging);
         Retrofit retrofit = new Retrofit.Builder()
                 .baseUrl(CertisCISCOServer.getPATH(activity))

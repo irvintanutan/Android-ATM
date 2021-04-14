@@ -38,7 +38,7 @@ import java.util.List;
 
 import static com.novigosolutions.certiscisco.R.id.recyclerview;
 
-public class ScanOtherFragment extends Fragment implements IOnScannerData, View.OnClickListener, RecyclerViewClickListenerLong, FragmentInterface, ApiCallback {
+public class  ScanOtherFragment extends Fragment implements IOnScannerData, View.OnClickListener, RecyclerViewClickListenerLong, FragmentInterface, ApiCallback {
     // TODO: Rename parameter arguments, choose names that match
     LinearLayout lldata, llnodata, llmessage;//, llscannedlist;
     Button btn_test_cash, btn_passbook, btn_test_rjr, btn_retain_card, btn_misc_scan, btn_misc_input;

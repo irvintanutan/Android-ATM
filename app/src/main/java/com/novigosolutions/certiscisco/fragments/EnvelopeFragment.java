@@ -100,7 +100,6 @@ public class EnvelopeFragment extends Fragment implements IOnScannerData, View.O
         if ((Double.parseDouble(denomination.textTotal) > 0 || denomination.HighReject) && jammedCash == 0) {
             ((ProcessJobActivity) getActivity()).alert("You mus have at least 1 Jammed Cash Envelope Scanned");
         } else
-
             ((ProcessJobActivity) getActivity()).setpage(1);
     }
 
@@ -220,10 +219,11 @@ public class EnvelopeFragment extends Fragment implements IOnScannerData, View.O
             public void onClick(DialogInterface dialog, int which) {
                 if (type == 1) {
                     OtherScan.cancelScan(orderNo);
+                    FLMSLMScan.cancelScan(orderNo);
                     list.clear();
                     refresh();
                 } else if (type == 2) {
-                    OtherScan.cancelSingleScan(id);
+                    FLMSLMScan.cancelSingleScan(id);
                     refresh();
                 }
             }

@@ -94,7 +94,6 @@ public class SyncCaller {
                                 Log.e("ERROR IRVIN" , jsonArray.toString());
                                 for (int i = 0; i < jsonArray.length(); i++) {
                                     JSONObject orderJSONObject = jsonArray.getJSONObject(i);
-                                    Log.e("ORDER INFO" , orderJSONObject.getJSONObject("OrderInfo").toString());
                                     if (orderJSONObject.getString("Status").equals("Updated") || orderJSONObject.getString("Status").equals("Cancelled") || orderJSONObject.getString("Status").equals("New")) {
                                         ischangeindata = true;
                                         break;
