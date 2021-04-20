@@ -15,6 +15,7 @@ import com.novigosolutions.certiscisco.models.Job;
 import com.novigosolutions.certiscisco.models.OtherScan;
 import com.novigosolutions.certiscisco.models.Seal;
 import com.novigosolutions.certiscisco.models.TestCash;
+import com.novigosolutions.certiscisco.utils.Constants;
 import com.novigosolutions.certiscisco.utils.Preferences;
 
 import org.json.JSONObject;
@@ -194,6 +195,8 @@ public class ATMListUpdateCaller {
                 try {
                     ((BaseActivity) activity).hideProgressDialog();
                     int result_code = response.code();
+                    Constants.requestBody = response.body().string();
+                    Log.e("RESPONSE_BODY" ,Constants.requestBody);
                     Log.e("upresult_code", ":" + result_code);
                     Log.e("upresult_messege", ":" + response.message());
                     Log.e("upresult_error", ":" + response.errorBody());

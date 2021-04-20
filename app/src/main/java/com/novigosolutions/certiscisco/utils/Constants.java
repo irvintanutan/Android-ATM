@@ -11,5 +11,6 @@ public class Constants {
     public static int coinenvelopeid = -5;
     public static FLMSLMAdditionalDetails FlmSlmDetails = new FLMSLMAdditionalDetails();
     public static Denomination denomination = new Denomination();
+    public static String requestBody = "";
 
 }

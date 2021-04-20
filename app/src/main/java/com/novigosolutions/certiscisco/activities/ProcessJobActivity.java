@@ -264,6 +264,8 @@ public class ProcessJobActivity extends BarCodeScanActivity implements ApiCallba
             public void onClick(DialogInterface dialog, int which) {
                 Constants.FlmSlmDetails = new FLMSLMAdditionalDetails();
                 Constants.denomination = new Denomination();
+                Denomination.clear(orderno);
+                FLMSLMAdditionalDetails.clear(orderno);
                 Cartridge.cancelAllScan(orderno);
                 if (Job.isHistoryCleared(orderno)) {
                     Job.clearHistory(orderno, getString(R.string.unload));

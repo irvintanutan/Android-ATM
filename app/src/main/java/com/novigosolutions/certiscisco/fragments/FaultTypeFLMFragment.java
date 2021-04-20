@@ -85,7 +85,6 @@ public class FaultTypeFLMFragment extends Fragment implements FragmentInterface 
             List<String> faultTypeList;
             faultTypeList = Arrays.asList(FlmSlmDetails.FaultType.split(","));
             faultType.setSelection(faultTypeList);
-
             faultFound.setText(FlmSlmDetails.FaultFound);
             remarks.setText(FlmSlmDetails.AdditionalRemarks);
 

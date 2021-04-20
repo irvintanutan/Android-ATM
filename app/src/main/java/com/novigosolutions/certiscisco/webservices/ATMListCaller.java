@@ -3,6 +3,8 @@ package com.novigosolutions.certiscisco.webservices;
 import android.content.Context;
 import android.util.Log;
 
+import com.novigosolutions.certiscisco.utils.Constants;
+
 import java.util.concurrent.TimeUnit;
 
 import okhttp3.OkHttpClient;
@@ -31,15 +33,18 @@ public class ATMListCaller {
                 .client(UnsafeOkHttpClient.getUnsafeOkHttpClient(httpClient))
                 .build();
         CertisCISCOServices service = retrofit.create(CertisCISCOServices.class);
+        Log.e("PAYLOAD" , token + " " + UserId + " " + teamId + " " + logindate);
         Call<ResponseBody> call = service.GetList(token, UserId, teamId,logindate);
         call.enqueue(new Callback<ResponseBody>() {
             @Override
             public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
                 try {
                     int result_code = response.code();
+                    Constants.requestBody = response.body().string();
                     Log.e("result_code", ":" + result_code);
                     Log.e("result_messege", ":" + response.message());
                     Log.e("result_error", ":" + response.errorBody());
+                    Log.e("result_body" , Constants.requestBody);
                     callback.onResult(result_code, response.body().string());
 
                 } catch (Exception e) {

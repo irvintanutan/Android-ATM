@@ -80,12 +80,6 @@ public class JobDetailsFragmentSLM_FLM extends Fragment implements FragmentInter
             Constants.FlmSlmDetails = new FLMSLMAdditionalDetails();
             Constants.denomination = new Denomination();
 
-            Constants.FlmSlmDetails.ATMOrderId = orderNo;
-            Constants.FlmSlmDetails.OperationMode = job.OperationMode;
-
-            Constants.denomination.ATMOrderId = orderNo;
-            Constants.denomination.OperationMode = job.OperationMode;
-
         }
     }
 

@@ -30,6 +30,7 @@ import com.novigosolutions.certiscisco.webservices.SendUpdateCaller;
 import org.json.JSONObject;
 
 import static com.novigosolutions.certiscisco.utils.Constants.FlmSlmDetails;
+import static com.novigosolutions.certiscisco.utils.Constants.denomination;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -94,6 +95,13 @@ public class ResolutionFragment extends Fragment implements FragmentInterface, A
     void setFLMResolutionDetails() {
         FlmSlmDetails.Resolution = resolution.getText().toString();
         FlmSlmDetails.SLMRequired = slmRequired.getSelectedItem().toString();
+
+        FlmSlmDetails.ATMOrderId = orderNo;
+        FlmSlmDetails.OperationMode = Job.getOperationMode(orderNo);
+        denomination.ATMOrderId = orderNo;
+        denomination.OperationMode = Job.getOperationMode(orderNo);
+        FlmSlmDetails.save();
+        denomination.save();
     }
 
 
@@ -106,7 +114,7 @@ public class ResolutionFragment extends Fragment implements FragmentInterface, A
     public void onResult(int result, String resultdata) {
         if (result == 200) {
             try {
-                JSONObject obj = new JSONObject(resultdata);
+                JSONObject obj = new JSONObject(Constants.requestBody);
                 String strresult = obj.getString("Result");
                 String messege = obj.getString("Message");
                 if (strresult.equals("Success")) {
@@ -114,7 +122,7 @@ public class ResolutionFragment extends Fragment implements FragmentInterface, A
                     getActivity().finish();
                     SendUpdateCaller.instance().sendUpdate(getActivity());
                 } else {
-                    //raiseSnakbar(cl, messege);
+                    ((ProcessJobActivity) getActivity()).raiseSnakbar(messege);
                 }
             } catch (Exception e) {
                 e.printStackTrace();

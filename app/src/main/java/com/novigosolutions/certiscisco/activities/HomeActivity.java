@@ -8,6 +8,7 @@ import android.content.Intent;
 import android.content.IntentFilter;
 import android.os.Bundle;
 import android.os.Handler;
+
 import androidx.coordinatorlayout.widget.CoordinatorLayout;
 import androidx.localbroadcastmanager.content.LocalBroadcastManager;
 import androidx.appcompat.widget.Toolbar;
@@ -67,8 +68,8 @@ public class HomeActivity extends BaseActivity implements ApiCallback, NetworkCh
     }
 
     private void initializeviews() {
-        cl = (CoordinatorLayout) findViewById(R.id.cl);
-        gridview = (GridView) findViewById(R.id.grid_view);
+        cl = findViewById(R.id.cl);
+        gridview = findViewById(R.id.grid_view);
     }
 
     private void setactions() {
@@ -142,13 +143,13 @@ public class HomeActivity extends BaseActivity implements ApiCallback, NetworkCh
         @Override
         public void onReceive(Context context, Intent intent) {
             hideProgressDialog();
-            Toast.makeText(HomeActivity.this,"Offline job updated", Toast.LENGTH_SHORT).show();
+            Toast.makeText(HomeActivity.this, "Offline job updated", Toast.LENGTH_SHORT).show();
             refresh();
         }
     };
+
     public void refresh() {
-        if(gridadapter==null)
-        {
+        if (gridadapter == null) {
             countList = new ArrayList<Integer>();
             countList.add(Job.getbyOrderMode("SCHEDULED").size());
             countList.add(Job.getByStatus("SCHEDULED", "READY TO DELIVER").size());
@@ -158,8 +159,7 @@ public class HomeActivity extends BaseActivity implements ApiCallback, NetworkCh
             countList.add(0);
             gridadapter = new GridAdapter(HomeActivity.this, countList);
             gridview.setAdapter(gridadapter);
-        }
-        else {
+        } else {
             countList.clear();
             countList.add(Job.getbyOrderMode("SCHEDULED").size());
             countList.add(Job.getByStatus("SCHEDULED", "READY TO DELIVER").size());
@@ -169,6 +169,13 @@ public class HomeActivity extends BaseActivity implements ApiCallback, NetworkCh
             countList.add(0);
             gridadapter.notifyDataSetChanged();
         }
+
+        List<Job> job = Job.getAll();
+        for (Job jobs : job) {
+            Log.e("COUNTLIST", jobs.ATMOrderId + " " + jobs.Status);
+        }
+
+
     }
 
 
@@ -182,7 +189,7 @@ public class HomeActivity extends BaseActivity implements ApiCallback, NetworkCh
                 onOptionsItemSelected(refreshItem);
             }
         });
-        menu.findItem(R.id.action_user_name).setTitle(Preferences.getString("UserName",HomeActivity.this));
+        menu.findItem(R.id.action_user_name).setTitle(Preferences.getString("UserName", HomeActivity.this));
         return super.onCreateOptionsMenu(menu);
     }
 
@@ -275,12 +282,9 @@ public class HomeActivity extends BaseActivity implements ApiCallback, NetworkCh
     @Override
     public void onResult(int result_code, String messege) {
         stopRefresh();
-        if(result_code==409)
-        {
+        if (result_code == 409) {
             authalert(this);
-        }
-        else
-        {
+        } else {
             raiseSnakbar(messege);
             refresh();
         }

@@ -73,6 +73,7 @@ public class SyncCaller {
                 .client(UnsafeOkHttpClient.getUnsafeOkHttpClient(httpClient))
                 .build();
         CertisCISCOServices service = retrofit.create(CertisCISCOServices.class);
+        Log.e("GETATMLISTJSON" , json.toString());
         Call<ResponseBody> call = service.Sync(Preferences.getString("AuthToken", activity), Preferences.getInt("UserId", activity), json);
         Log.e("TOKENS" ,Preferences.getString("AuthToken", activity) + " " + Preferences.getInt("UserId", activity));
         call.enqueue(new Callback<ResponseBody>() {

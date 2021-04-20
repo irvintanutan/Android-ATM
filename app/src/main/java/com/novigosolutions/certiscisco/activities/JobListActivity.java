@@ -5,6 +5,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.os.Bundle;
+
 import androidx.coordinatorlayout.widget.CoordinatorLayout;
 import androidx.localbroadcastmanager.content.LocalBroadcastManager;
 import androidx.cardview.widget.CardView;
@@ -34,6 +35,7 @@ import com.novigosolutions.certiscisco.interfaces.RecyclerViewClickListener;
 import com.novigosolutions.certiscisco.models.Job;
 import com.novigosolutions.certiscisco.recivers.NetworkChangeReceiver;
 import com.novigosolutions.certiscisco.utils.CustomDialogClass;
+import com.novigosolutions.certiscisco.utils.CustomDialogFlmSlmClass;
 import com.novigosolutions.certiscisco.utils.NetworkUtil;
 import com.novigosolutions.certiscisco.webservices.ATMOfflineListUpdateCaller;
 import com.novigosolutions.certiscisco.webservices.ApiCallback;
@@ -55,6 +57,8 @@ public class JobListActivity extends BarCodeScanActivity implements IOnScannerDa
     ImageView imgnetwork;
     CoordinatorLayout cl;
     Button submitall;
+    TextView mTitle;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -69,7 +73,7 @@ public class JobListActivity extends BarCodeScanActivity implements IOnScannerDa
         getSupportActionBar().setDisplayShowTitleEnabled(false);
         getSupportActionBar().setHomeButtonEnabled(false);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-        TextView mTitle = toolbar.findViewById(R.id.toolbar_title);
+        mTitle = toolbar.findViewById(R.id.toolbar_title);
         mTitle.setText("JOB LIST");
         imgnetwork = toolbar.findViewById(R.id.imgnetwork);
     }
@@ -97,6 +101,12 @@ public class JobListActivity extends BarCodeScanActivity implements IOnScannerDa
         if ((status.equals("OFFLINE") || status.equals("DELIVERED"))) {
             cardscan.setVisibility(View.GONE);
         }
+
+        if (status.equals("DELIVERED")) {
+            mTitle.setText("Delivered");
+        } else if (status.equals("READY TO DELIVER")) {
+            mTitle.setText("Pending");
+        }
     }
 
     @Override
@@ -116,8 +126,13 @@ public class JobListActivity extends BarCodeScanActivity implements IOnScannerDa
             CustomDialogClass cdd = new CustomDialogClass(JobListActivity.this, null, orderno, true);
             cdd.show();
         } else if (job.Status.equals("DELIVERED")) {
-            CustomDialogClass cdd = new CustomDialogClass(JobListActivity.this, null, orderno, true);
-            cdd.show();
+            if (job.OperationMode.equals("FLM") || job.OperationMode.equals("SLM")) {
+                CustomDialogFlmSlmClass cdd = new CustomDialogFlmSlmClass(JobListActivity.this, null, orderno, true);
+                cdd.show();
+            } else {
+                CustomDialogClass cdd = new CustomDialogClass(JobListActivity.this, null, orderno, true);
+                cdd.show();
+            }
         } else {
             Intent intent = new Intent(JobListActivity.this, ProcessJobActivity.class);
             intent.putExtra("orderno", orderno);
@@ -221,9 +236,9 @@ public class JobListActivity extends BarCodeScanActivity implements IOnScannerDa
                 default:
                     jobList = Job.getByStatus("SCHEDULED", status);
 
-                    Log.e("SIZE" , Integer.toString(jobList.size()));
+                    Log.e("SIZE", Integer.toString(jobList.size()));
                     for (Job j : jobList) {
-                        Log.e("HEY" , j.OperationMode);
+                        Log.e("HEY", j.OperationMode);
                     }
 
                     break;

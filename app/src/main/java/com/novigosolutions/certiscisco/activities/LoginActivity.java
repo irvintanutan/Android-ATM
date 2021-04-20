@@ -38,6 +38,7 @@ import com.novigosolutions.certiscisco.models.OtherScan;
 import com.novigosolutions.certiscisco.models.Seal;
 import com.novigosolutions.certiscisco.models.TestCash;
 import com.novigosolutions.certiscisco.recivers.NetworkChangeReceiver;
+import com.novigosolutions.certiscisco.utils.Constants;
 import com.novigosolutions.certiscisco.utils.NetworkUtil;
 import com.novigosolutions.certiscisco.utils.Preferences;
 import com.novigosolutions.certiscisco.utils.SyncDatabase;
@@ -341,7 +342,7 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener,
 
 
     @Override
-    public void onBackPressed() {
+        public void onBackPressed() {
         if (doubleBackToExitPressedOnce) {
             super.onBackPressed();
             return;
@@ -407,7 +408,7 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener,
         hideProgressDialog();
         if (result_code == 200) {
             try {
-                JSONObject obj = new JSONObject(result_body);
+                JSONObject obj = new JSONObject(Constants.requestBody);
                 String result = obj.getString("Result");
                 String messege = obj.getString("Message");
                 if (result.equals("Success")) {

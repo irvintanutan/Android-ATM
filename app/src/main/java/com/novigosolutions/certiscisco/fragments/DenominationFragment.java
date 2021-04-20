@@ -124,6 +124,18 @@ public class DenominationFragment extends Fragment implements FragmentInterface 
             orderNo = extras.getInt("orderno");
             Log.e("orderno", ":" + orderNo);
         }
+        text1000.setText(denomination.text1000);
+        text100.setText(denomination.text100);
+        text50.setText(denomination.text50);
+        text10.setText(denomination.text10);
+        text5.setText(denomination.text5);
+        text2.setText(denomination.text2);
+        text1.setText(denomination.text1);
+        text0_50.setText(denomination.text0_50);
+        text0_20.setText(denomination.text0_20);
+        text0_10.setText(denomination.text0_10);
+        text0_05.setText(denomination.text0_05);
+
 
         text1000.addTextChangedListener(new GenericTextWatcher(text1000));
         text100.addTextChangedListener(new GenericTextWatcher(text100));
@@ -136,6 +148,9 @@ public class DenominationFragment extends Fragment implements FragmentInterface 
         text0_20.addTextChangedListener(new GenericTextWatcher(text0_20));
         text0_10.addTextChangedListener(new GenericTextWatcher(text0_10));
         text0_05.addTextChangedListener(new GenericTextWatcher(text0_05));
+
+        calculate();
+
     }
 
     private void saveDenomination() {
@@ -196,27 +211,27 @@ public class DenominationFragment extends Fragment implements FragmentInterface 
         NumberFormat formatter = new DecimalFormat("0.00");
         total = 0.00;
 
-        if (text1000.getText().toString() == null)
+        if (text1000.getText().toString() == null || text1000.getText().toString().isEmpty())
             text1000.setText("0");
-        if (text100.getText().toString() == null)
+        if (text100.getText().toString() == null || text100.getText().toString().isEmpty())
             text100.setText("0");
-        if (text50.getText().toString() == null)
+        if (text50.getText().toString() == null || text50.getText().toString().isEmpty())
             text50.setText("0");
-        if (text10.getText().toString() == null)
+        if (text10.getText().toString() == null || text10.getText().toString().isEmpty())
             text10.setText("0");
-        if (text5.getText().toString() == null)
+        if (text5.getText().toString() == null || text5.getText().toString().isEmpty())
             text5.setText("0");
-        if (text2.getText().toString() == null)
+        if (text2.getText().toString() == null || text2.getText().toString().isEmpty())
             text2.setText("0");
-        if (text1.getText().toString() == null)
+        if (text1.getText().toString() == null || text1.getText().toString().isEmpty())
             text1.setText("0");
-        if (text0_50.getText().toString() == null)
+        if (text0_50.getText().toString() == null || text0_50.getText().toString().isEmpty())
             text0_50.setText("0");
-        if (text0_20.getText().toString() == null)
+        if (text0_20.getText().toString() == null || text0_20.getText().toString().isEmpty())
             text0_20.setText("0");
-        if (text0_10.getText().toString() == null)
+        if (text0_10.getText().toString() == null || text0_10.getText().toString().isEmpty())
             text0_10.setText("0");
-        if (text0_05.getText().toString() == null)
+        if (text0_05.getText().toString() == null || text0_05.getText().toString().isEmpty())
             text0_05.setText("0");
 
         total += Integer.parseInt(text1000.getText().toString()) * 1000;

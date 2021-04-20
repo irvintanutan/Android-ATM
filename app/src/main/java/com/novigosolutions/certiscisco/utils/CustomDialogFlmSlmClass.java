@@ -17,6 +17,8 @@ import com.novigosolutions.certiscisco.R;
 import com.novigosolutions.certiscisco.adapters.JobSummaryListAdapter;
 import com.novigosolutions.certiscisco.models.Cartridge;
 import com.novigosolutions.certiscisco.models.CoinEnvelopes;
+import com.novigosolutions.certiscisco.models.Denomination;
+import com.novigosolutions.certiscisco.models.FLMSLMAdditionalDetails;
 import com.novigosolutions.certiscisco.models.FLMSLMScan;
 import com.novigosolutions.certiscisco.models.Job;
 import com.novigosolutions.certiscisco.models.OtherScan;
@@ -73,6 +75,10 @@ public class CustomDialogFlmSlmClass extends Dialog implements View.OnClickListe
         super.onCreate(savedInstanceState);
         requestWindowFeature(Window.FEATURE_NO_TITLE);
         setContentView(R.layout.custom_dialog_flm_slm);
+
+        FlmSlmDetails = FLMSLMAdditionalDetails.getSingle(ATMOrderId);
+        denomination = Denomination.getSingle(ATMOrderId);
+
         txt_operation_mode = findViewById(R.id.txt_operation_mode);
         txt_atm_code = findViewById(R.id.txt_atm_code);
         txt_atm_type = findViewById(R.id.txt_atm_type);
@@ -145,7 +151,6 @@ public class CustomDialogFlmSlmClass extends Dialog implements View.OnClickListe
         btncancel.setOnClickListener(this);
         btnok.setOnClickListener(this);
         try {
-
             if (isjobcompleted) {
                 llbtns.setVisibility(View.GONE);
                 btnok.setVisibility(View.VISIBLE);
@@ -206,8 +211,6 @@ public class CustomDialogFlmSlmClass extends Dialog implements View.OnClickListe
                 if (isjobcompleted) {
                     dismiss();
                 } else {
-                    denomination.save();
-                    FlmSlmDetails.save();
                     Job.updateEndDate(ATMOrderId, CommonMethods.getCurrentDateTimeInFormat(activity), (int) difference / 1000);
                     chronometer.stop();
                     if (NetworkUtil.getConnectivityStatusString(activity)) {
