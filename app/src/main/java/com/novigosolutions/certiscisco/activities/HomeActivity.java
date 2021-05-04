@@ -26,6 +26,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.google.firebase.crashlytics.FirebaseCrashlytics;
 import com.novigosolutions.certiscisco.R;
 import com.novigosolutions.certiscisco.adapters.GridAdapter;
 import com.novigosolutions.certiscisco.applications.CertisCISCO;
@@ -56,6 +57,7 @@ public class HomeActivity extends BaseActivity implements ApiCallback, NetworkCh
         initializeviews();
         setactions();
         NetworkChangeReceiver.changekListener = this;
+        FirebaseCrashlytics.getInstance().setCrashlyticsCollectionEnabled(true);
     }
 
     private void setuptoolbar() {

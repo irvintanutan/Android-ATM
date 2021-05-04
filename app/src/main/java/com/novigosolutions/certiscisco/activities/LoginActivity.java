@@ -26,6 +26,7 @@ import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.google.firebase.crashlytics.FirebaseCrashlytics;
 import com.google.gson.JsonObject;
 import com.novigosolutions.certiscisco.R;
 import com.novigosolutions.certiscisco.interfaces.NetworkChangekListener;
@@ -93,6 +94,7 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener,
         setuptoolbar();
         initializeviews();
         setactions();
+        FirebaseCrashlytics.getInstance().setCrashlyticsCollectionEnabled(true);
         // dump();
     }
 
@@ -380,28 +382,6 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener,
             e.printStackTrace();
         }
     }
-
-//    private void dumpDummyData() {
-//        String result_body = "{\"Result\":\"Success\",\"Message\":\"Success\",\"Data\":[{\"ATMOrderId\":436,\"ATMMasterId\":773,\"OrderType\":\"SCHEDULED\",\"OrderMode\":\"SCHEDULED\",\"ATMTypeCode\":\"ATT001\",\"ATMCode\":\"ALL10001\",\"Location\":\"Aloor\",\"PriorityName\":\"P0\",\"AccessableTime\":\"08:30 - 17:30\",\"Zone\":\"W   \",\"Status\":\"READY TO DELIVER\",\"OperationMode\":\"LOAD\",\"DeploymentNo\":3,\"UserId\":0,\"StartDate\":null,\"EndDate\":null,\"ElapsedDeliveryTime\":0,\"Bank\":\"HSBC\",\"ATMType\":\"400K\",\"Version\":\"41AB7A43\",\"LoadingCart\":[{\"CartId\":197,\"CartNo\":\"CART1\",\"SerialNo\":\"CWT1306004\",\"Deno\":\"W-50\",\"DuffleSeal\":\"\",\"SealNo\":[\"BA17101405\"]}],\"UnloadingCart\":[],\"UnloadingEnvelops\":null,\"LoadingEnvelops\":null,\"CoinEnvelopes\":[\"\"]},{\"ATMOrderId\":437,\"ATMMasterId\":774,\"OrderType\":\"SCHEDULED\",\"OrderMode\":\"SCHEDULED\",\"ATMTypeCode\":\"ATT002\",\"ATMCode\":\"ALL10002\",\"Location\":\"Aloor\",\"PriorityName\":\"P1\",\"AccessableTime\":\"08:30 - 17:30\",\"Zone\":\"W   \",\"Status\":\"READY TO DELIVER\",\"OperationMode\":\"LOAD\",\"DeploymentNo\":3,\"UserId\":0,\"StartDate\":null,\"EndDate\":null,\"ElapsedDeliveryTime\":0,\"Bank\":\"HSBC\",\"ATMType\":\"400K\",\"Version\":\"D74F2286\",\"LoadingCart\":[{\"CartId\":197,\"CartNo\":\"CART1\",\"SerialNo\":\"CERTISUN001\",\"Deno\":\"W-50\",\"DuffleSeal\":\"\",\"SealNo\":[\"BA17101406\"]},{\"CartId\":198,\"CartNo\":\"CART2\",\"SerialNo\":\"CERTISUN002\",\"Deno\":\"W-50\",\"DuffleSeal\":\"\",\"SealNo\":[\"BA17101407\"]},{\"CartId\":199,\"CartNo\":\"CART3\",\"SerialNo\":\"CERTISUN003\",\"Deno\":\"W-50\",\"DuffleSeal\":\"\",\"SealNo\":[\"BA17101408\"]},{\"CartId\":200,\"CartNo\":\"CART4\",\"SerialNo\":\"CERTISUN004\",\"Deno\":\"W-50\",\"DuffleSeal\":\"\",\"SealNo\":[\"BA17101409\"]},{\"CartId\":201,\"CartNo\":\"CART5\",\"SerialNo\":\"CERTISUN005\",\"Deno\":\"W-10\",\"DuffleSeal\":\"\",\"SealNo\":[\"BA17101410\"]},{\"CartId\":202,\"CartNo\":\"CART6\",\"SerialNo\":\"CERTISUN006\",\"Deno\":\"W-5\",\"DuffleSeal\":\"\",\"SealNo\":[\"BA17101411\"]},{\"CartId\":203,\"CartNo\":\"CART7\",\"SerialNo\":\"CERTISUN007\",\"Deno\":\"W-2\",\"DuffleSeal\":\"\",\"SealNo\":[\"BA17101412\"]},{\"CartId\":204,\"CartNo\":\"CART8\",\"SerialNo\":\"CERTISUN008\",\"Deno\":\"W-1000\",\"DuffleSeal\":\"\",\"SealNo\":[\"BA17101413\"]},{\"CartId\":205,\"CartNo\":\"CART9\",\"SerialNo\":\"CERTISUN009\",\"Deno\":\"W-50\",\"DuffleSeal\":\"\",\"SealNo\":[\"BA17101414\"]}],\"UnloadingCart\":[],\"UnloadingEnvelops\":null,\"LoadingEnvelops\":null,\"CoinEnvelopes\":[\"BA18011111035\",\"BA18011111036\"]},{\"ATMOrderId\":438,\"ATMMasterId\":775,\"OrderType\":\"SCHEDULED\",\"OrderMode\":\"SCHEDULED\",\"ATMTypeCode\":\"ATT003\",\"ATMCode\":\"ALL10003\",\"Location\":\"Aloor\",\"PriorityName\":\"P2\",\"AccessableTime\":\"08:30 - 17:30\",\"Zone\":\"W   \",\"Status\":\"READY TO DELIVER\",\"OperationMode\":\"UNLOAD\",\"DeploymentNo\":3,\"UserId\":0,\"StartDate\":null,\"EndDate\":null,\"ElapsedDeliveryTime\":0,\"Bank\":\"HSBC\",\"ATMType\":\"400K\",\"Version\":\"283D0748\",\"LoadingCart\":[],\"UnloadingCart\":[{\"CartId\":197,\"CartNo\":\"CART1\",\"SerialNo\":\"BA1711220\",\"Deno\":\"W-100\",\"DuffleSeal\":null,\"SealNo\":[\"BA1711444\"]}],\"UnloadingEnvelops\":null,\"LoadingEnvelops\":null,\"CoinEnvelopes\":[\"BA18011111041\",\"BA18011111042\",\"BA18011111043\"]}],\"RecordCount\":3,\"JobId\":0}";
-//        try {
-//            JSONObject obj = new JSONObject(result_body);
-//            String result = obj.getString("Result");
-//            String messege = obj.getString("Message");
-//            if (result.equals("Success")) {
-//                JSONArray jsonArray = obj.getJSONArray("Data");
-//                savejob(jsonArray);
-//                Preferences.saveBoolean("LoggedIn", true, LoginActivity.this);
-//                Intent i = new Intent(LoginActivity.this, HomeActivity.class);
-//                i.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
-//                startActivity(i);
-//            } else {
-//                raiseSnakbar(messege);
-//            }
-//        } catch (Exception e) {
-//            e.printStackTrace();
-//            raiseSnakbar(getResources().getString(R.string.datakerror));
-//        }
-//    }
 
     @Override
     public void onResult(int result_code, String result_body) {

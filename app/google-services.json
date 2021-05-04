@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "381087916193",
+    "project_id": "android-atm",
+    "storage_bucket": "android-atm.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:381087916193:android:146f2604220558f4bfd0e0",
+        "android_client_info": {
+          "package_name": "com.novigosolutions.certiscisco"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "381087916193-igrrm0rtum0nlblt4glfnre4nsgnmjpk.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCILcyx8cwH69azhZCCCUOUq9SATJy1M3s"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "381087916193-igrrm0rtum0nlblt4glfnre4nsgnmjpk.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
