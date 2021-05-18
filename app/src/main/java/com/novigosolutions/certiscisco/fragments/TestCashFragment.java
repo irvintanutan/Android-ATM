@@ -31,6 +31,7 @@ import com.novigosolutions.certiscisco.models.EditRequests;
 import com.novigosolutions.certiscisco.models.Job;
 import com.novigosolutions.certiscisco.models.TestCash;
 import com.novigosolutions.certiscisco.utils.CommonMethods;
+import com.novigosolutions.certiscisco.utils.Constants;
 import com.novigosolutions.certiscisco.utils.CustomDialogClass;
 import com.novigosolutions.certiscisco.utils.NetworkUtil;
 import com.novigosolutions.certiscisco.utils.Preferences;
@@ -265,8 +266,8 @@ public class TestCashFragment extends Fragment implements IOnScannerData, View.O
     public void onResult(int result, String resultdata) {
         if (result == 200) {
             try {
-                Log.e("resultdata", resultdata);
-                JSONObject obj = new JSONObject(resultdata);
+                Log.e("resultdata", Constants.requestBody);
+                JSONObject obj = new JSONObject(Constants.requestBody);
                 String strresult = obj.getString("Result");
                 String messege = obj.getString("Message");
                 if (strresult.equals("Success")) {

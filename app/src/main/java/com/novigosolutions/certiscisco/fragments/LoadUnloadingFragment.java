@@ -280,15 +280,6 @@ public class LoadUnloadingFragment extends Fragment implements View.OnClickListe
                 }
             } else {
                 if (isSerialScan) {
-//                    commented on 12/07/19 to remove validation
-//                    String prifix = "";
-//                    if (data.length() > 1) {
-//                        prifix = data.substring(0, 2);
-//                    }
-//                    if (isHistoryCleared && (prifix.equals("WA")|| prifix.equals("BA"))) {
-//                        isInvalid = true;
-//                        message = "Do not prefix WA/BA";
-//                    } else {
                         cartid = Cartridge.updateScanAndGetCartridgeId(orderno, data, fragmenttype, isHistoryCleared);
                         if (cartid == -1) {
                             isInvalid = true;
@@ -300,18 +291,7 @@ public class LoadUnloadingFragment extends Fragment implements View.OnClickListe
                             imgClear.setEnabled(true);
                         }
 
-//                    }
                 } else {
-//                    commented on 12/07/19 to remove validation
-//                    String prifix = "";
-//                    if (data.length() > 1) {
-//                        prifix = data.substring(0, 2);
-//                    }
-//                    if (isHistoryCleared && !(prifix.equals("WA")|| prifix.equals("BA"))) {
-//                        isInvalid = true;
-//                        message = "Do
-//                        ";
-//                    } else {
                         if (Seal.isSealExistAndUpdate(orderno, cartid, fragmenttype, data, isHistoryCleared, -5)) {
                             if (Seal.isSealScanComplete(orderno, cartid, fragmenttype)) {
                                 isSerialScan = true;
@@ -324,7 +304,6 @@ public class LoadUnloadingFragment extends Fragment implements View.OnClickListe
                             isInvalid = true;
                             message = "Invalid seal no";
                         }
-//                    }
                 }
             }
         } else {
@@ -601,9 +580,9 @@ public class LoadUnloadingFragment extends Fragment implements View.OnClickListe
             //        HttpLoggingInterceptor logging = new HttpLoggingInterceptor();
 //        logging.setLevel(HttpLoggingInterceptor.Level.BODY);
             OkHttpClient.Builder httpClient = new OkHttpClient.Builder();
-            httpClient.connectTimeout(30, TimeUnit.SECONDS);
-            httpClient.readTimeout(30, TimeUnit.SECONDS);
-            httpClient.writeTimeout(30, TimeUnit.SECONDS);
+            httpClient.connectTimeout(1000, TimeUnit.SECONDS);
+            httpClient.readTimeout(1000, TimeUnit.SECONDS);
+            httpClient.writeTimeout(1000, TimeUnit.SECONDS);
 //        httpClient.addInterceptor(logging);
             Retrofit retrofit = new Retrofit.Builder()
                     .baseUrl(CertisCISCOServer.getPATH(getActivity()))
@@ -611,6 +590,7 @@ public class LoadUnloadingFragment extends Fragment implements View.OnClickListe
                     .client(UnsafeOkHttpClient.getUnsafeOkHttpClient(httpClient))
                     .build();
             CertisCISCOServices service = retrofit.create(CertisCISCOServices.class);
+            Log.e("RequestForEdit" , requestedOn);
             Call<ResponseBody> call = service.requestForEdit(Preferences.getString("AuthToken", getActivity()), Preferences.getInt("UserId", getActivity()), "ATM", requestType, String.valueOf(Preferences.getInt("UserId", getActivity())), requestedOn);
             call.enqueue(new Callback<ResponseBody>() {
                 @Override
@@ -685,9 +665,9 @@ public class LoadUnloadingFragment extends Fragment implements View.OnClickListe
             //        HttpLoggingInterceptor logging = new HttpLoggingInterceptor();
 //        logging.setLevel(HttpLoggingInterceptor.Level.BODY);
             OkHttpClient.Builder httpClient = new OkHttpClient.Builder();
-            httpClient.connectTimeout(30, TimeUnit.SECONDS);
-            httpClient.readTimeout(30, TimeUnit.SECONDS);
-            httpClient.writeTimeout(30, TimeUnit.SECONDS);
+            httpClient.connectTimeout(1000, TimeUnit.SECONDS);
+            httpClient.readTimeout(1000, TimeUnit.SECONDS);
+            httpClient.writeTimeout(1000, TimeUnit.SECONDS);
 //        httpClient.addInterceptor(logging);
             Retrofit retrofit = new Retrofit.Builder()
                     .baseUrl(CertisCISCOServer.getPATH(getActivity()))
@@ -747,9 +727,9 @@ public class LoadUnloadingFragment extends Fragment implements View.OnClickListe
 //        HttpLoggingInterceptor logging = new HttpLoggingInterceptor();
 //        logging.setLevel(HttpLoggingInterceptor.Level.BODY);
             OkHttpClient.Builder httpClient = new OkHttpClient.Builder();
-            httpClient.connectTimeout(30, TimeUnit.SECONDS);
-            httpClient.readTimeout(30, TimeUnit.SECONDS);
-            httpClient.writeTimeout(30, TimeUnit.SECONDS);
+            httpClient.connectTimeout(1000, TimeUnit.SECONDS);
+            httpClient.readTimeout(1000, TimeUnit.SECONDS);
+            httpClient.writeTimeout(1000, TimeUnit.SECONDS);
 //        httpClient.addInterceptor(logging);
             Retrofit retrofit = new Retrofit.Builder()
                     .baseUrl(CertisCISCOServer.getPATH(getActivity()))
