@@ -14,6 +14,7 @@ import butterknife.OnClick;
 
 import android.text.Editable;
 import android.text.TextWatcher;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -312,7 +313,8 @@ public class EnvelopeFragment extends Fragment implements IOnScannerData, View.O
     public void onResult(int result, String resultdata) {
         if (result == 200) {
             try {
-                JSONObject obj = new JSONObject(resultdata);
+                Log.e("resultdata", Constants.requestBody);
+                JSONObject obj = new JSONObject(Constants.requestBody);
                 String strresult = obj.getString("Result");
                 String messege = obj.getString("Message");
                 if (strresult.equals("Success")) {

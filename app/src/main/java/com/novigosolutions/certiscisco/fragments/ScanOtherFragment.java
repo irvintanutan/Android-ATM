@@ -9,6 +9,7 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import android.text.Editable;
 import android.text.TextWatcher;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -27,6 +28,7 @@ import com.novigosolutions.certiscisco.interfaces.IOnScannerData;
 import com.novigosolutions.certiscisco.interfaces.RecyclerViewClickListenerLong;
 import com.novigosolutions.certiscisco.models.Job;
 import com.novigosolutions.certiscisco.models.OtherScan;
+import com.novigosolutions.certiscisco.utils.Constants;
 import com.novigosolutions.certiscisco.utils.CustomDialogClass;
 import com.novigosolutions.certiscisco.webservices.ApiCallback;
 import com.novigosolutions.certiscisco.webservices.SendUpdateCaller;
@@ -412,7 +414,8 @@ public class  ScanOtherFragment extends Fragment implements IOnScannerData, View
     public void onResult(int result, String resultdata) {
         if (result == 200) {
             try {
-                JSONObject obj = new JSONObject(resultdata);
+                Log.e("resultdata", Constants.requestBody);
+                JSONObject obj = new JSONObject(Constants.requestBody);
                 String strresult = obj.getString("Result");
                 String messege = obj.getString("Message");
                 if (strresult.equals("Success")) {
