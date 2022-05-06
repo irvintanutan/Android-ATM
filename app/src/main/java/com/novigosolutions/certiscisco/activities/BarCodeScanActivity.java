@@ -238,6 +238,10 @@ public abstract class BarCodeScanActivity extends BaseActivity implements
                     scanner.enable();
                     ScannerConfig config = scanner.getConfig();
                     config.readerParams.readerSpecific.imagerSpecific.beamTimer = 1000;
+                    config.decoderParams.i2of5.enabled = true;
+                    config.decoderParams.code128.enabled = true;
+                    config.decoderParams.code39.enabled = true;
+                    config.decoderParams.code93.enabled = true;
                     scanner.setConfig(config);
                     hideSnackBar();
                 } catch (ScannerException e) {

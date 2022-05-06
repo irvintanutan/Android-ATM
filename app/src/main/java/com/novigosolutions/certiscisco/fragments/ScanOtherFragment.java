@@ -18,6 +18,7 @@ import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.novigosolutions.certiscisco.R;
 import com.novigosolutions.certiscisco.activities.BarCodeScanActivity;
@@ -423,7 +424,10 @@ public class  ScanOtherFragment extends Fragment implements IOnScannerData, View
                     getActivity().finish();
                     SendUpdateCaller.instance().sendUpdate(getActivity());
                 } else {
-                    //raiseSnakbar(cl, messege);
+                    Job.saveasOffline(orderno);
+                    Job.updateStatus(orderno);
+                    getActivity().finish();
+                    Toast.makeText(getActivity(), "Saved offline", Toast.LENGTH_SHORT).show();
                 }
             } catch (Exception e) {
                 e.printStackTrace();
