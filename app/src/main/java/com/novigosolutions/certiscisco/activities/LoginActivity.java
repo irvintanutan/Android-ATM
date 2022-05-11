@@ -52,6 +52,7 @@ import com.novigosolutions.certiscisco.webservices.UnsafeOkHttpClient;
 import org.json.JSONArray;
 import org.json.JSONObject;
 
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -83,7 +84,8 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener,
     Spinner mspindate;
     CoordinatorLayout clv;
     AlertDialog dialog;
-
+    SimpleDateFormat sdf = new SimpleDateFormat("dd-MMM-yyyy", Locale.US);
+    SimpleDateFormat sdf2 = new SimpleDateFormat("yyyy-MM-dd", Locale.US);
     /**
      * @param savedInstanceState
      */
@@ -202,8 +204,13 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener,
         int id = v.getId();
         switch (id) {
             case R.id.btn_login:
-                if(!TextUtils.isEmpty(Preferences.getString("API_URL",LoginActivity.this)))
-                    validate();
+                if(!TextUtils.isEmpty(Preferences.getString("API_URL",LoginActivity.this))) {
+                    try {
+                        validate();
+                    } catch (ParseException e) {
+                        e.printStackTrace();
+                    }
+                }
                 else
                     Toast.makeText(this, "Please set API URL", Toast.LENGTH_SHORT).show();
                 break;
@@ -220,7 +227,7 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener,
 
     }
 
-    private void validate() {
+    private void validate() throws ParseException {
         Boolean failflag = false;
         String teamid, password;
         teamid = edtteamid.getText().toString();
@@ -239,7 +246,8 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener,
                 json.addProperty("DeviceId", Preferences.getString("DeviceID", LoginActivity.this));
                 json.addProperty("UserCode", teamid);
                 json.addProperty("Password", password);
-                json.addProperty("LoginDate", mspindate.getSelectedItem().toString());
+                json.addProperty("LoginDate", false ? "2022-05-06": sdf2.format(sdf.parse(mspindate.getSelectedItem().toString())));
+
                 login(json);
             } else {
                 raiseInternetSnakbar();

@@ -78,6 +78,18 @@ public class Job extends Model {
     @Column(name = "ActivationTime")
     public String ActivationTime;
 
+    @Column(name = "AssignmentDate")
+    public String AssignmentDate;
+
+    @Column(name = "WindowStartTime")
+    public String WindowStartTime;
+
+    @Column(name = "WindowEndTime")
+    public String WindowEndTime;
+
+
+
+
     public static Job getSingle(int ATMOrderId) {
         return new Select().from(Job.class)
                 .orderBy("ATMOrderId ASC")

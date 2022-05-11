@@ -2,7 +2,9 @@ package com.novigosolutions.certiscisco.adapters;
 
 import android.content.Context;
 import android.graphics.Color;
+
 import androidx.recyclerview.widget.RecyclerView;
+
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -23,7 +25,7 @@ public class JobListAdapter extends RecyclerView.Adapter<JobListAdapter.MyViewHo
     String colorRed = "#EF9A9A";
 
     public class MyViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
-        TextView txt_order_type_head,txt_order_type,txt_operation_mode, txt_atm_code, txt_atm_type, txt_status, txt_location, txt_zone;
+        TextView txt_order_type_head, txt_order_type, txt_operation_mode, txt_atm_code, txt_atm_type, txt_status, txt_location, txt_zone, txt_assignment_date, txt_window_start_time, txt_window_end_time;
         LinearLayout llmain;
 
         public MyViewHolder(View view) {
@@ -36,7 +38,12 @@ public class JobListAdapter extends RecyclerView.Adapter<JobListAdapter.MyViewHo
             txt_status = (TextView) view.findViewById(R.id.txt_status);
             txt_location = (TextView) view.findViewById(R.id.txt_location);
             txt_zone = (TextView) view.findViewById(R.id.txt_zone);
+            txt_zone = (TextView) view.findViewById(R.id.txt_zone);
+            txt_zone = (TextView) view.findViewById(R.id.txt_zone);
             llmain = (LinearLayout) view.findViewById(R.id.llmain);
+            txt_assignment_date = view.findViewById(R.id.assignment_date);
+            txt_window_start_time = view.findViewById(R.id.window_start_time);
+            txt_window_end_time = view.findViewById(R.id.window_end_time);
             view.setOnClickListener(this);
         }
 
@@ -62,7 +69,7 @@ public class JobListAdapter extends RecyclerView.Adapter<JobListAdapter.MyViewHo
 
     @Override
     public void onBindViewHolder(MyViewHolder holder, int position) {
-        if(jobList.get(position).OrderType!=null) {
+        if (jobList.get(position).OrderType != null) {
             holder.txt_order_type.setText(jobList.get(position).OrderType);
             if (jobList.get(position).OrderType.equals("AD-HOC")) {
                 holder.txt_order_type.setTextColor(context.getResources().getColor(R.color.red));
@@ -78,7 +85,11 @@ public class JobListAdapter extends RecyclerView.Adapter<JobListAdapter.MyViewHo
         holder.txt_status.setText(jobList.get(position).Status);
         holder.txt_location.setText(jobList.get(position).Location);
         holder.txt_zone.setText(jobList.get(position).Zone);
-        if (jobList.get(position).isOfflineSaved==1)
+        holder.txt_assignment_date.setText(jobList.get(position).AssignmentDate);
+        holder.txt_window_start_time.setText(jobList.get(position).WindowStartTime);
+        holder.txt_window_end_time.setText(jobList.get(position).WindowEndTime);
+
+        if (jobList.get(position).isOfflineSaved == 1)
             holder.llmain.setBackgroundColor(Color.parseColor(colorRed));
         else if (jobList.get(position).Status.equals("DELIVERED"))
             holder.llmain.setBackgroundColor(Color.parseColor(colorGreen));

@@ -55,9 +55,9 @@ public class CustomDialogFlmSlmClass extends Dialog implements View.OnClickListe
     Boolean isjobcompleted;
     long difference = 0;
     TextView txt_operation_mode, txt_atm_code, txt_atm_type, txt_status, txt_location, txt_zone, txt_bank, txt_remarks, txt_activation_time,
-            engineerArrivalTime, staffName, teamArrivalTime, engineerArrivalTimeVal, staffNameVal, teamArrivalTimeVal;
+            engineerArrivalTime, staffName, teamArrivalTime, engineerArrivalTimeVal, staffNameVal, teamArrivalTimeVal, txt_assignment_date, txt_window_start_time, txt_window_end_time;
 
-    TextView faultTypeVal , scannedEnvelopeVal, jammedCashDenominationVal, faultFoundVal, resolutionVal, remarksVal, slmRequiredVal;
+    TextView faultTypeVal, scannedEnvelopeVal, jammedCashDenominationVal, faultFoundVal, resolutionVal, remarksVal, slmRequiredVal;
     LinearLayout llduration;
 
 
@@ -92,17 +92,19 @@ public class CustomDialogFlmSlmClass extends Dialog implements View.OnClickListe
         engineerArrivalTime = findViewById(R.id.textEngineerArrivalTime);
         teamArrivalTime = findViewById(R.id.textTeamArrivalTime);
         staffName = findViewById(R.id.textStaffName);
-        engineerArrivalTimeVal =  findViewById(R.id.engineerArrivalTime);
+        engineerArrivalTimeVal = findViewById(R.id.engineerArrivalTime);
         teamArrivalTimeVal = findViewById(R.id.teamArrivalTime);
         staffNameVal = findViewById(R.id.staffName);
         faultTypeVal = findViewById(R.id.faultType);
-        scannedEnvelopeVal= findViewById(R.id.scannedEnvelop);
+        scannedEnvelopeVal = findViewById(R.id.scannedEnvelop);
         jammedCashDenominationVal = findViewById(R.id.jammedCashDenomination);
         faultFoundVal = findViewById(R.id.faultFound);
         resolutionVal = findViewById(R.id.resolution);
         remarksVal = findViewById(R.id.remarks);
         slmRequiredVal = findViewById(R.id.slmRequired);
-
+        txt_assignment_date = findViewById(R.id.assignment_date);
+        txt_window_start_time = findViewById(R.id.window_start_time);
+        txt_window_end_time = findViewById(R.id.window_end_time);
         Job job = Job.getSingle(ATMOrderId);
         txt_operation_mode.setText(": " + job.OperationMode);
         txt_atm_code.setText(": " + job.ATMCode);
@@ -111,6 +113,9 @@ public class CustomDialogFlmSlmClass extends Dialog implements View.OnClickListe
         txt_location.setText(": " + job.Location);
         txt_zone.setText(": " + job.Zone);
         txt_bank.setText(": " + job.Bank + " " + job.ATMType);
+        txt_assignment_date.setText(": " + job.AssignmentDate);
+        txt_window_start_time.setText(": " + job.WindowStartTime);
+        txt_window_end_time.setText(": " + job.WindowEndTime);
         txt_activation_time.setText(": " + job.ActivationTime);
         txt_remarks.setText(": " + job.Remarks);
         engineerArrivalTimeVal.setText(FlmSlmDetails.EngineerArrivalTime);
@@ -119,7 +124,7 @@ public class CustomDialogFlmSlmClass extends Dialog implements View.OnClickListe
         faultTypeVal.setText(FlmSlmDetails.FaultType);
         List<FLMSLMScan> scanned = FLMSLMScan.get(job.ATMOrderId);
         StringBuilder sb = new StringBuilder();
-        for (FLMSLMScan scan : scanned){
+        for (FLMSLMScan scan : scanned) {
             sb.append(scan.ScanType);
             sb.append(" ");
             sb.append(scan.ScanValue);
@@ -183,7 +188,7 @@ public class CustomDialogFlmSlmClass extends Dialog implements View.OnClickListe
     private String constructDenomination() {
         String result = "";
 
-        if (denomination.HighReject){
+        if (denomination.HighReject) {
             result = "High Reject";
         } else if (denomination.NoCashFound) {
             result = "No Cash Found";

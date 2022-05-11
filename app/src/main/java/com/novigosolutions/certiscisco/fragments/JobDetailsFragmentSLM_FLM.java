@@ -48,6 +48,15 @@ public class JobDetailsFragmentSLM_FLM extends Fragment implements FragmentInter
     @BindView(R.id.txt_activation_time)
     TextView activationTime;
 
+    @BindView(R.id.assignment_date)
+    TextView txt_assignment_date;
+
+    @BindView(R.id.window_start_time)
+    TextView txt_window_start_time;
+
+    @BindView(R.id.window_end_time)
+    TextView txt_window_end_time;
+
     public JobDetailsFragmentSLM_FLM() {
         // Required empty public constructor
     }
@@ -62,7 +71,7 @@ public class JobDetailsFragmentSLM_FLM extends Fragment implements FragmentInter
         return rootView;
     }
 
-    private void initialize(){
+    private void initialize() {
         Bundle extras = getActivity().getIntent().getExtras();
         if (extras != null) {
             int orderNo = extras.getInt("orderno");
@@ -76,7 +85,9 @@ public class JobDetailsFragmentSLM_FLM extends Fragment implements FragmentInter
             bank.setText(job.Bank + " " + job.ATMType);
             remarks.setText(job.Remarks);
             activationTime.setText(job.ActivationTime);
-
+            txt_assignment_date.setText(job.AssignmentDate);
+            txt_window_start_time.setText(job.WindowStartTime);
+            txt_window_end_time.setText(job.WindowEndTime);
             Constants.FlmSlmDetails = new FLMSLMAdditionalDetails();
             Constants.denomination = new Denomination();
 
