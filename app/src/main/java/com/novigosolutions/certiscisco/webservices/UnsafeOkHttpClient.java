@@ -11,7 +11,8 @@ import javax.net.ssl.X509TrustManager;
 
 import okhttp3.OkHttpClient;
 
-public class UnsafeOkHttpClient {
+public class
+UnsafeOkHttpClient {
     public static OkHttpClient getUnsafeOkHttpClient(OkHttpClient.Builder builder) {
         try {
             // Create a trust manager that does not validate certificate chains

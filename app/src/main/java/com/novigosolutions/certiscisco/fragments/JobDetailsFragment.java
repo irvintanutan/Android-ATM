@@ -37,7 +37,7 @@ public class JobDetailsFragment extends Fragment implements FragmentInterface {
     Button next;
     CardView cardviewloading, cardviewunloading, cardviewnodata;
     TextView txt_operation_mode, txt_atm_code, txt_atm_type, txt_status, txt_location,
-            txt_zone, txt_bank, txt_clealred_history, txt_assignment_date, txt_window_start_time, txt_window_end_time;
+            txt_zone, txt_bank, txt_clealred_history, txt_assignment_date, txt_window_start_time, txt_window_end_time, txt_remarks;
     int orderno;
     LinearLayout llcoinen, llcoinhead;
 
@@ -57,6 +57,7 @@ public class JobDetailsFragment extends Fragment implements FragmentInterface {
         cardviewnodata = rootView.findViewById(R.id.cardviewnodata);
 
         txt_operation_mode = rootView.findViewById(R.id.txt_operation_mode);
+        txt_remarks = rootView.findViewById(R.id.txt_remarks);
         txt_atm_code = rootView.findViewById(R.id.txt_atm_code);
         txt_atm_type = rootView.findViewById(R.id.txt_atm_type);
         txt_status = rootView.findViewById(R.id.txt_status);
@@ -133,6 +134,7 @@ public class JobDetailsFragment extends Fragment implements FragmentInterface {
             txt_assignment_date.setText(job.AssignmentDate);
             txt_window_start_time.setText(job.WindowStartTime);
             txt_window_end_time.setText(job.WindowEndTime);
+            txt_remarks.setText(job.Remarks);
         }
         if (!isData) {
             cardviewnodata.setVisibility(View.VISIBLE);

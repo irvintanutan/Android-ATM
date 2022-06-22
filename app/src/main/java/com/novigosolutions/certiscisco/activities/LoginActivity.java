@@ -28,6 +28,7 @@ import android.widget.Toast;
 
 import com.google.firebase.crashlytics.FirebaseCrashlytics;
 import com.google.gson.JsonObject;
+import com.novigosolutions.certiscisco.BuildConfig;
 import com.novigosolutions.certiscisco.R;
 import com.novigosolutions.certiscisco.interfaces.NetworkChangekListener;
 import com.novigosolutions.certiscisco.models.Cartridge;
@@ -83,6 +84,7 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener,
     ImageView imgnetwork;
     Spinner mspindate;
     CoordinatorLayout clv;
+    TextView version;
     AlertDialog dialog;
     SimpleDateFormat sdf = new SimpleDateFormat("dd-MMM-yyyy", Locale.US);
     SimpleDateFormat sdf2 = new SimpleDateFormat("yyyy-MM-dd", Locale.US);
@@ -110,6 +112,8 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener,
     }
 
     private void initializeviews() {
+        version = findViewById(R.id.version);
+        version.setText(BuildConfig.VERSION_NAME);
         edtteamid = (EditText) findViewById(R.id.edtTeamid);
         edtpassword = (EditText) findViewById(R.id.edtPassword);
         mtxtinUserid = (TextInputLayout) findViewById(R.id.txtinputuserid);
@@ -246,7 +250,7 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener,
                 json.addProperty("DeviceId", Preferences.getString("DeviceID", LoginActivity.this));
                 json.addProperty("UserCode", teamid);
                 json.addProperty("Password", password);
-                json.addProperty("LoginDate", false ? "2022-05-06": sdf2.format(sdf.parse(mspindate.getSelectedItem().toString())));
+                json.addProperty("LoginDate", false ? "2022-06-08": sdf2.format(sdf.parse(mspindate.getSelectedItem().toString())));
 
                 login(json);
             } else {
