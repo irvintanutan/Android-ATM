@@ -8,8 +8,8 @@ android {
         applicationId "com.novigosolutions.certiscisco"
         minSdkVersion 19
         targetSdkVersion 28
-        versionCode 13
-        versionName "10.3"
+        versionCode 14
+        versionName "10.4"
         testInstrumentationRunner 'androidx.test.runner.AndroidJUnitRunner'
     }
     compileOptions {

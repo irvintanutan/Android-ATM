@@ -4,6 +4,8 @@ import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.graphics.Color;
+import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 
 import androidx.coordinatorlayout.widget.CoordinatorLayout;
@@ -18,6 +20,7 @@ import android.view.MotionEvent;
 import android.view.View;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -52,6 +55,7 @@ public class ProcessJobActivity extends BarCodeScanActivity implements ApiCallba
     ImageView imgnetwork;
     protected MenuItem refreshItem = null;
     CoordinatorLayout cl;
+    private androidx.appcompat.app.AlertDialog finalDialog = null;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -60,6 +64,30 @@ public class ProcessJobActivity extends BarCodeScanActivity implements ApiCallba
         setuptoolbar();
         initialize();
         setactions();
+        alertEnableBWC();
+    }
+
+    private void alertEnableBWC() {
+
+        LayoutInflater inflater = getLayoutInflater();
+        View alertLayout = inflater.inflate(R.layout.bwc_alert, null);
+
+
+        final Button proceed = alertLayout.findViewById(R.id.btn_next);
+
+        proceed.setOnClickListener(view1 -> {
+            finalDialog.dismiss();
+        });
+
+        androidx.appcompat.app.AlertDialog.Builder alert = new androidx.appcompat.app.AlertDialog.Builder(this);
+        // this is set the view from XML inside AlertDialog
+        alert.setView(alertLayout);
+        // disallow cancel of AlertDialog on click of back button and outside touch
+        alert.setCancelable(false);
+        finalDialog = alert.create();
+        finalDialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+        finalDialog.show();
+
     }
 
     @Override
