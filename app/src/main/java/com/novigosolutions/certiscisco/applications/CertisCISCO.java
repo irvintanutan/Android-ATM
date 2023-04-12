@@ -14,6 +14,7 @@ import com.novigosolutions.certiscisco.models.Job;
 import com.novigosolutions.certiscisco.models.OtherScan;
 import com.novigosolutions.certiscisco.models.Seal;
 import com.novigosolutions.certiscisco.models.TestCash;
+import com.novigosolutions.certiscisco.models.UserLogs;
 import com.novigosolutions.certiscisco.utils.Preferences;
 
 /**
@@ -24,11 +25,13 @@ public class CertisCISCO extends Application {
     @Override
     public void onCreate() {
         super.onCreate();
-        Configuration dbConfiguration = new Configuration.Builder(this).setDatabaseName("certiscisco.db").setDatabaseVersion(5).addModelClasses(Job.class, Cartridge.class, Seal.class, OtherScan.class, TestCash.class, CoinEnvelopes.class, EditRequests.class, ClearHistoryRequests.class).create();
+        Configuration dbConfiguration = new Configuration.Builder(this).setDatabaseName("certiscisco.db").setDatabaseVersion(5).addModelClasses(Job.class,
+                Cartridge.class, Seal.class, OtherScan.class, TestCash.class, CoinEnvelopes.class, EditRequests.class,
+                ClearHistoryRequests.class, UserLogs.class).create();
         ActiveAndroid.initialize(dbConfiguration);
         if(TextUtils.isEmpty(Preferences.getString("API_URL",getApplicationContext()))){
-            Preferences.saveString("API_URL", "https://pcsatm-api.certiscslops.local", getApplicationContext());
-            //Preferences.saveString("API_URL", "https://pcs-atmuatapi.certis-cslops-uat.com", getApplicationContext());
+            //Preferences.saveString("API_URL", "https://pcsatm-api.certiscslops.local", getApplicationContext());
+            Preferences.saveString("API_URL", "https://pcs-atmuatapi.certis-cslops-uat.com", getApplicationContext());
         }
     }
 

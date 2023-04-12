@@ -23,6 +23,7 @@ import com.novigosolutions.certiscisco.models.FLMSLMScan;
 import com.novigosolutions.certiscisco.models.Job;
 import com.novigosolutions.certiscisco.models.OtherScan;
 import com.novigosolutions.certiscisco.models.TestCash;
+import com.novigosolutions.certiscisco.service.UserLogService;
 import com.novigosolutions.certiscisco.webservices.ATMListUpdateCaller;
 import com.novigosolutions.certiscisco.webservices.ApiCallback;
 
@@ -216,6 +217,8 @@ public class CustomDialogFlmSlmClass extends Dialog implements View.OnClickListe
                 if (isjobcompleted) {
                     dismiss();
                 } else {
+                    UserLogService.save(UserLog.SYNC.toString(), String.format("ATMOrderId : %s", Job.getATMCode(ATMOrderId)),
+                            "SYNC ATTEMPT", getContext());
                     Job.updateEndDate(ATMOrderId, CommonMethods.getCurrentDateTimeInFormat(activity), (int) difference / 1000);
                     chronometer.stop();
                     if (NetworkUtil.getConnectivityStatusString(activity)) {
@@ -225,6 +228,8 @@ public class CustomDialogFlmSlmClass extends Dialog implements View.OnClickListe
                         Job.updateStatus(ATMOrderId);
                         activity.finish();
                         Toast.makeText(activity, "Saved offline", Toast.LENGTH_SHORT).show();
+                        UserLogService.save(UserLog.SYNC.toString(), String.format("ATMOrderId : %s", Job.getATMCode(ATMOrderId)),
+                                "SAVED OFFLINE", getContext());
                     }
                     dismiss();
                 }

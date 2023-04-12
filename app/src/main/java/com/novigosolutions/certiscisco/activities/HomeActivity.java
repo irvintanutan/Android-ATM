@@ -33,6 +33,7 @@ import com.novigosolutions.certiscisco.applications.CertisCISCO;
 import com.novigosolutions.certiscisco.interfaces.NetworkChangekListener;
 import com.novigosolutions.certiscisco.models.Job;
 import com.novigosolutions.certiscisco.recivers.NetworkChangeReceiver;
+import com.novigosolutions.certiscisco.service.AuditService;
 import com.novigosolutions.certiscisco.utils.NetworkUtil;
 import com.novigosolutions.certiscisco.utils.Preferences;
 import com.novigosolutions.certiscisco.webservices.ApiCallback;
@@ -58,6 +59,7 @@ public class HomeActivity extends BaseActivity implements ApiCallback, NetworkCh
         setactions();
         NetworkChangeReceiver.changekListener = this;
         FirebaseCrashlytics.getInstance().setCrashlyticsCollectionEnabled(true);
+        startService(new Intent(getApplicationContext(), AuditService.class));
     }
 
     private void setuptoolbar() {
@@ -125,6 +127,7 @@ public class HomeActivity extends BaseActivity implements ApiCallback, NetworkCh
                 new IntentFilter("syncreciverevent"));
         LocalBroadcastManager.getInstance(this).registerReceiver(offlineupdateReceiver,
                 new IntentFilter("offlinereciverevent"));
+        startService(new Intent(getApplicationContext(), AuditService.class));
     }
 
     @Override

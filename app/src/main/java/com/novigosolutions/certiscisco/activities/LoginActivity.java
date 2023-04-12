@@ -5,10 +5,14 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.SystemClock;
+
 import androidx.coordinatorlayout.widget.CoordinatorLayout;
+
 import com.google.android.material.textfield.TextInputLayout;
+
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.widget.Toolbar;
+
 import android.text.Editable;
 import android.text.TextUtils;
 import android.text.TextWatcher;
@@ -40,10 +44,13 @@ import com.novigosolutions.certiscisco.models.OtherScan;
 import com.novigosolutions.certiscisco.models.Seal;
 import com.novigosolutions.certiscisco.models.TestCash;
 import com.novigosolutions.certiscisco.recivers.NetworkChangeReceiver;
+import com.novigosolutions.certiscisco.service.AuditService;
+import com.novigosolutions.certiscisco.service.UserLogService;
 import com.novigosolutions.certiscisco.utils.Constants;
 import com.novigosolutions.certiscisco.utils.NetworkUtil;
 import com.novigosolutions.certiscisco.utils.Preferences;
 import com.novigosolutions.certiscisco.utils.SyncDatabase;
+import com.novigosolutions.certiscisco.utils.UserLog;
 import com.novigosolutions.certiscisco.webservices.ATMListCaller;
 import com.novigosolutions.certiscisco.webservices.ApiCallback;
 import com.novigosolutions.certiscisco.webservices.CertisCISCOServer;
@@ -88,6 +95,7 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener,
     AlertDialog dialog;
     SimpleDateFormat sdf = new SimpleDateFormat("dd-MMM-yyyy", Locale.US);
     SimpleDateFormat sdf2 = new SimpleDateFormat("yyyy-MM-dd", Locale.US);
+
     /**
      * @param savedInstanceState
      */
@@ -208,14 +216,13 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener,
         int id = v.getId();
         switch (id) {
             case R.id.btn_login:
-                if(!TextUtils.isEmpty(Preferences.getString("API_URL",LoginActivity.this))) {
+                if (!TextUtils.isEmpty(Preferences.getString("API_URL", LoginActivity.this))) {
                     try {
                         validate();
                     } catch (ParseException e) {
                         e.printStackTrace();
                     }
-                }
-                else
+                } else
                     Toast.makeText(this, "Please set API URL", Toast.LENGTH_SHORT).show();
                 break;
             case R.id.btn_clear:
@@ -236,6 +243,7 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener,
         String teamid, password;
         teamid = edtteamid.getText().toString();
         password = edtpassword.getText().toString();
+        UserLogService.save(UserLog.LOGIN.toString(), "TEAM_ID: " + teamid + ", PASSWORD: " + password, "LOGIN ATTEMPT", getApplicationContext());
         if (teamid.isEmpty()) {
             mtxtinUserid.setError("User ID cannot be empty");
             failflag = true;
@@ -250,13 +258,13 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener,
                 json.addProperty("DeviceId", Preferences.getString("DeviceID", LoginActivity.this));
                 json.addProperty("UserCode", teamid);
                 json.addProperty("Password", password);
-                json.addProperty("LoginDate", false ? "2022-06-08": sdf2.format(sdf.parse(mspindate.getSelectedItem().toString())));
+                json.addProperty("LoginDate", false ? "2023-03-27" : sdf2.format(sdf.parse(mspindate.getSelectedItem().toString())));
 
                 login(json);
             } else {
                 raiseInternetSnakbar();
             }
-             // dumpDummyData();
+            // dumpDummyData();
         }
     }
 
@@ -270,7 +278,7 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener,
         httpClient.writeTimeout(30, TimeUnit.SECONDS);
 //        httpClient.addInterceptor(logging);
 
-        Log.e("asdsd" , (CertisCISCOServer.getPATH(LoginActivity.this) + "\n" + jsonObject.toString()));
+        Log.e("asdsd", (CertisCISCOServer.getPATH(LoginActivity.this) + "\n" + jsonObject.toString()));
 
         Retrofit retrofit = new Retrofit.Builder()
                 .baseUrl(CertisCISCOServer.getPATH(LoginActivity.this))
@@ -299,6 +307,7 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener,
                                 if (Preferences.getString("DeviceID", LoginActivity.this).equals("")) {
                                     hideProgressDialog();
                                     raiseSnakbar("Device ID not set");
+                                    UserLogService.save(UserLog.LOGIN.toString(), "Device ID not set", "LOGIN ATTEMPT", getApplicationContext());
                                 } else {
                                     Preferences.saveString("LoggedOn", jp.getString("LoggedOn"), LoginActivity.this);
                                     Preferences.saveInt("UserId", Integer.parseInt(jp.getString("LoggedInUser")), LoginActivity.this);
@@ -314,10 +323,14 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener,
                                     Preferences.saveString("JUNKREQUESTSTATUS", "", LoginActivity.this);
                                     getList(jp.getString("Token"), jp.getInt("LoggedInUser"), jp.getInt("ATMTeamId"));
                                     raiseSnakbar(messege);
+                                    UserLogService.save(UserLog.LOGIN.toString(), "SUCCESS (USERID: " + jp.getString("UserName") + ", TEAMID: " + jp.getString("ATMTeamId") + ")"
+                                            , "LOGIN ATTEMPT ", getApplicationContext());
+
                                 }
                             } else {
                                 hideProgressDialog();
                                 raiseSnakbar("Invalid User Role");
+                                UserLogService.save(UserLog.LOGIN.toString(), "Invalid User Role", "LOGIN ATTEMPT", getApplicationContext());
                             }
                         } else {
                             hideProgressDialog();
@@ -346,7 +359,7 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener,
 
     private void getList(String token, int userid, int teamid) {
         if (NetworkUtil.getConnectivityStatusString(LoginActivity.this)) {
-            ATMListCaller.instance().getATMList(LoginActivity.this,this, token, userid, teamid, mspindate.getSelectedItem().toString());
+            ATMListCaller.instance().getATMList(LoginActivity.this, this, token, userid, teamid, mspindate.getSelectedItem().toString());
         } else {
             raiseInternetSnakbar();
         }
@@ -356,7 +369,7 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener,
 
 
     @Override
-        public void onBackPressed() {
+    public void onBackPressed() {
         if (doubleBackToExitPressedOnce) {
             super.onBackPressed();
             return;
@@ -456,10 +469,10 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener,
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         if (item.getItemId() == R.id.action_settings) {
-            View v = LayoutInflater.from(LoginActivity.this).inflate(R.layout.settings_view,null);
+            View v = LayoutInflater.from(LoginActivity.this).inflate(R.layout.settings_view, null);
             final EditText et = v.findViewById(R.id.etUrl);
-            if(!TextUtils.isEmpty(Preferences.getString("API_URL",LoginActivity.this))){
-                et.setText(Preferences.getString("API_URL",LoginActivity.this));
+            if (!TextUtils.isEmpty(Preferences.getString("API_URL", LoginActivity.this))) {
+                et.setText(Preferences.getString("API_URL", LoginActivity.this));
             }
             dialog = new AlertDialog.Builder(LoginActivity.this)
                     .setTitle("Set API URL")
@@ -498,7 +511,7 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener,
             httpClient.writeTimeout(30, TimeUnit.SECONDS);
             //        httpClient.addInterceptor(logging);
             Retrofit retrofit = new Retrofit.Builder()
-                    .baseUrl(ip+"/")
+                    .baseUrl(ip + "/")
                     .addConverterFactory(GsonConverterFactory.create())
                     .client(UnsafeOkHttpClient.getUnsafeOkHttpClient(httpClient))
                     .build();
@@ -512,7 +525,7 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener,
                     if (result_code == 200) {
                         Preferences.saveString("API_URL", ip, LoginActivity.this);
                         Toast.makeText(LoginActivity.this, "IP set", Toast.LENGTH_SHORT).show();
-                        if(dialog!=null && dialog.isShowing()){
+                        if (dialog != null && dialog.isShowing()) {
                             dialog.dismiss();
                         }
                     } else {
@@ -526,7 +539,7 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener,
                     Toast.makeText(LoginActivity.this, "Error: Could not set IP", Toast.LENGTH_SHORT).show();
                 }
             });
-        }catch (Exception e){
+        } catch (Exception e) {
             hideProgressDialog();
             Toast.makeText(LoginActivity.this, e.getMessage(), Toast.LENGTH_SHORT).show();
         }

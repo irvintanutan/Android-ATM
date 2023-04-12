@@ -16,8 +16,11 @@ import android.widget.EditText;
 import com.novigosolutions.certiscisco.R;
 import com.novigosolutions.certiscisco.activities.ProcessJobActivity;
 import com.novigosolutions.certiscisco.interfaces.FragmentInterface;
+import com.novigosolutions.certiscisco.models.Job;
+import com.novigosolutions.certiscisco.service.UserLogService;
 import com.novigosolutions.certiscisco.utils.Constants;
 import com.novigosolutions.certiscisco.utils.MultiSelectionSpinner;
+import com.novigosolutions.certiscisco.utils.UserLog;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -60,7 +63,7 @@ public class FaultTypeFLMFragment extends Fragment implements FragmentInterface 
 
     @OnClick(R.id.cancel_action)
     void cancel() {
-        ((ProcessJobActivity) getActivity()).alert(1, "Confirm", "Confirm Exit Job?");
+        ((ProcessJobActivity) getActivity()).alert(UserLog.FLM.toString(), 1, "Confirm", "Confirm Exit Job?");
     }
 
 
@@ -97,6 +100,8 @@ public class FaultTypeFLMFragment extends Fragment implements FragmentInterface 
         FlmSlmDetails.FaultType = faultType.getSelectedItemsAsString() == null ? "" : faultType.getSelectedItemsAsString();
         FlmSlmDetails.FaultFound = faultFound.getText().toString() == null ? "" : faultFound.getText().toString();
         FlmSlmDetails.AdditionalRemarks = remarks.getText().toString() == null ? "" : remarks.getText().toString();
+        UserLogService.save(UserLog.FLM.toString(), String.format("FaultType : %s , FaultFound : %s , Remarks : %s", FlmSlmDetails.FaultType,
+                FlmSlmDetails.FaultFound, FlmSlmDetails.AdditionalRemarks), "FAULT TYPE DATA", getActivity());
     }
 
     private void loadSpinnerIdTypes() {

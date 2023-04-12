@@ -21,9 +21,11 @@ import com.novigosolutions.certiscisco.activities.ProcessJobActivity;
 import com.novigosolutions.certiscisco.interfaces.FragmentInterface;
 import com.novigosolutions.certiscisco.models.FLMSLMScan;
 import com.novigosolutions.certiscisco.models.Job;
+import com.novigosolutions.certiscisco.service.UserLogService;
 import com.novigosolutions.certiscisco.utils.Constants;
 import com.novigosolutions.certiscisco.utils.CustomDialogClass;
 import com.novigosolutions.certiscisco.utils.CustomDialogFlmSlmClass;
+import com.novigosolutions.certiscisco.utils.UserLog;
 import com.novigosolutions.certiscisco.webservices.ApiCallback;
 import com.novigosolutions.certiscisco.webservices.SendUpdateCaller;
 
@@ -76,7 +78,7 @@ public class ResolutionFragment extends Fragment implements FragmentInterface, A
 
     @OnClick(R.id.cancel_action)
     void cancel() {
-        ((ProcessJobActivity) getActivity()).alert(1, "Confirm", "Confirm Exit Job?");
+        ((ProcessJobActivity) getActivity()).alert(UserLog.RESOLUTION.toString(), 1, "Confirm", "Confirm Exit Job?");
     }
 
 
@@ -95,7 +97,9 @@ public class ResolutionFragment extends Fragment implements FragmentInterface, A
     void setFLMResolutionDetails() {
         FlmSlmDetails.Resolution = resolution.getText().toString();
         FlmSlmDetails.SLMRequired = slmRequired.getSelectedItem().toString();
-
+        UserLogService.save(UserLog.RESOLUTION.toString(), String.format("ATMOrderId : %s , Resolution : %s , " +
+                        "SLMRequired : %s", Job.getATMCode(orderNo), FlmSlmDetails.Resolution, FlmSlmDetails.SLMRequired),
+                "RESOLUTION DATA", getActivity());
         FlmSlmDetails.ATMOrderId = orderNo;
         FlmSlmDetails.OperationMode = Job.getOperationMode(orderNo);
         denomination.ATMOrderId = orderNo;
@@ -121,8 +125,12 @@ public class ResolutionFragment extends Fragment implements FragmentInterface, A
                     Job.updateStatus(orderNo);
                     getActivity().finish();
                     SendUpdateCaller.instance().sendUpdate(getActivity());
+                    UserLogService.save(UserLog.SYNC.toString(), String.format("ATMOrderId : %s", Job.getATMCode(orderNo)),
+                            "SUCCESS", getContext());
                 } else {
                     ((ProcessJobActivity) getActivity()).raiseSnakbar(messege);
+                    UserLogService.save(UserLog.SYNC.toString(), String.format("ATMOrderId : %s, Message : %s", Job.getATMCode(orderNo), messege),
+                            "FAILED", getContext());
                 }
             } catch (Exception e) {
                 e.printStackTrace();

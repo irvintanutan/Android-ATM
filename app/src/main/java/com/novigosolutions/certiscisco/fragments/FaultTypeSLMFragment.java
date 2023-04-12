@@ -26,9 +26,11 @@ import com.novigosolutions.certiscisco.R;
 import com.novigosolutions.certiscisco.activities.ProcessJobActivity;
 import com.novigosolutions.certiscisco.interfaces.FragmentInterface;
 import com.novigosolutions.certiscisco.models.Job;
+import com.novigosolutions.certiscisco.service.UserLogService;
 import com.novigosolutions.certiscisco.utils.Constants;
 import com.novigosolutions.certiscisco.utils.CustomDialogFlmSlmClass;
 import com.novigosolutions.certiscisco.utils.MultiSelectionSpinner;
+import com.novigosolutions.certiscisco.utils.UserLog;
 import com.novigosolutions.certiscisco.webservices.ApiCallback;
 import com.novigosolutions.certiscisco.webservices.SendUpdateCaller;
 
@@ -172,7 +174,7 @@ public class FaultTypeSLMFragment extends Fragment implements FragmentInterface,
 
     @OnClick(R.id.cancel_action)
     void cancel() {
-        ((ProcessJobActivity) getActivity()).alert(1, "Confirm", "Confirm Exit Job?");
+        ((ProcessJobActivity) getActivity()).alert(UserLog.SLM.toString(), 1, "Confirm", "Confirm Exit Job?");
     }
 
 
@@ -204,6 +206,12 @@ public class FaultTypeSLMFragment extends Fragment implements FragmentInterface,
         denomination.OperationMode = Job.getOperationMode(orderNo);
         FlmSlmDetails.save();
         denomination.save();
+
+        UserLogService.save(UserLog.SLM.toString(), String.format("ATMOrderId : %s, Resolution : %s , SLMRequired : %s , FaultType : %s" +
+                        " , AdditionalRemarks : %s , FaultFound : %s , EngineerArrivalTime : %s , StaffName : %s" +
+                        " , TeamArrivalTime : %s", Job.getATMCode(orderNo), FlmSlmDetails.Resolution, FlmSlmDetails.SLMRequired, FlmSlmDetails.FaultType,
+                FlmSlmDetails.AdditionalRemarks, FlmSlmDetails.FaultFound, FlmSlmDetails.EngineerArrivalTime,
+                FlmSlmDetails.StaffName, FlmSlmDetails.TeamArrivalTime), "FAULT TYPE DATA", getActivity());
     }
 
 

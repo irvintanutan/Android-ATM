@@ -29,8 +29,10 @@ import com.novigosolutions.certiscisco.interfaces.IOnScannerData;
 import com.novigosolutions.certiscisco.interfaces.RecyclerViewClickListenerLong;
 import com.novigosolutions.certiscisco.models.Job;
 import com.novigosolutions.certiscisco.models.OtherScan;
+import com.novigosolutions.certiscisco.service.UserLogService;
 import com.novigosolutions.certiscisco.utils.Constants;
 import com.novigosolutions.certiscisco.utils.CustomDialogClass;
+import com.novigosolutions.certiscisco.utils.UserLog;
 import com.novigosolutions.certiscisco.webservices.ApiCallback;
 import com.novigosolutions.certiscisco.webservices.SendUpdateCaller;
 
@@ -277,6 +279,9 @@ public class  ScanOtherFragment extends Fragment implements IOnScannerData, View
         otherScan.ScanTypeName = scantypename;
         otherScan.ScanValue = data;
         otherScan.save();
+        UserLogService.save(UserLog.SCAN_OTHER.toString(), String.format("ATMOrderId : %s , ScanType : %s , " +
+                        "ScanTypeName : %s , ScanValue : %s", Job.getATMCode(orderno), scantype, scantypename, data),
+                "ENVELOPE DATA", getActivity());
         refresh();
 
     }

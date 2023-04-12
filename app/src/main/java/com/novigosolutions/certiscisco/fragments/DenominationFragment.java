@@ -26,11 +26,14 @@ import com.novigosolutions.certiscisco.activities.ProcessJobActivity;
 import com.novigosolutions.certiscisco.interfaces.FragmentInterface;
 import com.novigosolutions.certiscisco.models.Denomination;
 import com.novigosolutions.certiscisco.models.Job;
+import com.novigosolutions.certiscisco.service.UserLogService;
 import com.novigosolutions.certiscisco.utils.Constants;
+import com.novigosolutions.certiscisco.utils.UserLog;
 
 import java.text.DecimalFormat;
 import java.text.NumberFormat;
 
+import static com.novigosolutions.certiscisco.utils.Constants.FlmSlmDetails;
 import static com.novigosolutions.certiscisco.utils.Constants.denomination;
 
 /**
@@ -170,6 +173,13 @@ public class DenominationFragment extends Fragment implements FragmentInterface 
         denomination.text100 = text100.getText().toString();
         denomination.text1000 = text1000.getText().toString();
         denomination.textTotal = total.toString();
+
+        UserLogService.save(UserLog.DENOMINATION.toString(), String.format("ATMOrderId : %s , $1000 : %s , $100 : %s , $50 : %s ," +
+                        "$10 : %s , $5 : %s , $2 : %s , $1 : %s , $0.50 : %s , $0.20 : %s , $0.10 : %s , $0.05 : %s , " +
+                        "High Reject : %s , No Cash Found : %s", Job.getATMCode(orderNo), denomination.text1000, denomination.text100, denomination.text50,
+                denomination.text10, denomination.text5, denomination.text2, denomination.text1, denomination.text0_50,
+                denomination.text0_20, denomination.text0_10, denomination.text0_05, denomination.HighReject, denomination.NoCashFound),
+                "DENOMINATION DATA", getActivity());
     }
 
     void clear() {
@@ -199,7 +209,7 @@ public class DenominationFragment extends Fragment implements FragmentInterface 
 
     @OnClick(R.id.cancel_action)
     void cancel() {
-        ((ProcessJobActivity) getActivity()).alert(1, "Confirm", "Confirm Exit Job?");
+        ((ProcessJobActivity) getActivity()).alert(UserLog.DENOMINATION.toString(), 1, "Confirm", "Confirm Exit Job?");
     }
 
     @Override

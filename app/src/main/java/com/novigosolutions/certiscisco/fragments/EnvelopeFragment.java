@@ -35,7 +35,9 @@ import com.novigosolutions.certiscisco.interfaces.RecyclerViewClickListenerLong;
 import com.novigosolutions.certiscisco.models.FLMSLMScan;
 import com.novigosolutions.certiscisco.models.Job;
 import com.novigosolutions.certiscisco.models.OtherScan;
+import com.novigosolutions.certiscisco.service.UserLogService;
 import com.novigosolutions.certiscisco.utils.Constants;
+import com.novigosolutions.certiscisco.utils.UserLog;
 import com.novigosolutions.certiscisco.webservices.ApiCallback;
 import com.novigosolutions.certiscisco.webservices.SendUpdateCaller;
 
@@ -99,14 +101,14 @@ public class EnvelopeFragment extends Fragment implements IOnScannerData, View.O
         int jammedCash = FLMSLMScan.getCount(orderNo, "JAMMED").size();
 
         if ((Double.parseDouble(denomination.textTotal) > 0 || denomination.HighReject) && jammedCash == 0) {
-            ((ProcessJobActivity) getActivity()).alert("You mus have at least 1 Jammed Cash Envelope Scanned");
+            ((ProcessJobActivity) getActivity()).alert("You must have at least 1 Jammed Cash Envelope Scanned");
         } else
             ((ProcessJobActivity) getActivity()).setpage(1);
     }
 
     @OnClick(R.id.cancel_action)
     void cancel() {
-        ((ProcessJobActivity) getActivity()).alert(1, "Confirm", "Confirm Exit Job?");
+        ((ProcessJobActivity) getActivity()).alert(UserLog.ENVELOPE.toString(), 1, "Confirm", "Confirm Exit Job?");
     }
 
 
@@ -247,6 +249,9 @@ public class EnvelopeFragment extends Fragment implements IOnScannerData, View.O
         otherScan.ScanValue = data;
         otherScan.OperationMode = Job.getOperationMode(orderNo);
         otherScan.save();
+        UserLogService.save(UserLog.ENVELOPE.toString(), String.format("ATMOrderId : %s , ScanType : %s , " +
+                        "ScanTypeName : %s , ScanValue : %s", Job.getATMCode(orderNo), scanType, scanTypeName, data),
+                "ENVELOPE DATA", getActivity());
         refresh();
 
     }

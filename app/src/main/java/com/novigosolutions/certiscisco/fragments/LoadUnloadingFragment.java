@@ -33,10 +33,12 @@ import com.novigosolutions.certiscisco.models.EditRequests;
 import com.novigosolutions.certiscisco.models.Job;
 import com.novigosolutions.certiscisco.models.Seal;
 import com.novigosolutions.certiscisco.objects.ManualEntryResult;
+import com.novigosolutions.certiscisco.service.UserLogService;
 import com.novigosolutions.certiscisco.utils.CommonMethods;
 import com.novigosolutions.certiscisco.utils.NetworkUtil;
 import com.novigosolutions.certiscisco.utils.Preferences;
 import com.novigosolutions.certiscisco.utils.RequestEditDialog;
+import com.novigosolutions.certiscisco.utils.UserLog;
 import com.novigosolutions.certiscisco.webservices.CertisCISCOServer;
 import com.novigosolutions.certiscisco.webservices.CertisCISCOServices;
 import com.novigosolutions.certiscisco.webservices.UnsafeOkHttpClient;
@@ -274,6 +276,8 @@ public class LoadUnloadingFragment extends Fragment implements View.OnClickListe
                 message = "Duplicate value\n("+Job.isExistwithmessage(data)+")";
             } else if (Cartridge.isAllCartScanned(orderno, fragmenttype)) {
                 if (CoinEnvelopes.updateScan(orderno, data)) {
+                    UserLogService.save(UserLog.LOAD_UNLOAD.toString(), String.format("ATMOrderId : %s, Data : %s", Job.getATMCode(orderno), data),
+                            "SCAN DATA", getContext());
                     refreshcoin();
                 } else {
                     isInvalid = true;
@@ -289,6 +293,8 @@ public class LoadUnloadingFragment extends Fragment implements View.OnClickListe
                             isSerialScan = false;
                             txtnumincomplete.setText("1");
                             imgClear.setEnabled(true);
+                            UserLogService.save(UserLog.LOAD_UNLOAD.toString(), String.format("ATMOrderId : %s, Data : %s", Job.getATMCode(orderno), data),
+                                    "SCAN DATA", getContext());
                         }
 
                 } else {
@@ -300,6 +306,8 @@ public class LoadUnloadingFragment extends Fragment implements View.OnClickListe
                                 txtnumpending.setText(String.valueOf(Integer.parseInt(txtnumpending.getText().toString()) - 1));
                             }
                             refresh();
+                            UserLogService.save(UserLog.LOAD_UNLOAD.toString(), String.format("ATMOrderId : %s, Data : %s", Job.getATMCode(orderno), data),
+                                    "SCAN DATA", getContext());
                         } else {
                             isInvalid = true;
                             message = "Invalid seal no";
@@ -311,6 +319,8 @@ public class LoadUnloadingFragment extends Fragment implements View.OnClickListe
             message = "This bar code is empty";
         }
         if (isInvalid) {
+            UserLogService.save(UserLog.LOAD_UNLOAD.toString(), String.format("ATMOrderId : %s, Message : %s", Job.getATMCode(orderno), message),
+                    "SCAN FAILED", getContext());
             ((ProcessJobActivity) getActivity()).invalidbarcodealert(message);
         }
         Log.e("data enterd", ":" + isManualentered);
