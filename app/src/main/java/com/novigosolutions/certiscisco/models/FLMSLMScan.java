@@ -29,6 +29,12 @@ public class FLMSLMScan extends Model {
     @Column(name = "OperationMode")
     public String OperationMode;
 
+    public static FLMSLMScan getSingle(Long id) {
+        return new Select().from(FLMSLMScan.class)
+                .where("id=?", id)
+                .executeSingle();
+    }
+
     public static List<FLMSLMScan> get(int ATMOrderId) {
         return new Select()
                 .from(FLMSLMScan.class)
@@ -46,39 +52,39 @@ public class FLMSLMScan extends Model {
     public static List<FLMSLMScan> getCount(int ATMOrderId, String ScanType) {
         return new Select()
                 .from(FLMSLMScan.class)
-                .where("ATMOrderId=? AND ScanType=?",ATMOrderId, ScanType)
+                .where("ATMOrderId=? AND ScanType=?", ATMOrderId, ScanType)
                 .execute();
     }
-    public static String getByType(int ATMOrderId,String ScanType) {
-        String str="";
-        List<FLMSLMScan> otherScen= new Select()
+
+    public static String getByType(int ATMOrderId, String ScanType) {
+        String str = "";
+        List<FLMSLMScan> otherScen = new Select()
                 .from(FLMSLMScan.class)
-                .where("ATMOrderId=? AND ScanType=?",ATMOrderId, ScanType)
+                .where("ATMOrderId=? AND ScanType=?", ATMOrderId, ScanType)
                 .execute();
-        for (int i=0;i<otherScen.size();i++)
-        {
-            if(str.equals(""))
-            {
-                str+="("+otherScen.get(i).ScanValue;
-            }
-            else
-            {
-                str+=","+otherScen.get(i).ScanValue;
+        for (int i = 0; i < otherScen.size(); i++) {
+            if (str.equals("")) {
+                str += "(" + otherScen.get(i).ScanValue;
+            } else {
+                str += "," + otherScen.get(i).ScanValue;
             }
         }
-        str+=")";
+        str += ")";
         return str;
     }
+
     public static void cancelSingleScan(Long id) {
         new Delete().from(FLMSLMScan.class)
                 .where("id=?", id)
                 .execute();
     }
+
     public static void cancelScan(int ATMOrderId) {
         new Delete().from(FLMSLMScan.class)
                 .where("ATMOrderId=?", ATMOrderId)
                 .execute();
     }
+
     public static void remove() {
         new Delete().from(FLMSLMScan.class)
                 .execute();

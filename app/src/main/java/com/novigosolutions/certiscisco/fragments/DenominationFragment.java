@@ -179,7 +179,7 @@ public class DenominationFragment extends Fragment implements FragmentInterface 
                         "High Reject : %s , No Cash Found : %s", Job.getATMCode(orderNo), denomination.text1000, denomination.text100, denomination.text50,
                 denomination.text10, denomination.text5, denomination.text2, denomination.text1, denomination.text0_50,
                 denomination.text0_20, denomination.text0_10, denomination.text0_05, denomination.HighReject, denomination.NoCashFound),
-                "DENOMINATION DATA", getActivity());
+                "DENOMINATION DATA", Job.getATMCode(orderNo), getActivity());
     }
 
     void clear() {

@@ -29,9 +29,9 @@ public class CertisCISCO extends Application {
                 Cartridge.class, Seal.class, OtherScan.class, TestCash.class, CoinEnvelopes.class, EditRequests.class,
                 ClearHistoryRequests.class, UserLogs.class).create();
         ActiveAndroid.initialize(dbConfiguration);
-        if(TextUtils.isEmpty(Preferences.getString("API_URL",getApplicationContext()))){
-            //Preferences.saveString("API_URL", "https://pcsatm-api.certiscslops.local", getApplicationContext());
-            Preferences.saveString("API_URL", "https://pcs-atmuatapi.certis-cslops-uat.com", getApplicationContext());
+        if (TextUtils.isEmpty(Preferences.getString("API_URL", getApplicationContext()))) {
+            Preferences.saveString("API_URL", "https://pcsatm-api.certiscslops.local", getApplicationContext());
+            //Preferences.saveString("API_URL", "https://pcs-atmuatapi.certis-cslops-uat.com", getApplicationContext());
         }
     }
 

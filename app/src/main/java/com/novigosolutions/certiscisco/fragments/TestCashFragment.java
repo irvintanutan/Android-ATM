@@ -208,7 +208,7 @@ public class TestCashFragment extends Fragment implements IOnScannerData, View.O
         refresh();
         UserLogService.save(UserLog.TEST_CASH.toString(), String.format("ATMOrderId : %s , ScanType : %s , " +
                         "ScanTypeName : %s , ScanValue : %s", Job.getATMCode(orderno), scantype, scantypename, data),
-                "ENVELOPE DATA", getActivity());
+                "ENVELOPE DATA", null, getActivity());
     }
 
     private void refresh() {
@@ -279,6 +279,8 @@ public class TestCashFragment extends Fragment implements IOnScannerData, View.O
                     Job.updateStatus(orderno);
                     getActivity().finish();
                     SendUpdateCaller.instance().sendUpdate(getActivity());
+                    UserLogService.save(UserLog.SYNC.toString(), String.format("ATMOrderId : %s", Job.getATMCode(orderno)),
+                            "SUCCESS", null, getContext());
                 } else {
                     Toast.makeText(getContext(), "Error", Toast.LENGTH_SHORT).show();
                 }

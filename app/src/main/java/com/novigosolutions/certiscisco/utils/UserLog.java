@@ -5,7 +5,6 @@ public enum UserLog {
     ENVELOPE,
     FLM,
     SLM,
-    LOAD_UNLOAD,
     TEST_CASH,
     SCAN_OTHER,
     RESOLUTION,

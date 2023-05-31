@@ -2,8 +2,10 @@ package com.novigosolutions.certiscisco.fragments;
 
 import android.app.AlertDialog;
 import android.content.DialogInterface;
+import android.os.Build;
 import android.os.Bundle;
 
+import androidx.annotation.RequiresApi;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.DefaultItemAnimator;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -45,6 +47,7 @@ import org.json.JSONObject;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 import static com.novigosolutions.certiscisco.utils.Constants.denomination;
 
@@ -95,15 +98,23 @@ public class EnvelopeFragment extends Fragment implements IOnScannerData, View.O
         return rootView;
     }
 
+    @RequiresApi(api = Build.VERSION_CODES.O)
     @OnClick(R.id.btn_next)
     void next() {
 
         int jammedCash = FLMSLMScan.getCount(orderNo, "JAMMED").size();
 
         if ((Double.parseDouble(denomination.textTotal) > 0 || denomination.HighReject) && jammedCash == 0) {
+            UserLogService.save(UserLog.ENVELOPE.toString(), String.format("ATMOrderId : %s , Message : %s", Job.getATMCode(orderNo), "You must have at least 1 Jammed Cash Envelope Scanned"),
+                    "ENVELOPE DATA", null, getActivity());
             ((ProcessJobActivity) getActivity()).alert("You must have at least 1 Jammed Cash Envelope Scanned");
-        } else
+        } else {
             ((ProcessJobActivity) getActivity()).setpage(1);
+            UserLogService.save(UserLog.ENVELOPE.toString(), String.format("ATMOrderId : %s , Envelopes : %s", Job.getATMCode(orderNo),
+                    String.join(", ",
+                            list.stream().map(flmslmScan -> flmslmScan.ScanValue).collect(Collectors.toList()))),
+                    "SUBMITTED ENVELOPE", Job.getATMCode(orderNo), getActivity());
+        }
     }
 
     @OnClick(R.id.cancel_action)
@@ -218,14 +229,23 @@ public class EnvelopeFragment extends Fragment implements IOnScannerData, View.O
             alertDialog.setTitle("Duplicate");
             alertDialog.setMessage("Duplicate value");
         }
+
         alertDialog.setPositiveButton("Ok", new DialogInterface.OnClickListener() {
+            @RequiresApi(api = Build.VERSION_CODES.O)
             public void onClick(DialogInterface dialog, int which) {
                 if (type == 1) {
+                    UserLogService.save(UserLog.ENVELOPE.toString(), String.format("ATMOrderId : %s , Remarks : Removed all envelopes %s"
+                            , Job.getATMCode(orderNo), String.join(", ",
+                                    list.stream().map(flmslmScan -> flmslmScan.ScanValue).collect(Collectors.toList()))),
+                            "REMOVE ENVELOPE DATA", null, getActivity());
                     OtherScan.cancelScan(orderNo);
                     FLMSLMScan.cancelScan(orderNo);
                     list.clear();
                     refresh();
                 } else if (type == 2) {
+                    UserLogService.save(UserLog.ENVELOPE.toString(), String.format("ATMOrderId : %s , Remarks : Removed envelope %s"
+                            , Job.getATMCode(orderNo), FLMSLMScan.getSingle(id).ScanValue),
+                            "REMOVE ENVELOPE DATA", null, getActivity());
                     FLMSLMScan.cancelSingleScan(id);
                     refresh();
                 }
@@ -251,7 +271,7 @@ public class EnvelopeFragment extends Fragment implements IOnScannerData, View.O
         otherScan.save();
         UserLogService.save(UserLog.ENVELOPE.toString(), String.format("ATMOrderId : %s , ScanType : %s , " +
                         "ScanTypeName : %s , ScanValue : %s", Job.getATMCode(orderNo), scanType, scanTypeName, data),
-                "ENVELOPE DATA", getActivity());
+                "SCAN ENVELOPE DATA", null, getActivity());
         refresh();
 
     }

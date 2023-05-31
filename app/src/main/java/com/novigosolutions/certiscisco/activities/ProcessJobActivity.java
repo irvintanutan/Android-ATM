@@ -79,7 +79,7 @@ public class ProcessJobActivity extends BarCodeScanActivity implements ApiCallba
 
         proceed.setOnClickListener(view1 -> {
             finalDialog.dismiss();
-            UserLogService.save(UserLog.CONFIRMATION.toString(), txtorderno.getText().toString(), "Confirmation", getApplicationContext());
+            UserLogService.save(UserLog.CONFIRMATION.toString(), txtorderno.getText().toString(), "Confirmation", null, getApplicationContext());
         });
 
         androidx.appcompat.app.AlertDialog.Builder alert = new androidx.appcompat.app.AlertDialog.Builder(this);
@@ -283,17 +283,17 @@ public class ProcessJobActivity extends BarCodeScanActivity implements ApiCallba
         if ((OperationMode.equals("FLM") || OperationMode.equals("SLM")) && currentpage != 0) {
             setpage(-1);
         } else
-            alert("MAIN" , 1, "Confirm", "Are you sure you want to go back?");
+            alert("MAIN", 1, "Confirm", "Are you sure you want to go back?");
     }
 
-    public void alert(String eventType , final int type, String title, String message) {
+    public void alert(String eventType, final int type, String title, String message) {
         AlertDialog.Builder alertDialog = new AlertDialog.Builder(ProcessJobActivity.this);
         //alertDialog.setCancelable(true);
         alertDialog.setTitle(title);
         alertDialog.setMessage(message);
         alertDialog.setPositiveButton("Yes", new DialogInterface.OnClickListener() {
             public void onClick(DialogInterface dialog, int which) {
-                UserLogService.save(eventType, Job.getATMCode(orderno), "CANCELLED JOB", getApplicationContext());
+                UserLogService.save(eventType, Job.getATMCode(orderno), "CANCELLED JOB", null, getApplicationContext());
                 Constants.FlmSlmDetails = new FLMSLMAdditionalDetails();
                 Constants.denomination = new Denomination();
                 Denomination.clear(orderno);

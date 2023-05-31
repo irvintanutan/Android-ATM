@@ -59,9 +59,6 @@ public interface CertisCISCOServices {
     Call<ResponseBody> downloadFile();
 
     @Headers("Content-Type: application/json")
-    @POST("UserActivityLog/LogUserActivity")
-    Call<ResponseBody> UserActivityLog(@Query("entity") String entity, @Query("userAction") String userAction,
-                                       @Query("remarks") String remark,
-                                       @Query("userId") int userId, @Query("source") String source,
-                                       @Query("apkdatetime") String apkdatetime);
+    @POST("UserActivityLog")
+    Call<ResponseBody> UserActivityLog(@Header("AuthToken") String AuthToken, @Header("UserId") int UserId, @Body JsonArray jsonObject);
 }

@@ -99,7 +99,7 @@ public class ResolutionFragment extends Fragment implements FragmentInterface, A
         FlmSlmDetails.SLMRequired = slmRequired.getSelectedItem().toString();
         UserLogService.save(UserLog.RESOLUTION.toString(), String.format("ATMOrderId : %s , Resolution : %s , " +
                         "SLMRequired : %s", Job.getATMCode(orderNo), FlmSlmDetails.Resolution, FlmSlmDetails.SLMRequired),
-                "RESOLUTION DATA", getActivity());
+                "RESOLUTION DATA", null, getActivity());
         FlmSlmDetails.ATMOrderId = orderNo;
         FlmSlmDetails.OperationMode = Job.getOperationMode(orderNo);
         denomination.ATMOrderId = orderNo;
@@ -126,11 +126,11 @@ public class ResolutionFragment extends Fragment implements FragmentInterface, A
                     getActivity().finish();
                     SendUpdateCaller.instance().sendUpdate(getActivity());
                     UserLogService.save(UserLog.SYNC.toString(), String.format("ATMOrderId : %s", Job.getATMCode(orderNo)),
-                            "SUCCESS", getContext());
+                            "SUCCESS", null, getContext());
                 } else {
                     ((ProcessJobActivity) getActivity()).raiseSnakbar(messege);
                     UserLogService.save(UserLog.SYNC.toString(), String.format("ATMOrderId : %s, Message : %s", Job.getATMCode(orderNo), messege),
-                            "FAILED", getContext());
+                            "FAILED", null, getContext());
                 }
             } catch (Exception e) {
                 e.printStackTrace();

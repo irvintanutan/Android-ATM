@@ -31,6 +31,15 @@ public class UserLogs extends Model {
     @Column(name = "UserId")
     public String UserId;
 
+    @Column(name = "Identifier")
+    public String Identifier;
+
+    public static UserLogs getUserLog(String identifier, String entity) {
+        return new Select().from(UserLogs.class)
+                .where("Identifier=? AND Entity=?", identifier, entity)
+                .executeSingle();
+    }
+
     public static List<UserLogs> getUserLogs() {
         return new Select().from(UserLogs.class)
                 .where("Status=?", 0)
@@ -53,6 +62,13 @@ public class UserLogs extends Model {
         new Update(UserLogs.class)
                 .set("Status=?", 1)
                 .where("DateTime=?", dateTime)
+                .execute();
+    }
+
+    public static void updateUserLogs(String remarks, String identifier , String entity) {
+        new Update(UserLogs.class)
+                .set("Remarks=?", remarks)
+                .where("Identifier=? AND Entity=?", identifier, entity)
                 .execute();
     }
 

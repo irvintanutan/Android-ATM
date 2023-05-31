@@ -1,12 +1,6 @@
 package com.novigosolutions.certiscisco.adapters;
 
-import android.media.VolumeShaper;
 import android.os.Bundle;
-
-import androidx.fragment.app.Fragment;
-import androidx.fragment.app.FragmentManager;
-import androidx.fragment.app.FragmentStatePagerAdapter;
-
 import android.util.Log;
 
 import com.novigosolutions.certiscisco.fragments.DenominationFragment;
@@ -15,10 +9,14 @@ import com.novigosolutions.certiscisco.fragments.FaultTypeFLMFragment;
 import com.novigosolutions.certiscisco.fragments.FaultTypeSLMFragment;
 import com.novigosolutions.certiscisco.fragments.JobDetailsFragment;
 import com.novigosolutions.certiscisco.fragments.JobDetailsFragmentSLM_FLM;
+import com.novigosolutions.certiscisco.fragments.LoadUnloadingFragment;
 import com.novigosolutions.certiscisco.fragments.ResolutionFragment;
 import com.novigosolutions.certiscisco.fragments.ScanOtherFragment;
 import com.novigosolutions.certiscisco.fragments.TestCashFragment;
-import com.novigosolutions.certiscisco.fragments.LoadUnloadingFragment;
+
+import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentManager;
+import androidx.fragment.app.FragmentStatePagerAdapter;
 
 
 public class PagerIndicatorAdapter extends FragmentStatePagerAdapter {

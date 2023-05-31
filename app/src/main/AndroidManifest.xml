@@ -73,7 +73,6 @@
         </receiver>
         <service android:name=".service.SyncService" />
         <service android:name=".service.OfflineUpdateService" />
-        <service android:name=".service.AuditService" />
 
         <service android:name=".service.DownloadService" />
         <uses-library

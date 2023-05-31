@@ -3,10 +3,12 @@ package com.novigosolutions.certiscisco.fragments;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.os.Bundle;
+
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.DefaultItemAnimator;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
+
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.util.Log;
@@ -43,7 +45,7 @@ import java.util.List;
 
 import static com.novigosolutions.certiscisco.R.id.recyclerview;
 
-public class  ScanOtherFragment extends Fragment implements IOnScannerData, View.OnClickListener, RecyclerViewClickListenerLong, FragmentInterface, ApiCallback {
+public class ScanOtherFragment extends Fragment implements IOnScannerData, View.OnClickListener, RecyclerViewClickListenerLong, FragmentInterface, ApiCallback {
     // TODO: Rename parameter arguments, choose names that match
     LinearLayout lldata, llnodata, llmessage;//, llscannedlist;
     Button btn_test_cash, btn_passbook, btn_test_rjr, btn_retain_card, btn_misc_scan, btn_misc_input;
@@ -132,7 +134,7 @@ public class  ScanOtherFragment extends Fragment implements IOnScannerData, View
                 scantypename = "Test Cash";
                 currentButton = btn_test_cash;
                 try {
-                    ((BarCodeScanActivity)getContext()).scansoft();
+                    ((BarCodeScanActivity) getContext()).scansoft();
 
                 } catch (Exception e) {
                     e.printStackTrace();
@@ -144,7 +146,7 @@ public class  ScanOtherFragment extends Fragment implements IOnScannerData, View
                 scantypename = "Passbook";
                 currentButton = btn_passbook;
                 try {
-                    ((BarCodeScanActivity)getContext()).scansoft();
+                    ((BarCodeScanActivity) getContext()).scansoft();
 
                 } catch (Exception e) {
                     e.printStackTrace();
@@ -156,7 +158,7 @@ public class  ScanOtherFragment extends Fragment implements IOnScannerData, View
                 scantypename = "RJR";
                 currentButton = btn_test_rjr;
                 try {
-                    ((BarCodeScanActivity)getContext()).scansoft();
+                    ((BarCodeScanActivity) getContext()).scansoft();
                 } catch (Exception e) {
                     e.printStackTrace();
                 }
@@ -167,7 +169,7 @@ public class  ScanOtherFragment extends Fragment implements IOnScannerData, View
                 scantypename = "Retain Card";
                 currentButton = btn_retain_card;
                 try {
-                    ((BarCodeScanActivity)getContext()).scansoft();
+                    ((BarCodeScanActivity) getContext()).scansoft();
 
                 } catch (Exception e) {
                     e.printStackTrace();
@@ -179,7 +181,7 @@ public class  ScanOtherFragment extends Fragment implements IOnScannerData, View
                 scantypename = "Misc Scan";
                 currentButton = btn_misc_scan;
                 try {
-                    ((BarCodeScanActivity)getContext()).scansoft();
+                    ((BarCodeScanActivity) getContext()).scansoft();
 
                 } catch (Exception e) {
                     e.printStackTrace();
@@ -281,7 +283,7 @@ public class  ScanOtherFragment extends Fragment implements IOnScannerData, View
         otherScan.save();
         UserLogService.save(UserLog.SCAN_OTHER.toString(), String.format("ATMOrderId : %s , ScanType : %s , " +
                         "ScanTypeName : %s , ScanValue : %s", Job.getATMCode(orderno), scantype, scantypename, data),
-                "ENVELOPE DATA", getActivity());
+                "ENVELOPE DATA", null, getActivity());
         refresh();
 
     }
@@ -416,6 +418,7 @@ public class  ScanOtherFragment extends Fragment implements IOnScannerData, View
             }
         });
     }
+
     @Override
     public void onResult(int result, String resultdata) {
         if (result == 200) {
@@ -428,6 +431,8 @@ public class  ScanOtherFragment extends Fragment implements IOnScannerData, View
                     Job.updateStatus(orderno);
                     getActivity().finish();
                     SendUpdateCaller.instance().sendUpdate(getActivity());
+                    UserLogService.save(UserLog.SYNC.toString(), String.format("ATMOrderId : %s", Job.getATMCode(orderno)),
+                            "SUCCESS", null, getContext());
                 } else {
                     Job.saveasOffline(orderno);
                     Job.updateStatus(orderno);
@@ -441,10 +446,12 @@ public class  ScanOtherFragment extends Fragment implements IOnScannerData, View
             ((ProcessJobActivity) getActivity()).authalert(getActivity());
         }
     }
+
     @Override
     public void fragmentBecameVisible() {
-        ((BarCodeScanActivity)getContext()).registerScannerEvent(this);
+        ((BarCodeScanActivity) getContext()).registerScannerEvent(this);
     }
+
     @Override
     public void onResume() {
         super.onResume();

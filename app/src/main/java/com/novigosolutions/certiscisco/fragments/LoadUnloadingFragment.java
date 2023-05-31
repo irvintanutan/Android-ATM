@@ -276,8 +276,8 @@ public class LoadUnloadingFragment extends Fragment implements View.OnClickListe
                 message = "Duplicate value\n("+Job.isExistwithmessage(data)+")";
             } else if (Cartridge.isAllCartScanned(orderno, fragmenttype)) {
                 if (CoinEnvelopes.updateScan(orderno, data)) {
-                    UserLogService.save(UserLog.LOAD_UNLOAD.toString(), String.format("ATMOrderId : %s, Data : %s", Job.getATMCode(orderno), data),
-                            "SCAN DATA", getContext());
+                    UserLogService.save(fragmenttype, String.format("ATMOrderId : %s, Data : %s", Job.getATMCode(orderno), data),
+                            "SCAN DATA", null, getContext());
                     refreshcoin();
                 } else {
                     isInvalid = true;
@@ -293,8 +293,8 @@ public class LoadUnloadingFragment extends Fragment implements View.OnClickListe
                             isSerialScan = false;
                             txtnumincomplete.setText("1");
                             imgClear.setEnabled(true);
-                            UserLogService.save(UserLog.LOAD_UNLOAD.toString(), String.format("ATMOrderId : %s, Data : %s", Job.getATMCode(orderno), data),
-                                    "SCAN DATA", getContext());
+                            UserLogService.save(fragmenttype, String.format("ATMOrderId : %s, Data : %s", Job.getATMCode(orderno), data),
+                                    "SCAN DATA", null, getContext());
                         }
 
                 } else {
@@ -306,8 +306,8 @@ public class LoadUnloadingFragment extends Fragment implements View.OnClickListe
                                 txtnumpending.setText(String.valueOf(Integer.parseInt(txtnumpending.getText().toString()) - 1));
                             }
                             refresh();
-                            UserLogService.save(UserLog.LOAD_UNLOAD.toString(), String.format("ATMOrderId : %s, Data : %s", Job.getATMCode(orderno), data),
-                                    "SCAN DATA", getContext());
+                            UserLogService.save(fragmenttype, String.format("ATMOrderId : %s, Data : %s", Job.getATMCode(orderno), data),
+                                    "SCAN DATA", null, getContext());
                         } else {
                             isInvalid = true;
                             message = "Invalid seal no";
@@ -319,8 +319,8 @@ public class LoadUnloadingFragment extends Fragment implements View.OnClickListe
             message = "This bar code is empty";
         }
         if (isInvalid) {
-            UserLogService.save(UserLog.LOAD_UNLOAD.toString(), String.format("ATMOrderId : %s, Message : %s", Job.getATMCode(orderno), message),
-                    "SCAN FAILED", getContext());
+            UserLogService.save(fragmenttype, String.format("ATMOrderId : %s, Message : %s", Job.getATMCode(orderno), message),
+                    "SCAN FAILED",null,  getContext());
             ((ProcessJobActivity) getActivity()).invalidbarcodealert(message);
         }
         Log.e("data enterd", ":" + isManualentered);

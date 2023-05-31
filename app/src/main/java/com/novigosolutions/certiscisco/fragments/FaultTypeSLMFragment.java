@@ -211,7 +211,7 @@ public class FaultTypeSLMFragment extends Fragment implements FragmentInterface,
                         " , AdditionalRemarks : %s , FaultFound : %s , EngineerArrivalTime : %s , StaffName : %s" +
                         " , TeamArrivalTime : %s", Job.getATMCode(orderNo), FlmSlmDetails.Resolution, FlmSlmDetails.SLMRequired, FlmSlmDetails.FaultType,
                 FlmSlmDetails.AdditionalRemarks, FlmSlmDetails.FaultFound, FlmSlmDetails.EngineerArrivalTime,
-                FlmSlmDetails.StaffName, FlmSlmDetails.TeamArrivalTime), "FAULT TYPE DATA", getActivity());
+                FlmSlmDetails.StaffName, FlmSlmDetails.TeamArrivalTime), "FAULT TYPE DATA",Job.getATMCode(orderNo),  getActivity());
     }
 
 

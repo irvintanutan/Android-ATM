@@ -23,6 +23,7 @@ import com.novigosolutions.certiscisco.models.CoinEnvelopes;
 import com.novigosolutions.certiscisco.models.Job;
 import com.novigosolutions.certiscisco.models.OtherScan;
 import com.novigosolutions.certiscisco.models.TestCash;
+import com.novigosolutions.certiscisco.service.UserLogService;
 import com.novigosolutions.certiscisco.webservices.ATMListUpdateCaller;
 import com.novigosolutions.certiscisco.webservices.ApiCallback;
 
@@ -396,7 +397,8 @@ public class CustomDialogClass extends Dialog implements View.OnClickListener {
                     dismiss();
                 } else {
                     Job.updateEndDate(ATMOrderId,CommonMethods.getCurrentDateTimeInFormat(activity), (int) difference / 1000);
-
+                    UserLogService.save(UserLog.SYNC.toString(), String.format("ATMOrderId : %s", Job.getATMCode(ATMOrderId)),
+                            "SYNC ATTEMPT", null, getContext());
                     chronometer.stop();
                     if (NetworkUtil.getConnectivityStatusString(activity)) {
                         ATMListUpdateCaller.instance().UpdateATMList(callback, activity, ATMOrderId);

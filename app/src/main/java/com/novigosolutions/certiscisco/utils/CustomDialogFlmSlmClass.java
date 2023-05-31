@@ -218,7 +218,7 @@ public class CustomDialogFlmSlmClass extends Dialog implements View.OnClickListe
                     dismiss();
                 } else {
                     UserLogService.save(UserLog.SYNC.toString(), String.format("ATMOrderId : %s", Job.getATMCode(ATMOrderId)),
-                            "SYNC ATTEMPT", getContext());
+                            "SYNC ATTEMPT", null, getContext());
                     Job.updateEndDate(ATMOrderId, CommonMethods.getCurrentDateTimeInFormat(activity), (int) difference / 1000);
                     chronometer.stop();
                     if (NetworkUtil.getConnectivityStatusString(activity)) {
@@ -229,7 +229,7 @@ public class CustomDialogFlmSlmClass extends Dialog implements View.OnClickListe
                         activity.finish();
                         Toast.makeText(activity, "Saved offline", Toast.LENGTH_SHORT).show();
                         UserLogService.save(UserLog.SYNC.toString(), String.format("ATMOrderId : %s", Job.getATMCode(ATMOrderId)),
-                                "SAVED OFFLINE", getContext());
+                                "SAVED OFFLINE", null, getContext());
                     }
                     dismiss();
                 }

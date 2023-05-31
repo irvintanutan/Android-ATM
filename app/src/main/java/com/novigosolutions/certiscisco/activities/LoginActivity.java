@@ -44,7 +44,6 @@ import com.novigosolutions.certiscisco.models.OtherScan;
 import com.novigosolutions.certiscisco.models.Seal;
 import com.novigosolutions.certiscisco.models.TestCash;
 import com.novigosolutions.certiscisco.recivers.NetworkChangeReceiver;
-import com.novigosolutions.certiscisco.service.AuditService;
 import com.novigosolutions.certiscisco.service.UserLogService;
 import com.novigosolutions.certiscisco.utils.Constants;
 import com.novigosolutions.certiscisco.utils.NetworkUtil;
@@ -243,7 +242,6 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener,
         String teamid, password;
         teamid = edtteamid.getText().toString();
         password = edtpassword.getText().toString();
-        UserLogService.save(UserLog.LOGIN.toString(), "TEAM_ID: " + teamid + ", PASSWORD: " + password, "LOGIN ATTEMPT", getApplicationContext());
         if (teamid.isEmpty()) {
             mtxtinUserid.setError("User ID cannot be empty");
             failflag = true;
@@ -258,13 +256,13 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener,
                 json.addProperty("DeviceId", Preferences.getString("DeviceID", LoginActivity.this));
                 json.addProperty("UserCode", teamid);
                 json.addProperty("Password", password);
-                json.addProperty("LoginDate", false ? "2023-03-27" : sdf2.format(sdf.parse(mspindate.getSelectedItem().toString())));
+                json.addProperty("LoginDate", true ? "2023-05-26" : sdf2.format(sdf.parse(mspindate.getSelectedItem().toString())));
 
                 login(json);
             } else {
                 raiseInternetSnakbar();
             }
-            // dumpDummyData();
+            // dumpDummyData();u
         }
     }
 
@@ -307,7 +305,7 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener,
                                 if (Preferences.getString("DeviceID", LoginActivity.this).equals("")) {
                                     hideProgressDialog();
                                     raiseSnakbar("Device ID not set");
-                                    UserLogService.save(UserLog.LOGIN.toString(), "Device ID not set", "LOGIN ATTEMPT", getApplicationContext());
+                                    UserLogService.save(UserLog.LOGIN.toString(), "Device ID not set", "LOGIN ATTEMPT", null, getApplicationContext());
                                 } else {
                                     Preferences.saveString("LoggedOn", jp.getString("LoggedOn"), LoginActivity.this);
                                     Preferences.saveInt("UserId", Integer.parseInt(jp.getString("LoggedInUser")), LoginActivity.this);
@@ -324,16 +322,17 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener,
                                     getList(jp.getString("Token"), jp.getInt("LoggedInUser"), jp.getInt("ATMTeamId"));
                                     raiseSnakbar(messege);
                                     UserLogService.save(UserLog.LOGIN.toString(), "SUCCESS (USERID: " + jp.getString("UserName") + ", TEAMID: " + jp.getString("ATMTeamId") + ")"
-                                            , "LOGIN ATTEMPT ", getApplicationContext());
+                                            , "LOGIN ATTEMPT ", null, getApplicationContext());
 
                                 }
                             } else {
                                 hideProgressDialog();
                                 raiseSnakbar("Invalid User Role");
-                                UserLogService.save(UserLog.LOGIN.toString(), "Invalid User Role", "LOGIN ATTEMPT", getApplicationContext());
+                                UserLogService.save(UserLog.LOGIN.toString(), "Invalid User Role", "LOGIN ATTEMPT", null, getApplicationContext());
                             }
                         } else {
                             hideProgressDialog();
+                            UserLogService.save(UserLog.LOGIN.toString(), messege, "LOGIN ATTEMPT", null, getApplicationContext());
                             raiseSnakbar(messege);
                         }
 

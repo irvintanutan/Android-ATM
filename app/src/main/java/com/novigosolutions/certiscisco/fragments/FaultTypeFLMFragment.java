@@ -100,8 +100,8 @@ public class FaultTypeFLMFragment extends Fragment implements FragmentInterface 
         FlmSlmDetails.FaultType = faultType.getSelectedItemsAsString() == null ? "" : faultType.getSelectedItemsAsString();
         FlmSlmDetails.FaultFound = faultFound.getText().toString() == null ? "" : faultFound.getText().toString();
         FlmSlmDetails.AdditionalRemarks = remarks.getText().toString() == null ? "" : remarks.getText().toString();
-        UserLogService.save(UserLog.FLM.toString(), String.format("FaultType : %s , FaultFound : %s , Remarks : %s", FlmSlmDetails.FaultType,
-                FlmSlmDetails.FaultFound, FlmSlmDetails.AdditionalRemarks), "FAULT TYPE DATA", getActivity());
+        UserLogService.save(UserLog.FLM.toString(), String.format("ATMOrderId : %s , FaultType : %s , FaultFound : %s , Remarks : %s", Job.getATMCode(orderNo), FlmSlmDetails.FaultType,
+                FlmSlmDetails.FaultFound, FlmSlmDetails.AdditionalRemarks), "FAULT TYPE DATA", Job.getATMCode(orderNo), getActivity());
     }
 
     private void loadSpinnerIdTypes() {
